@@ -65,4 +65,8 @@
 	  <Folder Include="VM\" />
 	  <Folder Include="View\" />
 	</ItemGroup>
+	<ItemGroup>
+	  <ProjectReference Include="..\ViewModel\ViewModel.csproj" />
+	  <ProjectReference Include="..\..\MVVM_custom_LoL\Sources\StubLib\StubLib.csproj" />
+	</ItemGroup>
 </Project>

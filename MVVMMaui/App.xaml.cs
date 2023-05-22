@@ -1,11 +1,15 @@
-﻿namespace MVVMMaui;
+﻿using ViewModel;
+
+namespace MVVMMaui;
 
 public partial class App : Application
 {
-	public App()
+	public ChampionManagerVM championVM;
+
+	public App(ChampionManagerVM champion)
 	{
 		InitializeComponent();
-
+		championVM = champion;
 		MainPage = new AppShell();
 	}
 }

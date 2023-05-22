@@ -1,11 +1,16 @@
-﻿namespace MVVMMaui;
+﻿using ViewModel;
+
+namespace MVVMMaui;
 
 public partial class MainPage : ContentPage
 {
-	public MainPage()
+    readonly ChampionManagerVM championManagerVM = (Application.Current as App).championVM;
+
+    public MainPage()
 	{
 		InitializeComponent();
-	}
+        BindingContext = championManagerVM.Champions;
+    }
 
 
 }
