@@ -1,0 +1,42 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MVVMMaui.Pages.ChampionAddPage"
+             BackgroundColor="{StaticResource Gray950}"
+             Title="ChampionAddPage">
+     <VerticalStackLayout>
+         
+         <Label x:Name="Titre" HorizontalOptions="Center"
+             Style="{StaticResource TitreChampion}"></Label>
+         <Line BackgroundColor="{StaticResource Primary}"
+               Margin="40, 4"></Line>
+         <ScrollView>
+             <VerticalStackLayout>
+                 <Image Source="{Binding Icon}"></Image>
+                 <HorizontalStackLayout>
+        <Label Text="Nom: "  Style="{StaticResource TextChampion}"></Label>
+        <Entry x:Name="NameEntry" Placeholder="{Binding Name}" Text="{Binding Name}" IsEnabled="False" Style="{StaticResource EditChampion}"></Entry>
+        
+                 </HorizontalStackLayout>
+                     <HorizontalStackLayout>
+        <Label Text="Bio: "></Label>
+             <Editor Text="{Binding Bio}" AutoSize="TextChanges" HeightRequest="200" Placeholder="{Binding Bio}" Style="{StaticResource EditorChampion}"/>
+             </HorizontalStackLayout>
+                 <Label 
+                    Text="Caractéristiques"
+                     Style="{StaticResource TitreChampion}"/>
+       
+                <Label 
+                    Text="Compétences"
+                    Style="{StaticResource TitreChampion}"/>
+                <Label 
+                    Text="Skins"
+                    Style="{StaticResource TitreChampion}"/>
+                 <HorizontalStackLayout>
+                     <Button x:Name="Status"></Button>
+                     <Button Text="Annuler"></Button>
+                 </HorizontalStackLayout>
+             </VerticalStackLayout>
+         </ScrollView>
+    </VerticalStackLayout>
+</ContentPage>

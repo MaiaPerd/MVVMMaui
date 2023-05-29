@@ -25,22 +25,12 @@ namespace ViewModel
         public ChampionManagerVM(IDataManager dataManager)
 		{
             DataManager = dataManager;
-            loadChampions(index, count);
             index = 1;
             count = 5;
             Champions = new ReadOnlyObservableCollection<ChampionVM>(champions);
+            LoadChampions(index, count);
             //mette la readonly new () pour champions
-           // PropertyChanged += ChampionManagerVM_PropertyChanged;
-		}
-
-        public ChampionManagerVM( )
-        {
-            loadChampions(index, count);
-            index = 1;
-            count = 5;
-            Champions = new ReadOnlyObservableCollection<ChampionVM>(champions);
-            //mette la readonly new () pour champions
-            // PropertyChanged += ChampionManagerVM_PropertyChanged;
+            // PropertyChanged += ChampionManagerVM.PropertyChanged;
         }
 
         public int Index
@@ -68,9 +58,10 @@ namespace ViewModel
         private int count;
 
 
-        public async Task loadChampions(int index, int count)
+        public async Task LoadChampions(int index, int count)
         {
-            foreach (var champion in await DataManager.ChampionsMgr.GetItems(index, count))
+            var a = await DataManager.ChampionsMgr.GetItems(index, count);
+            foreach (var champion in a)
             {//trie
                 champions.Add(new ChampionVM(champion));
             }

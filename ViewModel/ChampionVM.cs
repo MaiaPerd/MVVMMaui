@@ -2,6 +2,7 @@
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using System.Drawing;
 using Model;
 using MVVM;
 
@@ -31,8 +32,8 @@ namespace ViewModel
 
         public ChampionVM(Champion model)
 		{
-			Model = model;
-		}
+			this.model = model;
+        }
         // Jusque la
 
 		public string Name
@@ -56,7 +57,7 @@ namespace ViewModel
 				}
 			}
 		}
-
+        /*
         public string Icon
         {
             get => Model.Icon;
@@ -64,6 +65,43 @@ namespace ViewModel
             {
                 if (Model == null || Model.Icon == value) return;
                 Model.Icon = value;
+                OnPropertyChanged();
+                //OnPropertyChanged(nameof(Name)); Fais changer d'autre propriéter force le binding
+            }
+        }*/
+
+        public ImageSource Icon
+        {
+            get
+            {
+                return ImageSource.FromStream(() => new MemoryStream(Convert.FromBase64String(Model.Icon)));
+            }
+            set
+            {
+                //if (Model == null || Model.Icon == value) return;
+                //Model.Icon = value;
+                OnPropertyChanged();
+                //OnPropertyChanged(nameof(Name)); Fais changer d'autre propriéter force le binding
+            }
+        }
+
+
+        public ImageSource Image
+        {
+            get
+            {
+                return ImageSource.FromStream(() => new MemoryStream(Convert.FromBase64String(Model.Image.Base64)));
+            }
+        
+
+        //return Image.FromStream(new MemoryStream(Convert.FromBase64String(Model.Image.Base64)));
+        // return Convert.ToBase64String(System.IO.File.ReadAllBytes(Model.Image.Base64));
+    
+
+            set
+            {
+                //if (Model == null || Model.Image == value) return;
+                //Model.Image = value;
                 OnPropertyChanged();
                 //OnPropertyChanged(nameof(Name)); Fais changer d'autre propriéter force le binding
             }
@@ -85,6 +123,26 @@ namespace ViewModel
                 }
             }
         }
+
+        /*
+        private ObservableCollection<Dictionary<string, int>> characteristics;
+        public ReadOnlyObservableCollection<Dictionary<string, int>> Characteristics
+        {
+            get => Model.Characteristics;
+            set
+            {
+                if (Model == null)
+                {
+                    return;
+                }
+                if (Model.Characteristics != value)
+                {
+                    Model.Characteristics = value;
+                    OnPropertyChanged();
+                }
+            }
+        }*/
+
         /*
         public LargeImage Image
         {

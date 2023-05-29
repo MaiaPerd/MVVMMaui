@@ -6,10 +6,17 @@
     xmlns:local="clr-namespace:MVVMMaui"
     Shell.FlyoutBehavior="Disabled">
 
-    <ShellContent
-        Title="Home"
-        ContentTemplate="{DataTemplate local:MainPage}"
-        Route="MainPage" />
+   
+    <TabBar>
+        <ShellContent
+            Title="Home"
+            ContentTemplate="{DataTemplate local:Pages.HomePage}"
+           />
+        <ShellContent
+            Title="Champions"
+            ContentTemplate="{DataTemplate local:Pages.ChampionsListPage}"
+           />
 
+    </TabBar>
 </Shell>
 

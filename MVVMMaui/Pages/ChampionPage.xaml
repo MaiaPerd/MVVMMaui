@@ -1,0 +1,36 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MVVMMaui.Pages.ChampionPage"
+             xmlns:views="clr-namespace:MVVMaui.Views"
+             BackgroundColor="{StaticResource Gray950}"
+             Title="ChampionPage">
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Modifier" Clicked="ToolbarItem_Clicked"/>
+    </ContentPage.ToolbarItems>
+    <ScrollView>
+        <VerticalStackLayout >
+            <Image Source="{Binding Image}" HeightRequest="220"></Image>
+            <VerticalStackLayout Padding="10,5">
+                 <Label 
+                Text="{Binding Name}" 
+               Style="{StaticResource TitreChampion}"/>
+            <Label Text="{Binding Bio}" Style="{StaticResource TextChampion}"></Label>
+            <Label 
+                Text="Caractéristiques"
+               Style="{StaticResource TitreChampion}"/>
+       
+            <Label 
+                Text="Compétences"
+               Style="{StaticResource TitreChampion}"/>
+            <Label 
+                Text="Skins"
+               Style="{StaticResource TitreChampion}"/>
+
+            </VerticalStackLayout>
+       
+        </VerticalStackLayout>
+
+    </ScrollView>
+   
+</ContentPage>

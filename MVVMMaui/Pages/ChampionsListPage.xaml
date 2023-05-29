@@ -1,0 +1,40 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MVVMMaui.Pages.ChampionsListPage"
+             Title="Champions">
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Ajouter" Clicked="ToolbarItem_Clicked"/>
+    </ContentPage.ToolbarItems>
+    <VerticalStackLayout>
+       <!-- <SearchBar></SearchBar>-->
+        <ListView ItemsSource="{Binding}">
+
+            <ListView.ItemTemplate>
+            <DataTemplate>
+                <ImageCell ImageSource="{Binding Icon}"
+                           Text="{Binding Name}"
+                           Detail="{Binding Class}"
+                           Tapped="ImageCell_Tapped"
+                           CommandParameter="{Binding}">
+
+
+                </ImageCell>
+                <!--<TextCell
+                    Text="{Binding Name}"
+                    Detail="{Binding Class}"
+                    Tapped="TextCell_Tapped"
+                    CommandParameter="{Binding}">
+
+
+                </TextCell>-->
+            </DataTemplate>
+
+        </ListView.ItemTemplate>
+        </ListView>
+  
+
+    </VerticalStackLayout>
+    
+
+</ContentPage>
