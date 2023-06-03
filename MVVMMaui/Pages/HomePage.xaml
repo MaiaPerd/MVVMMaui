@@ -5,6 +5,7 @@
              Title="Home">
     <VerticalStackLayout   VerticalOptions="Center" 
             HorizontalOptions="Center" >
+        <Image Source="logolol.png" HeightRequest="150"></Image>
         <Label 
             Text="League of Legends Data"
              VerticalOptions="Center" 

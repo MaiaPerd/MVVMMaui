@@ -54,17 +54,24 @@
 	<ItemGroup>
 		<PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="7.0.0" />
 		<PackageReference Include="ParallelExtensionsExtras" Version="1.2.0" />
+		<PackageReference Include="Microsoft.Toolkit" Version="7.1.2" />
+		<PackageReference Include="CommunityToolkit.Maui" Version="5.2.0" />
 	</ItemGroup>
 
 	<ItemGroup>
 	  <None Remove="Pages\" />
 	  <None Remove="VM\" />
-	  <None Remove="View\" />
+	  <None Remove="Converter\" />
+	  <None Remove="Resources\Images\previous.svg" />
+	  <None Remove="Resources\Images\next.svg" />
+	  <None Remove="Resources\Images\logolol.png" />
+	  <None Remove="Views\" />
 	</ItemGroup>
 	<ItemGroup>
 	  <Folder Include="Pages\" />
 	  <Folder Include="VM\" />
-	  <Folder Include="View\" />
+	  <Folder Include="Converter\" />
+	  <Folder Include="Views\" />
 	</ItemGroup>
 	<ItemGroup>
 	  <ProjectReference Include="..\ViewModel\ViewModel.csproj" />

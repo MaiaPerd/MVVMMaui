@@ -10,7 +10,7 @@ public partial class ChampionsListPage : ContentPage
     {
         InitializeComponent();
 
-        BindingContext = championManagerVM.Champions;
+        BindingContext = championManagerVM;
     }
 
     void ImageCell_Tapped(System.Object sender, System.EventArgs e)

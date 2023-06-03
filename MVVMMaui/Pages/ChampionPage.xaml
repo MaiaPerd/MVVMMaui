@@ -2,30 +2,92 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="MVVMMaui.Pages.ChampionPage"
-             xmlns:views="clr-namespace:MVVMaui.Views"
+             xmlns:views="clr-namespace:MVVMMaui.Views"
+             xmlns:converter="clr-namespace:MVVMMaui" 
              BackgroundColor="{StaticResource Gray950}"
              Title="ChampionPage">
     <ContentPage.ToolbarItems>
         <ToolbarItem Text="Modifier" Clicked="ToolbarItem_Clicked"/>
     </ContentPage.ToolbarItems>
+    <ContentPage.Resources>
+        <converter:StringToImageConverter x:Key="StringToImage"/>
+    </ContentPage.Resources>
     <ScrollView>
         <VerticalStackLayout >
-            <Image Source="{Binding Image}" HeightRequest="220"></Image>
+            <Image Source="{Binding Image, Converter={StaticResource StringToImage}}" HeightRequest="220"></Image>
             <VerticalStackLayout Padding="10,5">
-                 <Label 
-                Text="{Binding Name}" 
-               Style="{StaticResource TitreChampion}"/>
+                <HorizontalStackLayout>
+                    <Label Text="{Binding Name}" Style="{StaticResource TitreChampion}" />
+                    <Label Text="{Binding Class}" Style="{StaticResource TextChampion}" VerticalTextAlignment="Center" Margin="130,0,0,0"/>
+                </HorizontalStackLayout>
             <Label Text="{Binding Bio}" Style="{StaticResource TextChampion}"></Label>
-            <Label 
-                Text="Caractéristiques"
-               Style="{StaticResource TitreChampion}"/>
-       
+            <Label Text="Caractéristiques" Style="{StaticResource TitreChampion}"/>
+                    <CollectionView ItemsSource="{Binding Characteristics}" SelectionMode="None" MaximumHeightRequest="220">
+                        <CollectionView.ItemsLayout>
+                             <GridItemsLayout Orientation="Vertical"
+                                                Span="3"
+                                                VerticalItemSpacing="10"
+                                                HorizontalItemSpacing="10" />
+                         </CollectionView.ItemsLayout>
+                        <CollectionView.ItemTemplate>
+                            <DataTemplate>
+                                <Border Style="{StaticResource Characteristics}"  >
+                                     <VerticalStackLayout HorizontalOptions="Center" VerticalOptions="Center" >
+                                        <Label Text="{Binding Key}" Style="{StaticResource TextCaracteristics}"></Label>
+                                        <Label Text="{Binding Value}" Style="{StaticResource TextCaracteristics}"></Label>
+                                    </VerticalStackLayout>
+
+                                </Border>
+                               
+                            </DataTemplate>
+                        </CollectionView.ItemTemplate>    
+                    </CollectionView>
+            <!--<views:CaracteristiquesView></views:CaracteristiquesView>-->
             <Label 
                 Text="Compétences"
                Style="{StaticResource TitreChampion}"/>
+
+                  <CollectionView ItemsSource="{Binding Skills}" SelectionMode="None" >
+                        <CollectionView.ItemsLayout>
+                             <LinearItemsLayout Orientation="Vertical"
+                                                ItemSpacing="10" />
+                         </CollectionView.ItemsLayout>
+                        <CollectionView.ItemTemplate>
+                            <DataTemplate>
+                                <VerticalStackLayout>
+                                     <HorizontalStackLayout>
+                                           <Label Text="{Binding Name}" Style="{StaticResource SousTitreChampion}" VerticalTextAlignment="Center"></Label>
+                                    
+                                        <Label Text="{Binding Type}" Style="{StaticResource TextChampion}" VerticalTextAlignment="Center" Margin="10,0"></Label>
+                                     </HorizontalStackLayout>
+                                     <Label Text="{Binding Description}" Style="{StaticResource TextChampion}" ></Label>                     
+                                </VerticalStackLayout>                  
+                            </DataTemplate>
+                        </CollectionView.ItemTemplate>    
+                    </CollectionView>
+
             <Label 
                 Text="Skins"
                Style="{StaticResource TitreChampion}"/>
+                 <CollectionView ItemsSource="{Binding Skins}" SelectionMode="None" MaximumHeightRequest="220">
+                        <CollectionView.ItemsLayout>
+                             <LinearItemsLayout Orientation="Vertical"
+                                                ItemSpacing="10"/>
+                         </CollectionView.ItemsLayout>
+                        <CollectionView.ItemTemplate>
+                            <DataTemplate>
+                            <Border Style="{StaticResource Skins}"  >
+                                    <HorizontalStackLayout>
+                                        <Image Source="{Binding Icon, Converter={StaticResource StringToImage}}" HeightRequest="40" Margin="10, 0"></Image>
+                                        <Label Text="{Binding Name}" Style="{StaticResource TextChampion}" VerticalTextAlignment="Center"></Label>
+                                    </HorizontalStackLayout>
+
+                                </Border>
+                               
+                                
+                            </DataTemplate>
+                        </CollectionView.ItemTemplate>    
+                    </CollectionView>
 
             </VerticalStackLayout>
        

@@ -4,15 +4,23 @@ using MVVM;
 
 namespace ViewModel
 {
-	public class SkinVM
+	public class SkinVM : BaseVM
 	{
-        private Skin Model { get; set; }
-
-        private ToolKit propertyChanged;
+        public Skin Model
+        {
+            get => model;
+            set
+            {
+                if (model.Equals(value)) return;
+                model = value;
+                OnPropertyChanged();
+            }
+        }
+        private Skin model;
 
         public SkinVM(Skin model)
         {
-            Model = model;
+            this.model = model;
         }
 
         public string Name
@@ -32,7 +40,7 @@ namespace ViewModel
                 if (Model.Description != value)
                 {
                     Model.Description = value;
-                    propertyChanged.OnPropertyChanged();
+                    OnPropertyChanged();
                 }
             }
         }
@@ -42,32 +50,20 @@ namespace ViewModel
             get => Model.Icon;
             set
             {
-                if (Model == null)
-                {
-                    return;
-                }
-                if (Model.Icon != value)
-                {
-                    Model.Icon = value;
-                    propertyChanged.OnPropertyChanged();
-                }
+                if (Model == null || Model.Icon == value) return;
+                Model.Icon = value;
+                OnPropertyChanged();
             }
         }
 
-        public LargeImage Image
+        public string Image
         {
-            get => Model.Image;
+            get => Model.Image.Base64;
             set
             {
-                if (Model == null)
-                {
-                    return;
-                }
-                if (Model.Image != value)
-                {
-                    Model.Image = value;
-                    propertyChanged.OnPropertyChanged();
-                }
+                if (Model == null || Model.Image.Base64 == value) return;
+                Model.Image.Base64 = value;
+                OnPropertyChanged();
             }
         }
 
@@ -83,7 +79,7 @@ namespace ViewModel
                 if (Model.Price != value)
                 {
                     Model.Price = value;
-                    propertyChanged.OnPropertyChanged();
+                    OnPropertyChanged();
                 }
             }
         }

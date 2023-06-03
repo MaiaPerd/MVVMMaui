@@ -1,42 +1,161 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" xmlns:converter="clr-namespace:MVVMMaui"
              x:Class="MVVMMaui.Pages.ChampionAddPage"
              BackgroundColor="{StaticResource Gray950}"
              Title="ChampionAddPage">
-     <VerticalStackLayout>
-         
-         <Label x:Name="Titre" HorizontalOptions="Center"
+    <ContentPage.Resources>
+        <converter:StringToImageConverter x:Key="StringToImage"/>
+    </ContentPage.Resources>
+    <FlexLayout Direction="Column">
+
+        <!-- Header -->
+          <VerticalStackLayout Grid.Row="0">
+                    <Label x:Name="Titre" HorizontalOptions="Center"
              Style="{StaticResource TitreChampion}"></Label>
          <Line BackgroundColor="{StaticResource Primary}"
-               Margin="40, 4"></Line>
-         <ScrollView>
-             <VerticalStackLayout>
-                 <Image Source="{Binding Icon}"></Image>
-                 <HorizontalStackLayout>
-        <Label Text="Nom: "  Style="{StaticResource TextChampion}"></Label>
-        <Entry x:Name="NameEntry" Placeholder="{Binding Name}" Text="{Binding Name}" IsEnabled="False" Style="{StaticResource EditChampion}"></Entry>
-        
+               ></Line>
+
+             </VerticalStackLayout>
+
+        <!-- Body -->
+        <FlexLayout FlexLayout.Grow="1">
+             <ScrollView >
+                 <Grid ColumnDefinitions="50, *" RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto">
+                       
+                    <Label Text="Nom: "
+                           Style="{StaticResource TextChampion}"
+                           VerticalOptions="Center"
+                           Grid.Column="0" Grid.Row="0"></Label>
+                    <Entry x:Name="NameEntry"
+                           Placeholder="{Binding Name}"
+                           Text="{Binding Name}"
+                           WidthRequest="300"
+                           IsEnabled="False"
+                           Style="{StaticResource EditChampion}"
+                           Grid.Column="1" Grid.Row="0"></Entry>
+             
+                    <Label Text="Icon: "
+                           Style="{StaticResource TextChampion}"
+                           VerticalOptions="Center"
+                           Grid.Column="0" Grid.Row="1"></Label>
+                    <Image Source="{Binding Icon, Converter={StaticResource StringToImage}}"
+                           Grid.Column="1" Grid.Row="1"></Image>
+
+                    <Label Text="Image: "
+                           Style="{StaticResource TextChampion}"
+                           VerticalOptions="Center"
+                           Grid.Column="0" Grid.Row="2"></Label>
+                    <Image Source="{Binding Image, Converter={StaticResource StringToImage}}"
+                           HeightRequest="100"
+                           Grid.Column="1" Grid.Row="2"></Image>
+
+                    <Label Text="Bio: "
+                           Style="{StaticResource TextChampion}"
+                           VerticalOptions="Center"         
+                           Grid.Column="0" Grid.Row="3"></Label>
+                    <Editor Text="{Binding Bio}"
+                            AutoSize="TextChanges"
+                            HeightRequest="200"
+                            WidthRequest="300"
+                            Placeholder="{Binding Bio}"
+                            Style="{StaticResource EditorChampion}"
+                            Grid.Column="1" Grid.Row="3"/>
+             
+                 <Label 
+                    Text="Classe: "
+                     Style="{StaticResource TextChampion}"
+                     VerticalOptions="Center"
+                     Grid.Column="0" Grid.Row="4"/>
+                 <Grid ColumnDefinitions="*,*,*" RowDefinitions="*,*" Grid.Column="1" Grid.Row="4">
+                    <Border Style="{StaticResource Classe}" Grid.Column="0" Grid.Row="0">
+                        <Label Text="Assassin" HorizontalTextAlignment="Center" VerticalTextAlignment="Center"/>
+                    </Border>
+                    <Border Style="{StaticResource Classe}" Grid.Column="1" Grid.Row="0">
+                        <Label Text="Fighter" HorizontalTextAlignment="Center" VerticalTextAlignment="Center"/>
+                    </Border>
+                    <Border Style="{StaticResource Classe}" Grid.Column="2" Grid.Row="0">
+                        <Label Text="Mage" HorizontalTextAlignment="Center" VerticalTextAlignment="Center"/>
+                    </Border>
+                    <Border Style="{StaticResource Classe}" Grid.Column="0" Grid.Row="1">
+                        <Label Text="Marksman" HorizontalTextAlignment="Center" VerticalTextAlignment="Center"/>
+                    </Border>
+                    <Border Style="{StaticResource Classe}" Grid.Column="1" Grid.Row="1">
+                        <Label Text="Support" HorizontalTextAlignment="Center" VerticalTextAlignment="Center"/>
+                    </Border>
+                    <Border Style="{StaticResource Classe}" Grid.Column="2" Grid.Row="1">
+                        <Label Text="Tank" HorizontalTextAlignment="Center" VerticalTextAlignment="Center"/>
+                    </Border>
+
+                 </Grid>
+                <Label 
+                    Text="Caractéristiques: "
+                    Style="{StaticResource TextChampion}"
+                    VerticalOptions="Center"
+                    Grid.Column="0" Grid.Row="5"/>
+              
+
+                 </Grid>
+          
+        </ScrollView>
+           
+
+        </FlexLayout>
+
+        <!-- Footer -->
+      <HorizontalStackLayout Padding="5" HorizontalOptions="Center">
+                     <Button x:Name="Status" Margin="10, 5"></Button>
+                     <Button Text="Annuler" Margin="10, 5"></Button>
                  </HorizontalStackLayout>
-                     <HorizontalStackLayout>
-        <Label Text="Bio: "></Label>
-             <Editor Text="{Binding Bio}" AutoSize="TextChanges" HeightRequest="200" Placeholder="{Binding Bio}" Style="{StaticResource EditorChampion}"/>
-             </HorizontalStackLayout>
+    </FlexLayout>
+    <!--
+         <Grid Margin="10"
+          RowDefinitions="Auto,*, Auto">
+             <VerticalStackLayout Grid.Row="0">
+                    <Label x:Name="Titre" HorizontalOptions="Center"
+             Style="{StaticResource TitreChampion}"></Label>
+         <Line BackgroundColor="{StaticResource Primary}"
+               ></Line>
+
+             </VerticalStackLayout>
+      
+        <ScrollView Grid.Row="1"
+                    VerticalOptions="FillAndExpand">
+            <VerticalStackLayout>
+                 <HorizontalStackLayout Padding="10" VerticalOptions="Center">
+                    <Label Text="Nom: "  Style="{StaticResource TextChampion}"></Label>
+                    <Entry x:Name="NameEntry" Placeholder="{Binding Name}" Text="{Binding Name}" IsEnabled="False" Style="{StaticResource EditChampion}"></Entry>
+                 </HorizontalStackLayout>
+                 <HorizontalStackLayout Padding="10" VerticalOptions="Center">
+                    <Label Text="Icon: "  Style="{StaticResource TextChampion}"></Label>
+                    <Image Source="{Binding Icon}"></Image>
+                 </HorizontalStackLayout>
+                 <HorizontalStackLayout Padding="10" VerticalOptions="Center">
+                    <Label Text="Image: "  Style="{StaticResource TextChampion}"></Label>
+                    <Image Source="{Binding Image}" HeightRequest="100"></Image>
+                 </HorizontalStackLayout>
+                 <HorizontalStackLayout Padding="10" VerticalOptions="Center">
+                    <Label Text="Bio: "  Style="{StaticResource TextChampion}"></Label>
+                    <Editor Text="{Binding Bio}" AutoSize="TextChanges" HeightRequest="200" WidthRequest="300" Placeholder="{Binding Bio}" Style="{StaticResource EditorChampion}"/>
+                 </HorizontalStackLayout>
                  <Label 
                     Text="Caractéristiques"
                      Style="{StaticResource TitreChampion}"/>
-       
                 <Label 
                     Text="Compétences"
                     Style="{StaticResource TitreChampion}"/>
                 <Label 
                     Text="Skins"
                     Style="{StaticResource TitreChampion}"/>
-                 <HorizontalStackLayout>
-                     <Button x:Name="Status"></Button>
-                     <Button Text="Annuler"></Button>
-                 </HorizontalStackLayout>
+               
              </VerticalStackLayout>
-         </ScrollView>
-    </VerticalStackLayout>
+        </ScrollView>
+     
+               <HorizontalStackLayout Padding="10" Grid.Row="2">
+                     <Button x:Name="Status" Padding="10"></Button>
+                     <Button Text="Annuler" Padding="10"></Button>
+                 </HorizontalStackLayout>
+    </Grid>-->
+       
+         
 </ContentPage>

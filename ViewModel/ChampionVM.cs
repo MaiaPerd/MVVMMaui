@@ -5,19 +5,13 @@ using System.Runtime.CompilerServices;
 using System.Drawing;
 using Model;
 using MVVM;
+using System.Linq;
 
 namespace ViewModel
 {
-	public class ChampionVM : INotifyPropertyChanged
+	public class ChampionVM : BaseVM
     {
-        //Faire une classe génerique avec ça
-        public event PropertyChangedEventHandler? PropertyChanged;
-
-        private void OnPropertyChanged([CallerMemberName] string name = null)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
-        }
-
+        // Faire une classe génerique avec ça
         public Champion Model
         {
             get => model;
@@ -33,10 +27,16 @@ namespace ViewModel
         public ChampionVM(Champion model)
 		{
 			this.model = model;
+            Characteristics = new ReadOnlyObservableCollection<KeyValuePair<string, int>>(characteristics);
+            loadCaracteristique();
+            Skins = new ReadOnlyObservableCollection<SkinVM>(skins);
+            loadSkins();
+            Skills = new ReadOnlyObservableCollection<SkillVM>(skills);
+            loadSkills();
         }
         // Jusque la
 
-		public string Name
+        public string Name
 		{
 			get => Model.Name;
 		}
@@ -57,7 +57,7 @@ namespace ViewModel
 				}
 			}
 		}
-        /*
+        
         public string Icon
         {
             get => Model.Icon;
@@ -68,9 +68,9 @@ namespace ViewModel
                 OnPropertyChanged();
                 //OnPropertyChanged(nameof(Name)); Fais changer d'autre propriéter force le binding
             }
-        }*/
+        }
 
-        public ImageSource Icon
+     /*   public ImageSource Icon
         {
             get
             {
@@ -83,15 +83,15 @@ namespace ViewModel
                 OnPropertyChanged();
                 //OnPropertyChanged(nameof(Name)); Fais changer d'autre propriéter force le binding
             }
-        }
+        }*/
 
 
-        public ImageSource Image
+        public string Image
         {
-            get
-            {
+            get => Model.Image.Base64;
+          /*  {
                 return ImageSource.FromStream(() => new MemoryStream(Convert.FromBase64String(Model.Image.Base64)));
-            }
+            }*/
         
 
         //return Image.FromStream(new MemoryStream(Convert.FromBase64String(Model.Image.Base64)));
@@ -100,8 +100,8 @@ namespace ViewModel
 
             set
             {
-                //if (Model == null || Model.Image == value) return;
-                //Model.Image = value;
+                if (Model == null || Model.Image.Base64 == value) return;
+                Model.Image.Base64 = value;
                 OnPropertyChanged();
                 //OnPropertyChanged(nameof(Name)); Fais changer d'autre propriéter force le binding
             }
@@ -109,7 +109,11 @@ namespace ViewModel
 
         public ChampionClass Class//En théorie il ne faudrait pas utiliser l'enum du model
         {
-            get => Model.Class;
+            get
+            {
+               // if(Model.Class == ChampionClassVM.Tank)
+               return Model.Class;
+            }
             set
             {
                 if (Model == null)
@@ -125,10 +129,18 @@ namespace ViewModel
         }
 
         /*
-        private ObservableCollection<Dictionary<string, int>> characteristics;
-        public ReadOnlyObservableCollection<Dictionary<string, int>> Characteristics
+        private ObservableCollection<KeyValuePair<string, int>> characteristics;
+        public ReadOnlyObservableCollection<KeyValuePair<string, int>> Characteristics
         {
-            get => Model.Characteristics;
+            get
+            {
+                
+                foreach(var a in Model.Characteristics)
+                {
+
+                }
+                return Model.Characteristics;
+            }
             set
             {
                 if (Model == null)
@@ -142,6 +154,45 @@ namespace ViewModel
                 }
             }
         }*/
+
+        public ReadOnlyObservableCollection<KeyValuePair<string, int>> Characteristics { get; private set; }
+
+        private ObservableCollection<KeyValuePair<string, int>> characteristics = new ObservableCollection<KeyValuePair<string, int>>();
+
+        private void loadCaracteristique()
+        {
+            foreach (var charact in Model.Characteristics)
+            {
+                characteristics.Add(charact);
+            }
+        }
+
+        public ReadOnlyObservableCollection<SkinVM> Skins { get; private set; }
+
+        private ObservableCollection<SkinVM> skins = new ObservableCollection<SkinVM>();
+
+        private void loadSkins()
+        {
+            foreach (var skin in Model.Skins)
+            {
+                skins.Add(new SkinVM(skin));
+            }
+            // A trier dans l'ordre alphabétique
+        }
+
+        public ReadOnlyObservableCollection<SkillVM> Skills { get; private set; }
+
+        private ObservableCollection<SkillVM> skills = new ObservableCollection<SkillVM>();
+
+        private void loadSkills()
+        {
+            foreach (var skill in Model.Skills)
+            {
+                skills.Add(new SkillVM(skill));
+            }
+        }
+
+
 
         /*
         public LargeImage Image
