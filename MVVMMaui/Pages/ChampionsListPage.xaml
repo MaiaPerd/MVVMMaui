@@ -12,16 +12,55 @@
     </ContentPage.Resources>
     <VerticalStackLayout>
        <!-- <SearchBar></SearchBar>-->
+
+         <ListView ItemsSource="{Binding Champions}" SelectionMode="None">
+
+            <ListView.ItemTemplate>
+            <DataTemplate>
+                <ViewCell>
+
+                     <SwipeView >
+                         <SwipeView.GestureRecognizers>
+                               <TapGestureRecognizer Tapped="Cell_Tapped"
+                           CommandParameter="{Binding}"
+                              NumberOfTapsRequired="1" />
+
+                         </SwipeView.GestureRecognizers>
+                    <SwipeView.RightItems>
+                        <SwipeItems>
+                            <SwipeItem Text="Suprrimer"
+                                       BackgroundColor="Red"/>
+                            <SwipeItem Text="Modifier"
+                                       BackgroundColor="Gray"/>
+                        </SwipeItems>
+                    </SwipeView.RightItems>
+  
+                    <HorizontalStackLayout>
+                        <Image Source="{Binding Icon, Converter={StaticResource StringToImage}}" HeightRequest="35" Margin="5,5"></Image>
+                        <VerticalStackLayout VerticalOptions="Center">
+                             <Label Text="{Binding Name}" FontSize="Medium"></Label>
+                             <Label Text="{Binding Class}" FontSize="Small" ></Label>
+                        </VerticalStackLayout>
+                    </HorizontalStackLayout>
+                </SwipeView>
+                </ViewCell>
+               
+            </DataTemplate>
+
+        </ListView.ItemTemplate>
+        </ListView>
         <ListView ItemsSource="{Binding Champions}">
 
             <ListView.ItemTemplate>
             <DataTemplate>
+
                 <ImageCell ImageSource="{Binding Icon, Converter={StaticResource StringToImage}}"
                            Text="{Binding Name}"
                            Detail="{Binding Class}"
                            Tapped="ImageCell_Tapped"
                            CommandParameter="{Binding}">
-                          <!--Tapped="ImageCell_Tapped" voir la commande--> 
+                          <!--Command="{Binding NavigationVM.NavigationChampionPageCommand}"
+                            voir la commande--> 
 
                 </ImageCell>
                 <!--<TextCell

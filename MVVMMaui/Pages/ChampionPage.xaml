@@ -47,7 +47,7 @@
                 Text="Compétences"
                Style="{StaticResource TitreChampion}"/>
 
-                  <CollectionView ItemsSource="{Binding Skills}" SelectionMode="None" >
+                  <CollectionView ItemsSource="{Binding Skills}" SelectionMode="None"  MaximumHeightRequest="600">
                         <CollectionView.ItemsLayout>
                              <LinearItemsLayout Orientation="Vertical"
                                                 ItemSpacing="10" />

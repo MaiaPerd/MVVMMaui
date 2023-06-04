@@ -5,18 +5,12 @@ using System.Runtime.CompilerServices;
 using System.Collections.ObjectModel;
 using System.Reflection;
 using System.Windows.Input;
+using MVVM;
 
 namespace ViewModel
 {
-	public class ChampionManagerVM
+	public class ChampionManagerVM : BaseVM
 	{
-        public event PropertyChangedEventHandler? PropertyChanged;
-
-        private void OnPropertyChanged([CallerMemberName] string name = null)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
-        }
-
         public ReadOnlyObservableCollection<ChampionVM> Champions { get; private set; }
    
         private ObservableCollection<ChampionVM> champions = new ObservableCollection<ChampionVM>();
@@ -31,6 +25,8 @@ namespace ViewModel
             GetNbChampions();
             Champions = new ReadOnlyObservableCollection<ChampionVM>(champions);
             LoadChampions(index, count);
+            ChampionsClass = new ReadOnlyObservableCollection<ChampionClassVM>(championsClass);
+            LoadChampionsClass();
 
             PropertyChanged += ChampionManagerVM_PropertyChanged;
             NextPageCommand = new Command(execute: () =>
@@ -48,7 +44,35 @@ namespace ViewModel
             {
                 return Index - 1 >= 1;
             });
+
+            SaveChampionCommand = new Command(execute: (championVM) =>
+            {
+                var old = champions.Where((champion) => champion.Model.Equals(((ChampionVM)championVM).Model));
+                if(old.Count() == 0)
+                {
+                    dataManager.ChampionsMgr.AddItem(((ChampionVM)championVM).Model);
+                }
+                else
+                {
+                    dataManager.ChampionsMgr.UpdateItem(((ChampionVM)old.First()).Model, ((ChampionVM)championVM).Model);
+                }
+                
+            });
         }
+
+        public ReadOnlyObservableCollection<ChampionClassVM> ChampionsClass { get; private set; }
+
+        private ObservableCollection<ChampionClassVM> championsClass = new ObservableCollection<ChampionClassVM>();
+
+        private void LoadChampionsClass()
+        {
+            foreach (ChampionClassVM champion in Enum.GetValues(typeof(ChampionClassVM)))
+            {
+                championsClass.Add(champion);
+            }
+            
+        }
+
 
         private void ChampionManagerVM_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {
@@ -120,6 +144,9 @@ namespace ViewModel
 
         public ICommand NextPageCommand { get; set; }
         public ICommand PreviousPageCommand { get; set; }
+
+        public ICommand SaveChampionCommand { get; set; }
+
     }
 }
 

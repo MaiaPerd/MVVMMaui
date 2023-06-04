@@ -28,11 +28,19 @@ namespace ViewModel
 		{
 			this.model = model;
             Characteristics = new ReadOnlyObservableCollection<KeyValuePair<string, int>>(characteristics);
-            loadCaracteristique();
+            LoadCaracteristique();
             Skins = new ReadOnlyObservableCollection<SkinVM>(skins);
-            loadSkins();
+            LoadSkins();
             Skills = new ReadOnlyObservableCollection<SkillVM>(skills);
-            loadSkills();
+            LoadSkills();
+        }
+
+        public ChampionVM()
+        {
+            this.model = new Champion(name: "Nouveau");
+            Characteristics = new ReadOnlyObservableCollection<KeyValuePair<string, int>>(characteristics);
+            Skins = new ReadOnlyObservableCollection<SkinVM>(skins);
+            Skills = new ReadOnlyObservableCollection<SkillVM>(skills);
         }
         // Jusque la
 
@@ -159,7 +167,7 @@ namespace ViewModel
 
         private ObservableCollection<KeyValuePair<string, int>> characteristics = new ObservableCollection<KeyValuePair<string, int>>();
 
-        private void loadCaracteristique()
+        private void LoadCaracteristique()
         {
             foreach (var charact in Model.Characteristics)
             {
@@ -171,7 +179,7 @@ namespace ViewModel
 
         private ObservableCollection<SkinVM> skins = new ObservableCollection<SkinVM>();
 
-        private void loadSkins()
+        private void LoadSkins()
         {
             foreach (var skin in Model.Skins)
             {
@@ -184,7 +192,7 @@ namespace ViewModel
 
         private ObservableCollection<SkillVM> skills = new ObservableCollection<SkillVM>();
 
-        private void loadSkills()
+        private void LoadSkills()
         {
             foreach (var skill in Model.Skills)
             {

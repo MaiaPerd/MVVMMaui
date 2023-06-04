@@ -4,7 +4,9 @@ namespace MVVMMaui.Pages;
 
 public partial class ChampionPage : ContentPage
 {
-	public ChampionPage(ChampionVM championVM)
+    readonly ChampionManagerVM championManagerVM = (Application.Current as App).championVM;
+
+    public ChampionPage(ChampionVM championVM)
 	{
 		InitializeComponent();
         BindingContext = championVM;

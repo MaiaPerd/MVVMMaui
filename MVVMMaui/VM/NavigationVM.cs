@@ -1,25 +1,39 @@
 ﻿using System;
+using System.ComponentModel;
 using System.Windows.Input;
 using Microsoft.Maui.Controls;
+using MVVM;
 using MVVMMaui.Pages;
 using ViewModel;
 
 namespace MVVMMaui.VM
 {
-	public class NavigationVM
-	{
+	public class NavigationVM : BaseVM
+    {
 
-		public ICommand NavigationCommand { get; private set; }
+		public ICommand NavigationChampionPageCommand { get; private set; }
+
+
 		public NavigationVM()
 		{
-			NavigationCommand = new Command<ChampionVM>(push);
-		}
+            //NavigationChampionPageCommand = new Command<ChampionVM>(push);
+            NavigationChampionPageCommand = new Command<ChampionVM>(
+                execute: (ChampionVM champion) =>
+                {
+                   // Shell.Current.Navigation.PushAsync(new ChampionPage(champion));
+                }
+                );
+        }
 
+    
+
+
+		/*
 		private void push(ChampionVM champion)
         {
 			Shell.Current.Navigation.PushAsync(new ChampionPage(champion));
 
-        }
+        }*/
 		
 	}
 }

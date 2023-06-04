@@ -1,4 +1,5 @@
-﻿using ViewModel;
+﻿using MVVMMaui.VM;
+using ViewModel;
 
 namespace MVVMMaui.Pages;
 
@@ -9,7 +10,6 @@ public partial class ChampionsListPage : ContentPage
     public ChampionsListPage()
     {
         InitializeComponent();
-
         BindingContext = championManagerVM;
     }
 
@@ -17,6 +17,13 @@ public partial class ChampionsListPage : ContentPage
     {
         var imageCell = (ImageCell)sender;
         Navigation.PushAsync(new ChampionPage((ChampionVM) imageCell.CommandParameter));
+    }
+
+    void Cell_Tapped(System.Object sender, System.EventArgs e)
+    {
+        var swipeView = (SwipeView)sender;
+        var gesture = (TapGestureRecognizer)swipeView.GestureRecognizers[0];
+        Navigation.PushAsync(new ChampionPage((ChampionVM)gesture.CommandParameter));
     }
 
     void TextCell_Tapped(System.Object sender, System.EventArgs e)

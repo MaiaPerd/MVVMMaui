@@ -11,7 +11,7 @@
 
         <!-- Header -->
           <VerticalStackLayout Grid.Row="0">
-                    <Label x:Name="Titre" HorizontalOptions="Center"
+                    <Label Text="{Binding Titre}" HorizontalOptions="Center"
              Style="{StaticResource TitreChampion}"></Label>
          <Line BackgroundColor="{StaticResource Primary}"
                ></Line>
@@ -21,17 +21,17 @@
         <!-- Body -->
         <FlexLayout FlexLayout.Grow="1">
              <ScrollView >
-                 <Grid ColumnDefinitions="50, *" RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto">
+                 <Grid ColumnDefinitions="50, *" RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto" BindingContext="{Binding ChampionEdit}">
                        
                     <Label Text="Nom: "
                            Style="{StaticResource TextChampion}"
                            VerticalOptions="Center"
                            Grid.Column="0" Grid.Row="0"></Label>
-                    <Entry x:Name="NameEntry"
+                    <Entry
                            Placeholder="{Binding Name}"
                            Text="{Binding Name}"
                            WidthRequest="300"
-                           IsEnabled="False"
+                           IsEnabled="{Binding Edit}"
                            Style="{StaticResource EditChampion}"
                            Grid.Column="1" Grid.Row="0"></Entry>
              
@@ -88,6 +88,19 @@
                     </Border>
 
                  </Grid>
+                 <!--<CollectionView x:Name="Class" ItemsSource="{Binding championManagerVM}">
+                        <CollectionView.ItemsLayout>
+                             <LinearItemsLayout Orientation="Vertical"
+                                                ItemSpacing="10" />
+                         </CollectionView.ItemsLayout>
+                        <CollectionView.ItemTemplate>
+                            <DataTemplate>
+                                 <Border Style="{StaticResource Classe}" Grid.Column="2" Grid.Row="1">
+                                        <Label Text="{Binding}" HorizontalTextAlignment="Center" VerticalTextAlignment="Center"/>
+                                    </Border>                 
+                            </DataTemplate>
+                        </CollectionView.ItemTemplate>    
+                </CollectionView>-->
                 <Label 
                     Text="Caractéristiques: "
                     Style="{StaticResource TextChampion}"
@@ -104,8 +117,8 @@
 
         <!-- Footer -->
       <HorizontalStackLayout Padding="5" HorizontalOptions="Center">
-                     <Button x:Name="Status" Margin="10, 5"></Button>
-                     <Button Text="Annuler" Margin="10, 5"></Button>
+                     <Button Text="{Binding Status}" Margin="10, 5"  Command="{Binding ChampionManagerVM.SaveChampionCommand}" CommandParameter="{Binding ChampionEdit}"></Button>
+                     <Button Text="Annuler" Margin="10, 5" Clicked="Button_Clicked"></Button>
                  </HorizontalStackLayout>
     </FlexLayout>
     <!--
