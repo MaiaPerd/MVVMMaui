@@ -58,6 +58,11 @@ namespace ViewModel
                 }
                 
             });
+
+            DeleteChampionCommand = new Command(execute: (championVM) =>
+            {
+                dataManager.ChampionsMgr.DeleteItem(((ChampionVM)championVM).Model);
+            });
         }
 
         public ReadOnlyObservableCollection<ChampionClassVM> ChampionsClass { get; private set; }
@@ -144,7 +149,8 @@ namespace ViewModel
 
         public ICommand NextPageCommand { get; set; }
         public ICommand PreviousPageCommand { get; set; }
-
+        
+        public ICommand DeleteChampionCommand { get; set; }
         public ICommand SaveChampionCommand { get; set; }
 
     }

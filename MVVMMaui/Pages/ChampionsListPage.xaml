@@ -29,8 +29,10 @@
                     <SwipeView.RightItems>
                         <SwipeItems>
                             <SwipeItem Text="Suprrimer"
+                                       Command="{Binding DeleteChampionCommand}"
                                        BackgroundColor="Red"/>
                             <SwipeItem Text="Modifier"
+                                      
                                        BackgroundColor="Gray"/>
                         </SwipeItems>
                     </SwipeView.RightItems>
