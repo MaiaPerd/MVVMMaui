@@ -46,6 +46,10 @@
 		<!-- Images -->
 		<MauiImage Include="Resources\Images\*" />
 		<MauiImage Update="Resources\Images\dotnet_bot.svg" BaseSize="168,208" />
+		<MauiImage Update="Resources\Images\logo.svg" BaseSize="25,25" />
+		<MauiImage Update="Resources\Images\epee.png" BaseSize="25,25" />
+		<MauiImage Update="Resources\Images\next.svg" BaseSize="15,15" />
+		<MauiImage Update="Resources\Images\previous.svg" BaseSize="15,15" />
 
 		<!-- Custom Fonts -->
 		<MauiFont Include="Resources\Fonts\*" />
@@ -69,6 +73,14 @@
 	  <None Remove="Resources\Images\next.svg" />
 	  <None Remove="Resources\Images\logolol.png" />
 	  <None Remove="Views\" />
+	  <None Remove="Resources\Images\logo.svg" />
+	  <None Remove="Resources\Images\assassin.png" />
+	  <None Remove="Resources\Images\fighter.png" />
+	  <None Remove="Resources\Images\mage.png" />
+	  <None Remove="Resources\Images\marksman.png" />
+	  <None Remove="Resources\Images\support.png" />
+	  <None Remove="Resources\Images\tank.png" />
+	  <None Remove="Resources\Images\epee.png" />
 	</ItemGroup>
 	<ItemGroup>
 	  <Folder Include="Pages\" />
@@ -79,5 +91,9 @@
 	<ItemGroup>
 	  <ProjectReference Include="..\ViewModel\ViewModel.csproj" />
 	  <ProjectReference Include="..\..\MVVM_custom_LoL\Sources\StubLib\StubLib.csproj" />
+	</ItemGroup>
+	<ItemGroup>
+	  <BundleResource Include="Resources\Images\marksman.png" />
+	  <BundleResource Include="Resources\Images\support.png" />
 	</ItemGroup>
 </Project>

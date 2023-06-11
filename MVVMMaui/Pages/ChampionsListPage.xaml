@@ -1,6 +1,9 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" xmlns:converter="clr-namespace:MVVMMaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:converter="clr-namespace:MVVMMaui"
+             xmlns:view="clr-namespace:MVVMMaui.Views"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
              x:Class="MVVMMaui.Pages.ChampionsListPage"
              Title="Champions">
 
@@ -9,84 +12,78 @@
     </ContentPage.ToolbarItems>
     <ContentPage.Resources>
         <converter:StringToImageConverter x:Key="StringToImage"/>
+        <toolkit:ItemTappedEventArgsConverter x:Key="ItemTappedEventArgsConverter" />
     </ContentPage.Resources>
-    <VerticalStackLayout>
-       <!-- <SearchBar></SearchBar>-->
-
-         <ListView ItemsSource="{Binding Champions}" SelectionMode="None">
-
+    <Grid RowDefinitions="*,Auto">
+         <ListView ItemsSource="{Binding ChampionManagerVM.Champions}"
+                   SelectedItem="{Binding ItemSelected}"
+                   Grid.Row="0">
+            <ListView.Behaviors>
+                <toolkit:EventToCommandBehavior EventName="ItemTapped"
+                                                Command="{Binding ItemTappedCommand}"
+                                                EventArgsConverter="{StaticResource ItemTappedEventArgsConverter}" />
+            </ListView.Behaviors>
             <ListView.ItemTemplate>
-            <DataTemplate>
-                <ViewCell>
+                <DataTemplate>
+                    <ViewCell>
+                        <SwipeView>
+                         <SwipeView.Behaviors>
 
-                     <SwipeView >
-                         <SwipeView.GestureRecognizers>
-                               <TapGestureRecognizer Tapped="Cell_Tapped"
-                           CommandParameter="{Binding}"
-                              NumberOfTapsRequired="1" />
 
-                         </SwipeView.GestureRecognizers>
-                    <SwipeView.RightItems>
-                        <SwipeItems>
-                            <SwipeItem Text="Suprrimer"
-                                       Command="{Binding DeleteChampionCommand}"
-                                       BackgroundColor="Red"/>
-                            <SwipeItem Text="Modifier"
-                                      
-                                       BackgroundColor="Gray"/>
-                        </SwipeItems>
-                    </SwipeView.RightItems>
-  
-                    <HorizontalStackLayout>
-                        <Image Source="{Binding Icon, Converter={StaticResource StringToImage}}" HeightRequest="35" Margin="5,5"></Image>
-                        <VerticalStackLayout VerticalOptions="Center">
-                             <Label Text="{Binding Name}" FontSize="Medium"></Label>
-                             <Label Text="{Binding Class}" FontSize="Small" ></Label>
-                        </VerticalStackLayout>
-                    </HorizontalStackLayout>
-                </SwipeView>
-                </ViewCell>
-               
-            </DataTemplate>
+                         </SwipeView.Behaviors>
+                            <SwipeView.RightItems>
+                                <SwipeItems>
+                                    <SwipeItemView Command="{Binding DeleteChampionCommand}"
+                                               CommandParameter="{Binding}">
+                                  
+                                        <Label Text="Suprimer"
+                                               FontAttributes="Bold"
+                                               HorizontalOptions="Center" BackgroundColor="Red"/>
+                                 
+                                </SwipeItemView>
+                                 
+                                              <SwipeItemView  >
+                           <!--<SwipeItemView.Behaviors>
+                <toolkit:EventToCommandBehavior EventName="Invoked"
+                                                Command="{Binding UpdateChampionCommand}"
+                                                EventArgsConverter="{StaticResource ItemTappedEventArgsConverter}" />
+            </SwipeItemView.Behaviors>-->
+                                        <Label Text="Modifier"
+                                               FontAttributes="Bold"
+                                               HorizontalOptions="Center" BackgroundColor="Gray"/>
+                                
+                                </SwipeItemView>
 
-        </ListView.ItemTemplate>
+
+                                    <!--<SwipeItem Text="Modifier"
+                                               Command="{Binding UpdateChampionCommand}"
+                                              BackgroundColor="Green"  />-->
+                                </SwipeItems>
+                                
+                            </SwipeView.RightItems>
+                            <HorizontalStackLayout>
+                                <Image Source="{Binding Icon, Converter={StaticResource StringToImage}}" HeightRequest="40" WidthRequest="40" Margin="5,5"></Image>
+                                <VerticalStackLayout VerticalOptions="Center">
+                                     <Label Text="{Binding Name}" FontSize="Medium"></Label>
+                                     <Label Text="{Binding Class}" FontSize="Small" ></Label>
+                                </VerticalStackLayout>
+                            </HorizontalStackLayout>
+                        </SwipeView>
+                    </ViewCell>              
+                </DataTemplate>
+            </ListView.ItemTemplate>
         </ListView>
-        <ListView ItemsSource="{Binding Champions}">
 
-            <ListView.ItemTemplate>
-            <DataTemplate>
-
-                <ImageCell ImageSource="{Binding Icon, Converter={StaticResource StringToImage}}"
-                           Text="{Binding Name}"
-                           Detail="{Binding Class}"
-                           Tapped="ImageCell_Tapped"
-                           CommandParameter="{Binding}">
-                          <!--Command="{Binding NavigationVM.NavigationChampionPageCommand}"
-                            voir la commande--> 
-
-                </ImageCell>
-                <!--<TextCell
-                    Text="{Binding Name}"
-                    Detail="{Binding Class}"
-                    Tapped="TextCell_Tapped"
-                    CommandParameter="{Binding}">
-
-
-                </TextCell>-->
-            </DataTemplate>
-
-        </ListView.ItemTemplate>
-        </ListView>
-        <HorizontalStackLayout HorizontalOptions="Center" >
-            <ImageButton Source="previous.png" Style="{StaticResource Pagination}"  Command="{Binding PreviousPageCommand}" Margin="20, 10"></ImageButton>
-            <Label Text="{Binding Index}" Margin="0, 10"></Label>
-            <Label Text="/" Margin="0, 10"></Label>
-            <Label Text="{Binding IndexMax}" Margin="0, 10"></Label>
-            <ImageButton Source="next.png" Style="{StaticResource Pagination}" Command="{Binding NextPageCommand}" Margin="30, 10"></ImageButton>
+        <HorizontalStackLayout HorizontalOptions="Center" Grid.Row="1">
+            <ImageButton Source="previous.png" Style="{StaticResource Pagination}"  Command="{Binding ChampionManagerVM.PreviousPageCommand}" Margin="20, 10"></ImageButton>
+            <Label Text="{Binding ChampionManagerVM.Index}" Margin="0, 10" VerticalTextAlignment="Center"></Label>
+            <Label Text="/" Margin="0, 10" VerticalTextAlignment="Center"></Label>
+            <Label Text="{Binding ChampionManagerVM.IndexMax}" Margin="0, 10" VerticalTextAlignment="Center"></Label>
+            <ImageButton Source="next.png" Style="{StaticResource Pagination}" Command="{Binding ChampionManagerVM.NextPageCommand}" Margin="20, 10"></ImageButton>
         </HorizontalStackLayout>
         
 
-    </VerticalStackLayout>
+    </Grid>
     
 
 </ContentPage>

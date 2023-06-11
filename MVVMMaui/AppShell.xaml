@@ -11,10 +11,12 @@
         <ShellContent
             Title="Home"
             ContentTemplate="{DataTemplate local:Pages.HomePage}"
+            Icon="logo.png"
            />
         <ShellContent
             Title="Champions"
             ContentTemplate="{DataTemplate local:Pages.ChampionsListPage}"
+            Icon="epee.png"
            />
 
     </TabBar>

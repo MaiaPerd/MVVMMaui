@@ -2,17 +2,17 @@
 using System.Windows.Input;
 using MVVM;
 using ViewModel;
-
+//x:DataType="viewmodel:ChampionVM"
 namespace MVVMMaui.VM
 {
 	public class UpdateChampionVM : BaseVM
     {
-        ChampionVM championEdit;
+        ChampionVM championEditCopie;
 
-        public ChampionVM ChampionEdit
+        public ChampionVM ChampionEditCopie
         {
-            set { SetProperty(ref championEdit, value); }
-            get { return championEdit; }
+            set { SetProperty(ref championEditCopie, value); }
+            get { return championEditCopie; }
         }
 
         public ChampionManagerVM ChampionManagerVM
@@ -23,8 +23,9 @@ namespace MVVMMaui.VM
 
         public UpdateChampionVM(ChampionManagerVM championManagerVM, ChampionVM champion)
         {
-            this.championEdit = new ChampionVM(champion.Model);
+            this.championEditCopie = new ChampionVM(champion);
             this.championManagerVM = championManagerVM;
+          
         }
 
         public string Titre

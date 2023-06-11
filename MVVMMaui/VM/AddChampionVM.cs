@@ -24,6 +24,8 @@ namespace MVVMMaui.VM
         public AddChampionVM(ChampionManagerVM championManagerVM)
 		{
             this.championEdit = new ChampionVM();
+            this.Selection = "Mage";
+            this.GroupName = "class";
             this.championManagerVM = championManagerVM;
      	}
 
@@ -40,6 +42,32 @@ namespace MVVMMaui.VM
         public bool Edit
         {
             get => true;
+        }
+
+        private object selection;
+
+
+        public object Selection
+        {
+            get => selection;
+            set
+            {
+                selection = value;
+                OnPropertyChanged(nameof(Selection));
+            }
+        }
+
+        private string groupName;
+        
+
+        public string GroupName
+        {
+            get => groupName;
+            set
+            {
+                groupName = value;
+                OnPropertyChanged(nameof(GroupName));
+            }
         }
 
     }

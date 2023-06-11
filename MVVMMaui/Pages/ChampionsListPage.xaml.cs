@@ -10,7 +10,7 @@ public partial class ChampionsListPage : ContentPage
     public ChampionsListPage()
     {
         InitializeComponent();
-        BindingContext = championManagerVM;
+        BindingContext = new ListChampionsVM(championManagerVM);
     }
 
     void ImageCell_Tapped(System.Object sender, System.EventArgs e)
@@ -21,8 +21,9 @@ public partial class ChampionsListPage : ContentPage
 
     void Cell_Tapped(System.Object sender, System.EventArgs e)
     {
-        var swipeView = (SwipeView)sender;
-        var gesture = (TapGestureRecognizer)swipeView.GestureRecognizers[0];
+        var tapView = (HorizontalStackLayout)sender;
+        var gesture = (TapGestureRecognizer)tapView.GestureRecognizers[0];
+        championManagerVM.ChampionEdit = (ChampionVM)gesture.CommandParameter;
         Navigation.PushAsync(new ChampionPage((ChampionVM)gesture.CommandParameter));
     }
 

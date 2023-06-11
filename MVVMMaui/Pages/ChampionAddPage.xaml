@@ -1,34 +1,58 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" xmlns:converter="clr-namespace:MVVMMaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:converter="clr-namespace:MVVMMaui"
+             xmlns:viewmodel="clr-namespace:ViewModel;assembly=ViewModel"
              x:Class="MVVMMaui.Pages.ChampionAddPage"
              BackgroundColor="{StaticResource Gray950}"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
              Title="ChampionAddPage">
     <ContentPage.Resources>
         <converter:StringToImageConverter x:Key="StringToImage"/>
+        <ControlTemplate x:Key="RadioTemplate">
+            <Border Style="{StaticResource ClasseBorder}">
+                <VisualStateManager.VisualStateGroups>
+                    <VisualStateGroup x:Name="CheckedStates">
+                        <VisualState x:Name="Checked">
+                            <VisualState.Setters>
+                                <Setter Property="BackgroundColor" Value="{StaticResource Primary}"/>
+                            </VisualState.Setters>
+                        </VisualState>
+
+                        <VisualState x:Name="Unchecked">
+                            <VisualState.Setters>
+                                <Setter Property="BackgroundColor" Value="{StaticResource Beige}"/>
+                            </VisualState.Setters>
+                        </VisualState>
+                    </VisualStateGroup>
+                </VisualStateManager.VisualStateGroups>
+
+                <Grid Margin="4" WidthRequest="100">
+                    <ContentPresenter/>
+                </Grid>
+            </Border>
+        </ControlTemplate>
     </ContentPage.Resources>
     <FlexLayout Direction="Column">
 
-        <!-- Header -->
-          <VerticalStackLayout Grid.Row="0">
-                    <Label Text="{Binding Titre}" HorizontalOptions="Center"
-             Style="{StaticResource TitreChampion}"></Label>
-         <Line BackgroundColor="{StaticResource Primary}"
-               ></Line>
+        <VerticalStackLayout Grid.Row="0">
+            <Label Text="{Binding Titre}"
+                   HorizontalOptions="Center"
+                   Style="{StaticResource TitreChampion}"></Label>
+            <Line BackgroundColor="{StaticResource Primary}"></Line>
+        </VerticalStackLayout>
 
-             </VerticalStackLayout>
-
-        <!-- Body -->
         <FlexLayout FlexLayout.Grow="1">
-             <ScrollView >
-                 <Grid ColumnDefinitions="50, *" RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto" BindingContext="{Binding ChampionEdit}">
+            <ScrollView >
+                <Grid ColumnDefinitions="50, *"
+                      RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto"
+                      BindingContext="{Binding ChampionEditCopie}"  >
                        
                     <Label Text="Nom: "
                            Style="{StaticResource TextChampion}"
                            VerticalOptions="Center"
                            Grid.Column="0" Grid.Row="0"></Label>
-                    <Entry
-                           Placeholder="{Binding Name}"
+                    <Entry Placeholder="{Binding Name}"
                            Text="{Binding Name}"
                            WidthRequest="300"
                            IsEnabled="{Binding Edit}"
@@ -39,13 +63,17 @@
                            Style="{StaticResource TextChampion}"
                            VerticalOptions="Center"
                            Grid.Column="0" Grid.Row="1"></Label>
-                    <Image Source="{Binding Icon, Converter={StaticResource StringToImage}}"
-                           Grid.Column="1" Grid.Row="1"></Image>
+     
+                    <ImageButton Source="{Binding Icon, Converter={StaticResource StringToImage}}"
+                                 Grid.Column="1" Grid.Row="1"
+                                 Clicked="ImageButton_Clicked">
+                    </ImageButton>
 
                     <Label Text="Image: "
                            Style="{StaticResource TextChampion}"
                            VerticalOptions="Center"
                            Grid.Column="0" Grid.Row="2"></Label>
+
                     <Image Source="{Binding Image, Converter={StaticResource StringToImage}}"
                            HeightRequest="100"
                            Grid.Column="1" Grid.Row="2"></Image>
@@ -54,6 +82,7 @@
                            Style="{StaticResource TextChampion}"
                            VerticalOptions="Center"         
                            Grid.Column="0" Grid.Row="3"></Label>
+
                     <Editor Text="{Binding Bio}"
                             AutoSize="TextChanges"
                             HeightRequest="200"
@@ -62,113 +91,174 @@
                             Style="{StaticResource EditorChampion}"
                             Grid.Column="1" Grid.Row="3"/>
              
-                 <Label 
-                    Text="Classe: "
-                     Style="{StaticResource TextChampion}"
-                     VerticalOptions="Center"
-                     Grid.Column="0" Grid.Row="4"/>
-                 <Grid ColumnDefinitions="*,*,*" RowDefinitions="*,*" Grid.Column="1" Grid.Row="4">
-                    <Border Style="{StaticResource Classe}" Grid.Column="0" Grid.Row="0">
-                        <Label Text="Assassin" HorizontalTextAlignment="Center" VerticalTextAlignment="Center"/>
-                    </Border>
-                    <Border Style="{StaticResource Classe}" Grid.Column="1" Grid.Row="0">
-                        <Label Text="Fighter" HorizontalTextAlignment="Center" VerticalTextAlignment="Center"/>
-                    </Border>
-                    <Border Style="{StaticResource Classe}" Grid.Column="2" Grid.Row="0">
-                        <Label Text="Mage" HorizontalTextAlignment="Center" VerticalTextAlignment="Center"/>
-                    </Border>
-                    <Border Style="{StaticResource Classe}" Grid.Column="0" Grid.Row="1">
-                        <Label Text="Marksman" HorizontalTextAlignment="Center" VerticalTextAlignment="Center"/>
-                    </Border>
-                    <Border Style="{StaticResource Classe}" Grid.Column="1" Grid.Row="1">
-                        <Label Text="Support" HorizontalTextAlignment="Center" VerticalTextAlignment="Center"/>
-                    </Border>
-                    <Border Style="{StaticResource Classe}" Grid.Column="2" Grid.Row="1">
-                        <Label Text="Tank" HorizontalTextAlignment="Center" VerticalTextAlignment="Center"/>
-                    </Border>
+                    <Label Text="Classe: "
+                           Style="{StaticResource TextChampion}"
+                           VerticalOptions="Center"
+                           Grid.Column="0" Grid.Row="4"/>
+ 
+                    <Grid ColumnDefinitions="*,*,*"
+                          RowDefinitions="*,*,*"
+                          Grid.Column="1" Grid.Row="4"
+                          RadioButtonGroup.GroupName="{Binding GroupName}"
+                          RadioButtonGroup.SelectedValue="{Binding Selection}">
+                        <RadioButton Value="Assassin"
+                                     ControlTemplate="{StaticResource RadioTemplate}"
+                                     Grid.Column="0" Grid.Row="0">
+                            <RadioButton.Content>
+                                <VerticalStackLayout VerticalOptions="Center">
+                                    <Image Source="assassin.png" Style="{StaticResource ClassImage}">
+                                        <Image.Behaviors>
+                                            <toolkit:IconTintColorBehavior TintColor="Black" />
+                                        </Image.Behaviors>
+                                    </Image>
+                                    <Label Text="Assassin" HorizontalTextAlignment="Center" VerticalTextAlignment="Center"/>
+                                </VerticalStackLayout>
+                            </RadioButton.Content>
+                        </RadioButton>
+                        <RadioButton Value="Fighter"
+                                     ControlTemplate="{StaticResource RadioTemplate}"
+                                     Grid.Column="1" Grid.Row="0">
+                            <RadioButton.Content>
+                                <VerticalStackLayout VerticalOptions="Center">
+                                    <Image Source="fighter.png" Style="{StaticResource ClassImage}">
+                                        <Image.Behaviors>
+                                            <toolkit:IconTintColorBehavior TintColor="Black" />
+                                        </Image.Behaviors>
+                                    </Image>
+                                    <Label Text="Fighter" HorizontalTextAlignment="Center" VerticalTextAlignment="Center"/>
+                                </VerticalStackLayout>
+                            </RadioButton.Content>
+                        </RadioButton>
+                        <RadioButton Value="Mage"
+                                     ControlTemplate="{StaticResource RadioTemplate}"
+                                     Grid.Column="2" Grid.Row="0">
+                            <RadioButton.Content>
+                                <VerticalStackLayout VerticalOptions="Center">
+                                    <Image Source="mage.png" Style="{StaticResource ClassImage}">
+                                        <Image.Behaviors>
+                                            <toolkit:IconTintColorBehavior TintColor="Black" />
+                                        </Image.Behaviors>
+                                    </Image>
+                                    <Label Text="Mage" HorizontalTextAlignment="Center" VerticalTextAlignment="Center"/>
+                                </VerticalStackLayout>
+                            </RadioButton.Content>
+                        </RadioButton>
+                        <RadioButton Value="Marksman"
+                                     ControlTemplate="{StaticResource RadioTemplate}"
+                                     Grid.Column="0" Grid.Row="1">
+                            <RadioButton.Content>
+                                <VerticalStackLayout VerticalOptions="Center">
+                                    <Image Source="marksman.png" Style="{StaticResource ClassImage}">
+                                        <Image.Behaviors>
+                                            <toolkit:IconTintColorBehavior TintColor="Black" />
+                                        </Image.Behaviors>
+                                    </Image>
+                                    <Label Text="Marksman" HorizontalTextAlignment="Center" VerticalTextAlignment="Center"/>
+                                </VerticalStackLayout>
+                            </RadioButton.Content>
+                        </RadioButton>
+                        <RadioButton Value="Support"
+                                     ControlTemplate="{StaticResource RadioTemplate}"
+                                     Grid.Column="1" Grid.Row="1">
+                            <RadioButton.Content>
+                                <VerticalStackLayout VerticalOptions="Center">
+                                    <Image Source="support.png" Style="{StaticResource ClassImage}">
+                                        <Image.Behaviors>
+                                            <toolkit:IconTintColorBehavior TintColor="Black" />
+                                        </Image.Behaviors>
+                                    </Image>
+                                    <Label Text="Support" HorizontalTextAlignment="Center" VerticalTextAlignment="Center"/>
+                                </VerticalStackLayout>
+                            </RadioButton.Content>
+                        </RadioButton>
+                        <RadioButton Value="Tank"
+                                     ControlTemplate="{StaticResource RadioTemplate}"
+                                     Grid.Column="2" Grid.Row="1">
+                            <RadioButton.Content>
+                                 <VerticalStackLayout VerticalOptions="Center">
+                                    <Image Source="tank.png" Style="{StaticResource ClassImage}" >
+                                        <Image.Behaviors>
+                                            <toolkit:IconTintColorBehavior TintColor="Black" />
+                                        </Image.Behaviors>
+                                    </Image>
+                                    <Label Text="Tank" HorizontalTextAlignment="Center" VerticalTextAlignment="Center"/>
+                                </VerticalStackLayout>
+                            </RadioButton.Content>
+                        </RadioButton>
+                        <Label x:Name="animalLabel" Grid.Row="2" Grid.ColumnSpan="2">
+                            <Label.FormattedText>
+                                <FormattedString>
+                                    <Span Text="You have chosen:" TextColor="White"/>
+                                    <Span Text="{Binding Selection}" TextColor="White"  />
+                                </FormattedString>
+                            </Label.FormattedText>
+                        </Label>
+                    </Grid>
 
-                 </Grid>
-                 <!--<CollectionView x:Name="Class" ItemsSource="{Binding championManagerVM}">
-                        <CollectionView.ItemsLayout>
-                             <LinearItemsLayout Orientation="Vertical"
-                                                ItemSpacing="10" />
-                         </CollectionView.ItemsLayout>
-                        <CollectionView.ItemTemplate>
-                            <DataTemplate>
-                                 <Border Style="{StaticResource Classe}" Grid.Column="2" Grid.Row="1">
-                                        <Label Text="{Binding}" HorizontalTextAlignment="Center" VerticalTextAlignment="Center"/>
-                                    </Border>                 
-                            </DataTemplate>
-                        </CollectionView.ItemTemplate>    
-                </CollectionView>-->
-                <Label 
-                    Text="Caractéristiques: "
-                    Style="{StaticResource TextChampion}"
-                    VerticalOptions="Center"
-                    Grid.Column="0" Grid.Row="5"/>
-              
+                    <Label Text="Caractéristiques: "
+                           Style="{StaticResource TextChampion}"
+                           VerticalOptions="Center"
+                           Grid.Column="0" Grid.Row="5"/>
 
+                    <VerticalStackLayout Grid.Column="1" Grid.Row="5">
+                        <Border Stroke="{StaticResource Primary}">
+                            <ListView ItemsSource="{Binding Characteristics}"
+                                      MaximumHeightRequest="100"
+                                      BackgroundColor="Transparent"
+                                      SelectionMode="None"
+                                      SeparatorVisibility="None">
+                                <ListView.ItemTemplate>
+                                    <DataTemplate>
+                                        <ViewCell>
+                                            <Border BackgroundColor="{StaticResource Beige}"
+                                                    StrokeShape="RoundRectangle 10,10,0,10"
+                                                    Margin="2" Padding="2">
+                                                <Grid RowDefinitions="*"
+                                                      ColumnDefinitions="*,Auto"
+                                                      VerticalOptions="Center"
+                                                      Padding="5">
+                                                    <Label Text="{Binding Key}"  Grid.Column="0"></Label>
+                                                    <Label Text="{Binding Value}" Grid.Column="1"></Label>
+                                                </Grid>
+                                            </Border>
+                                        </ViewCell>
+                                    </DataTemplate>
+                                </ListView.ItemTemplate>
+                            </ListView>
+                        </Border>
+                
+                        <Grid ColumnDefinitions="*,Auto,Auto"
+                              RowDefinitions="*"
+                              ColumnSpacing="10">
+                            <Entry Placeholder="Caractéristiques"
+                                   Text="{Binding CharacteristicsValue}"
+                                   Style="{StaticResource EditChampion}"
+                                   Grid.Column="0" Grid.Row="0"></Entry>
+                            <Entry Keyboard="Numeric"
+                                   Text="{Binding CharacteristicsKey}"
+                                   Style="{StaticResource EditChampion}"
+                                   Grid.Column="1" Grid.Row="0"></Entry>
+                            <Button Text="+"
+                                    Grid.Column="2" Grid.Row="0"
+                                    CornerRadius="20"
+                                    Command="{Binding ChampionEditCopie.AddCharacteristicCommand}">
+                            </Button>
+
+                        </Grid>
+                  
+                    </VerticalStackLayout>
+                                        
                  </Grid>
           
-        </ScrollView>
-           
+            </ScrollView>
 
         </FlexLayout>
 
-        <!-- Footer -->
-      <HorizontalStackLayout Padding="5" HorizontalOptions="Center">
-                     <Button Text="{Binding Status}" Margin="10, 5"  Command="{Binding ChampionManagerVM.SaveChampionCommand}" CommandParameter="{Binding ChampionEdit}"></Button>
-                     <Button Text="Annuler" Margin="10, 5" Clicked="Button_Clicked"></Button>
-                 </HorizontalStackLayout>
+        <HorizontalStackLayout Padding="5" HorizontalOptions="Center">
+            <Button Text="{Binding Status}" Margin="10, 5"  Command="{Binding ChampionManagerVM.SaveChampionCommand}" CommandParameter="{Binding ChampionEdit}"></Button>
+            <Button Text="Annuler" Margin="10, 5" Clicked="Button_Clicked"></Button>
+        </HorizontalStackLayout>
     </FlexLayout>
-    <!--
-         <Grid Margin="10"
-          RowDefinitions="Auto,*, Auto">
-             <VerticalStackLayout Grid.Row="0">
-                    <Label x:Name="Titre" HorizontalOptions="Center"
-             Style="{StaticResource TitreChampion}"></Label>
-         <Line BackgroundColor="{StaticResource Primary}"
-               ></Line>
-
-             </VerticalStackLayout>
-      
-        <ScrollView Grid.Row="1"
-                    VerticalOptions="FillAndExpand">
-            <VerticalStackLayout>
-                 <HorizontalStackLayout Padding="10" VerticalOptions="Center">
-                    <Label Text="Nom: "  Style="{StaticResource TextChampion}"></Label>
-                    <Entry x:Name="NameEntry" Placeholder="{Binding Name}" Text="{Binding Name}" IsEnabled="False" Style="{StaticResource EditChampion}"></Entry>
-                 </HorizontalStackLayout>
-                 <HorizontalStackLayout Padding="10" VerticalOptions="Center">
-                    <Label Text="Icon: "  Style="{StaticResource TextChampion}"></Label>
-                    <Image Source="{Binding Icon}"></Image>
-                 </HorizontalStackLayout>
-                 <HorizontalStackLayout Padding="10" VerticalOptions="Center">
-                    <Label Text="Image: "  Style="{StaticResource TextChampion}"></Label>
-                    <Image Source="{Binding Image}" HeightRequest="100"></Image>
-                 </HorizontalStackLayout>
-                 <HorizontalStackLayout Padding="10" VerticalOptions="Center">
-                    <Label Text="Bio: "  Style="{StaticResource TextChampion}"></Label>
-                    <Editor Text="{Binding Bio}" AutoSize="TextChanges" HeightRequest="200" WidthRequest="300" Placeholder="{Binding Bio}" Style="{StaticResource EditorChampion}"/>
-                 </HorizontalStackLayout>
-                 <Label 
-                    Text="Caractéristiques"
-                     Style="{StaticResource TitreChampion}"/>
-                <Label 
-                    Text="Compétences"
-                    Style="{StaticResource TitreChampion}"/>
-                <Label 
-                    Text="Skins"
-                    Style="{StaticResource TitreChampion}"/>
-               
-             </VerticalStackLayout>
-        </ScrollView>
-     
-               <HorizontalStackLayout Padding="10" Grid.Row="2">
-                     <Button x:Name="Status" Padding="10"></Button>
-                     <Button Text="Annuler" Padding="10"></Button>
-                 </HorizontalStackLayout>
-    </Grid>-->
        
          
 </ContentPage>

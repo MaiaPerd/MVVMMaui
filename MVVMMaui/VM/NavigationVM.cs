@@ -16,11 +16,10 @@ namespace MVVMMaui.VM
 
 		public NavigationVM()
 		{
-            //NavigationChampionPageCommand = new Command<ChampionVM>(push);
             NavigationChampionPageCommand = new Command<ChampionVM>(
                 execute: (ChampionVM champion) =>
                 {
-                   // Shell.Current.Navigation.PushAsync(new ChampionPage(champion));
+                    Shell.Current.Navigation.PushAsync(new ChampionPage(champion));
                 }
                 );
         }
@@ -28,12 +27,6 @@ namespace MVVMMaui.VM
     
 
 
-		/*
-		private void push(ChampionVM champion)
-        {
-			Shell.Current.Navigation.PushAsync(new ChampionPage(champion));
-
-        }*/
 		
 	}
 }

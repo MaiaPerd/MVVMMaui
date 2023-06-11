@@ -1,4 +1,5 @@
-﻿using ViewModel;
+﻿using MVVMMaui.VM;
+using ViewModel;
 
 namespace MVVMMaui.Pages;
 
@@ -9,7 +10,8 @@ public partial class ChampionPage : ContentPage
     public ChampionPage(ChampionVM championVM)
 	{
 		InitializeComponent();
-        BindingContext = championVM;
+        championManagerVM.ChampionEdit = championVM;
+        BindingContext = new PageChampionVM(championManagerVM);
     }
 
     void ToolbarItem_Clicked(System.Object sender, System.EventArgs e)

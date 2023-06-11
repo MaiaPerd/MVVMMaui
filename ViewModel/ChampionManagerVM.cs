@@ -11,6 +11,21 @@ namespace ViewModel
 {
 	public class ChampionManagerVM : BaseVM
 	{
+        ChampionVM championEdit;
+
+        public ChampionVM ChampionEdit
+        {
+            //set { SetProperty(ref championEdit, value); }
+            //get { return championEdit; }
+            get => championEdit;
+            set
+            {
+                if (championEdit == value) return;
+                championEdit = value;
+                OnPropertyChanged();
+            }
+        }
+
         public ReadOnlyObservableCollection<ChampionVM> Champions { get; private set; }
    
         private ObservableCollection<ChampionVM> champions = new ObservableCollection<ChampionVM>();

@@ -6,6 +6,7 @@ using System.Drawing;
 using Model;
 using MVVM;
 using System.Linq;
+using System.Windows.Input;
 
 namespace ViewModel
 {
@@ -33,6 +34,25 @@ namespace ViewModel
             LoadSkins();
             Skills = new ReadOnlyObservableCollection<SkillVM>(skills);
             LoadSkills();
+            commandDef();
+        }
+
+        public ChampionVM(ChampionVM championVM)
+        {
+            this.model = new Champion(name: championVM.Name, champClass: championVM.Model.Class, icon: championVM.Icon, image: championVM.Image, bio: championVM.Bio);
+            foreach (var characteristic in championVM.Model.Characteristics)
+            {
+                Model.AddCharacteristics(Tuple.Create(characteristic.Key, characteristic.Value));
+            }
+            Characteristics = new ReadOnlyObservableCollection<KeyValuePair<string, int>>(characteristics);
+            LoadCaracteristique();
+            Skins = new ReadOnlyObservableCollection<SkinVM>(skins);
+            LoadSkins();
+            Skills = new ReadOnlyObservableCollection<SkillVM>(skills);
+            LoadSkills();
+            commandDef();
+
+
         }
 
         public ChampionVM()
@@ -41,8 +61,30 @@ namespace ViewModel
             Characteristics = new ReadOnlyObservableCollection<KeyValuePair<string, int>>(characteristics);
             Skins = new ReadOnlyObservableCollection<SkinVM>(skins);
             Skills = new ReadOnlyObservableCollection<SkillVM>(skills);
+            commandDef();
         }
         // Jusque la
+
+
+        public void commandDef()
+        {
+            AddCharacteristicCommand = new Command(
+             execute: () =>
+             {
+                 Characteristics.Append(new KeyValuePair<string, int>("carac", 10));
+             }
+           );
+            AddSkinsCommand = new Command(
+                 execute: () =>
+                 {
+                     Skins.Append(new SkinVM(new Skin(name: "Nouveau skin", champion: Model)));
+                 }
+                );
+        }
+
+        public ICommand AddCharacteristicCommand { get; set; }
+        public ICommand AddSkinsCommand { get; set; }
+
 
         public string Name
 		{
