@@ -41,8 +41,8 @@ namespace MVVMMaui.VM
         public AddChampionVM(ChampionManagerVM championManagerVM)
 		{
             this.championEditCopie = new ChampionVM();
-            ChampionEditCopie.Image = StringToImageConverter.ImageSourceToBase64Async(ImageSource.FromResource("logolol.png"));
-            ChampionEditCopie.Icon = StringToImageConverter.ImageSourceToBase64Async(ImageSource.FromResource("logo.png"));
+            ChampionEditCopie.Image = StringToImageConverter.ImageSourceToBase64(ImageSource.FromResource("logolol.png"));
+            ChampionEditCopie.Icon = StringToImageConverter.ImageSourceToBase64(ImageSource.FromResource("logo.png"));
             championManagerVM.ChampionEdit = ChampionEditCopie;
             this.championManagerVM = championManagerVM;
             ChampionsClass = new ReadOnlyObservableCollection<ClassVM>(championsClass);
@@ -78,6 +78,7 @@ namespace MVVMMaui.VM
             {
 
                 FileResult image = await PickAndShow();
+                
                 
             });
             IconChangeCommand = new Command(execute: async () =>
