@@ -26,14 +26,20 @@ namespace MVVMMaui.VM
             execute: async () =>
             {
                 string name = await Shell.Current.DisplayPromptAsync("New skill", "Nom de la compétence: ");
-                championManagerVM.ChampionEdit.AddSkillCommand.Execute(name);
+                if (name != null)
+                {
+                    championManagerVM.ChampionEdit.AddSkillCommand.Execute(name);
+                }
             }
             );
             AddSkinChampionPageCommand = new Command(
             execute: async () =>
             {
                 string name = await Shell.Current.DisplayPromptAsync("New skin", "Nom du skin: ");
-                championManagerVM.ChampionEdit.AddSkinCommand.Execute(name); ;
+                if(name != null)
+                {
+                    championManagerVM.ChampionEdit.AddSkinCommand.Execute(name);
+                }
             }
             ); 
         }
