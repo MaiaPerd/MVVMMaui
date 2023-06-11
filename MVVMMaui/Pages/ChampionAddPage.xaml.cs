@@ -21,10 +21,4 @@ public partial class ChampionAddPage : ContentPage
         BindingContext = new AddChampionVM(championManagerVM, championVM);
 
     }
-
-    void ImageButton_Clicked(System.Object sender, System.EventArgs e)
-    {
-        //FilePicker on récupère l'image et on la changer 
-     
-    }
 }

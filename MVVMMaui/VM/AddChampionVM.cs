@@ -41,8 +41,8 @@ namespace MVVMMaui.VM
         public AddChampionVM(ChampionManagerVM championManagerVM)
 		{
             this.championEditCopie = new ChampionVM();
-            ChampionEditCopie.Image = StringToImageConverter.ImageSourceToBase64(ImageSource.FromResource("logolol.png"));
-            ChampionEditCopie.Icon = StringToImageConverter.ImageSourceToBase64(ImageSource.FromResource("logo.png"));
+            ChampionEditCopie.Image = StringToImageConverter.ImageSourceToBase64Async(ImageSource.FromResource("logolol.png"));
+            ChampionEditCopie.Icon = StringToImageConverter.ImageSourceToBase64Async(ImageSource.FromResource("logo.png"));
             championManagerVM.ChampionEdit = ChampionEditCopie;
             this.championManagerVM = championManagerVM;
             ChampionsClass = new ReadOnlyObservableCollection<ClassVM>(championsClass);
@@ -74,6 +74,42 @@ namespace MVVMMaui.VM
                 CharacteristicsValue = "";
                 CharacteristicsKey = 0;
             });
+            ImageChangeCommand = new Command(execute: async () =>
+            {
+
+                FileResult image = await PickAndShow();
+                
+            });
+            IconChangeCommand = new Command(execute: async () =>
+            {
+                PickAndShow();
+            });
+
+        }
+
+        public async Task<FileResult> PickAndShow()
+        {
+            try
+            {
+                var result = await FilePicker.Default.PickAsync(PickOptions.Images);
+                if (result != null)
+                {
+                    if (result.FileName.EndsWith("jpg", StringComparison.OrdinalIgnoreCase) ||
+                        result.FileName.EndsWith("png", StringComparison.OrdinalIgnoreCase))
+                    {
+                        using var stream = await result.OpenReadAsync();
+                        var image = ImageSource.FromStream(() => stream);
+                    }
+                }
+
+                return result;
+            }
+            catch (Exception ex)
+            {
+                // The user canceled or something went wrong
+            }
+
+            return null;
         }
 
         public ReadOnlyObservableCollection<ClassVM> ChampionsClass { get; private set; }
@@ -163,6 +199,8 @@ namespace MVVMMaui.VM
         public ICommand UpdateChampionCommand { get; set; }
         public ICommand ResetChampionCommand { get; set; }
         public ICommand AddCharacteristicCommand { get; set; }
+        public ICommand ImageChangeCommand { get; set; }
+        public ICommand IconChangeCommand { get; set; }
     }
 }
 
