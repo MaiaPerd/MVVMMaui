@@ -71,7 +71,8 @@ namespace ViewModel
                 {
                     dataManager.ChampionsMgr.UpdateItem(((ChampionVM)old.First()).Model, ((ChampionVM)championVM).Model);
                 }
-                
+                Index = IndexMax;
+                LoadChampions(Index, Count);
             });
 
             DeleteChampionCommand = new Command(execute: (championVM) =>

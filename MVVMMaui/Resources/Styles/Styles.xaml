@@ -24,7 +24,7 @@
         <Setter Property="StrokeShape" Value="RoundRectangle 60,60,0,60"/>
         <Setter Property="StrokeThickness" Value="0"/>
         <Setter Property="HeightRequest" Value="80"/>
-        <Setter Property="WidthRequest" Value="100"/>
+        <Setter Property="WidthRequest" Value="95"/>
         <Setter Property="HorizontalOptions" Value="Center"/>
         <Setter Property="VerticalOptions" Value="Center"/>
     </Style>

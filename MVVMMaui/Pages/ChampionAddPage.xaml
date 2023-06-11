@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:converter="clr-namespace:MVVMMaui"
              xmlns:viewmodel="clr-namespace:ViewModel;assembly=ViewModel"
+             xmlns:view="clr-namespace:MVVMMaui.Views"
              x:Class="MVVMMaui.Pages.ChampionAddPage"
              BackgroundColor="{StaticResource Gray950}"
              xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
@@ -27,7 +28,7 @@
                     </VisualStateGroup>
                 </VisualStateManager.VisualStateGroups>
 
-                <Grid Margin="4" WidthRequest="100">
+                <Grid Margin="4" WidthRequest="100" VerticalOptions="Center">
                     <ContentPresenter/>
                 </Grid>
             </Border>
@@ -44,15 +45,14 @@
 
         <FlexLayout FlexLayout.Grow="1">
             <ScrollView >
-                <Grid ColumnDefinitions="50, *"
-                      RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto"
-                      BindingContext="{Binding ChampionEditCopie}"  >
-                       
+                <Grid ColumnDefinitions="60, *"
+                      RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto">
+                   
                     <Label Text="Nom: "
                            Style="{StaticResource TextChampion}"
                            VerticalOptions="Center"
                            Grid.Column="0" Grid.Row="0"></Label>
-                    <Entry Placeholder="{Binding Name}"
+                    <Entry Placeholder="{Binding ChampionEditCopie.Name}"
                            Text="{Binding Name}"
                            WidthRequest="300"
                            IsEnabled="{Binding Edit}"
@@ -64,7 +64,7 @@
                            VerticalOptions="Center"
                            Grid.Column="0" Grid.Row="1"></Label>
      
-                    <ImageButton Source="{Binding Icon, Converter={StaticResource StringToImage}}"
+                    <ImageButton Source="{Binding ChampionEditCopie.Icon, Converter={StaticResource StringToImage}}"
                                  Grid.Column="1" Grid.Row="1"
                                  Clicked="ImageButton_Clicked">
                     </ImageButton>
@@ -74,7 +74,7 @@
                            VerticalOptions="Center"
                            Grid.Column="0" Grid.Row="2"></Label>
 
-                    <Image Source="{Binding Image, Converter={StaticResource StringToImage}}"
+                    <Image Source="{Binding ChampionEditCopie.Image, Converter={StaticResource StringToImage}}"
                            HeightRequest="100"
                            Grid.Column="1" Grid.Row="2"></Image>
 
@@ -83,11 +83,11 @@
                            VerticalOptions="Center"         
                            Grid.Column="0" Grid.Row="3"></Label>
 
-                    <Editor Text="{Binding Bio}"
+                    <Editor Text="{Binding ChampionEditCopie.Bio}"
                             AutoSize="TextChanges"
                             HeightRequest="200"
                             WidthRequest="300"
-                            Placeholder="{Binding Bio}"
+                            Placeholder="{Binding ChampionEditCopie.Bio}"
                             Style="{StaticResource EditorChampion}"
                             Grid.Column="1" Grid.Row="3"/>
              
@@ -96,104 +96,43 @@
                            VerticalOptions="Center"
                            Grid.Column="0" Grid.Row="4"/>
  
-                    <Grid ColumnDefinitions="*,*,*"
-                          RowDefinitions="*,*,*"
-                          Grid.Column="1" Grid.Row="4"
-                          RadioButtonGroup.GroupName="{Binding GroupName}"
+         
+                   
+                     <VerticalStackLayout
+                          Grid.Column="1" Grid.Row="4" VerticalOptions="Center"
+                          RadioButtonGroup.GroupName="class"
                           RadioButtonGroup.SelectedValue="{Binding Selection}">
-                        <RadioButton Value="Assassin"
-                                     ControlTemplate="{StaticResource RadioTemplate}"
-                                     Grid.Column="0" Grid.Row="0">
-                            <RadioButton.Content>
-                                <VerticalStackLayout VerticalOptions="Center">
-                                    <Image Source="assassin.png" Style="{StaticResource ClassImage}">
-                                        <Image.Behaviors>
-                                            <toolkit:IconTintColorBehavior TintColor="Black" />
-                                        </Image.Behaviors>
-                                    </Image>
-                                    <Label Text="Assassin" HorizontalTextAlignment="Center" VerticalTextAlignment="Center"/>
-                                </VerticalStackLayout>
-                            </RadioButton.Content>
-                        </RadioButton>
-                        <RadioButton Value="Fighter"
-                                     ControlTemplate="{StaticResource RadioTemplate}"
-                                     Grid.Column="1" Grid.Row="0">
-                            <RadioButton.Content>
-                                <VerticalStackLayout VerticalOptions="Center">
-                                    <Image Source="fighter.png" Style="{StaticResource ClassImage}">
-                                        <Image.Behaviors>
-                                            <toolkit:IconTintColorBehavior TintColor="Black" />
-                                        </Image.Behaviors>
-                                    </Image>
-                                    <Label Text="Fighter" HorizontalTextAlignment="Center" VerticalTextAlignment="Center"/>
-                                </VerticalStackLayout>
-                            </RadioButton.Content>
-                        </RadioButton>
-                        <RadioButton Value="Mage"
-                                     ControlTemplate="{StaticResource RadioTemplate}"
-                                     Grid.Column="2" Grid.Row="0">
-                            <RadioButton.Content>
-                                <VerticalStackLayout VerticalOptions="Center">
-                                    <Image Source="mage.png" Style="{StaticResource ClassImage}">
-                                        <Image.Behaviors>
-                                            <toolkit:IconTintColorBehavior TintColor="Black" />
-                                        </Image.Behaviors>
-                                    </Image>
-                                    <Label Text="Mage" HorizontalTextAlignment="Center" VerticalTextAlignment="Center"/>
-                                </VerticalStackLayout>
-                            </RadioButton.Content>
-                        </RadioButton>
-                        <RadioButton Value="Marksman"
-                                     ControlTemplate="{StaticResource RadioTemplate}"
-                                     Grid.Column="0" Grid.Row="1">
-                            <RadioButton.Content>
-                                <VerticalStackLayout VerticalOptions="Center">
-                                    <Image Source="marksman.png" Style="{StaticResource ClassImage}">
-                                        <Image.Behaviors>
-                                            <toolkit:IconTintColorBehavior TintColor="Black" />
-                                        </Image.Behaviors>
-                                    </Image>
-                                    <Label Text="Marksman" HorizontalTextAlignment="Center" VerticalTextAlignment="Center"/>
-                                </VerticalStackLayout>
-                            </RadioButton.Content>
-                        </RadioButton>
-                        <RadioButton Value="Support"
-                                     ControlTemplate="{StaticResource RadioTemplate}"
-                                     Grid.Column="1" Grid.Row="1">
-                            <RadioButton.Content>
-                                <VerticalStackLayout VerticalOptions="Center">
-                                    <Image Source="support.png" Style="{StaticResource ClassImage}">
-                                        <Image.Behaviors>
-                                            <toolkit:IconTintColorBehavior TintColor="Black" />
-                                        </Image.Behaviors>
-                                    </Image>
-                                    <Label Text="Support" HorizontalTextAlignment="Center" VerticalTextAlignment="Center"/>
-                                </VerticalStackLayout>
-                            </RadioButton.Content>
-                        </RadioButton>
-                        <RadioButton Value="Tank"
-                                     ControlTemplate="{StaticResource RadioTemplate}"
-                                     Grid.Column="2" Grid.Row="1">
-                            <RadioButton.Content>
-                                 <VerticalStackLayout VerticalOptions="Center">
-                                    <Image Source="tank.png" Style="{StaticResource ClassImage}" >
-                                        <Image.Behaviors>
-                                            <toolkit:IconTintColorBehavior TintColor="Black" />
-                                        </Image.Behaviors>
-                                    </Image>
-                                    <Label Text="Tank" HorizontalTextAlignment="Center" VerticalTextAlignment="Center"/>
-                                </VerticalStackLayout>
-                            </RadioButton.Content>
-                        </RadioButton>
-                        <Label x:Name="animalLabel" Grid.Row="2" Grid.ColumnSpan="2">
-                            <Label.FormattedText>
-                                <FormattedString>
-                                    <Span Text="You have chosen:" TextColor="White"/>
-                                    <Span Text="{Binding Selection}" TextColor="White"  />
-                                </FormattedString>
-                            </Label.FormattedText>
-                        </Label>
-                    </Grid>
+                         <CollectionView  ItemsSource="{Binding ChampionsClass}"
+                                         MaximumHeightRequest="180" Margin="10">
+                         <CollectionView.ItemsLayout>
+                             <GridItemsLayout Orientation="Vertical"
+                                                Span="3"
+                                                VerticalItemSpacing="10"
+                                                HorizontalItemSpacing="10" />
+                         </CollectionView.ItemsLayout>
+                         <CollectionView.ItemTemplate>
+                            <DataTemplate>
+                                     <RadioButton Value="{Binding}" Content="{Binding ClassName}"
+                                                  GroupName="class"
+                                             ControlTemplate="{StaticResource RadioTemplate}">
+                                   <!--<RadioButton.Content>
+                                        <VerticalStackLayout VerticalOptions="Center">
+                                            <Image Source="{Binding ImageName}" Style="{StaticResource ClassImage}">
+                                                <Image.Behaviors>
+                                                    <toolkit:IconTintColorBehavior TintColor="Black" />
+                                                </Image.Behaviors>
+                                            </Image>
+                                            <Label Text="{Binding ClassName}" HorizontalTextAlignment="Center" VerticalTextAlignment="Center"/>
+                                        </VerticalStackLayout>
+                                   </RadioButton.Content>-->
+                                </RadioButton>
+                                
+                            
+                            </DataTemplate>
+                        </CollectionView.ItemTemplate>
+             
+                    </CollectionView>
+                    </VerticalStackLayout>
 
                     <Label Text="Caractéristiques: "
                            Style="{StaticResource TextChampion}"
@@ -255,8 +194,8 @@
         </FlexLayout>
 
         <HorizontalStackLayout Padding="5" HorizontalOptions="Center">
-            <Button Text="{Binding Status}" Margin="10, 5"  Command="{Binding ChampionManagerVM.SaveChampionCommand}" CommandParameter="{Binding ChampionEdit}"></Button>
-            <Button Text="Annuler" Margin="10, 5" Clicked="Button_Clicked"></Button>
+            <Button Text="{Binding Status}" Margin="10, 5"  Command="{Binding UpdateChampionCommand}" CommandParameter="{Binding ChampionEditCopie}"></Button>
+            <Button Text="Annuler" Margin="10, 5" Command="{Binding ResetChampionCommand}"></Button>
         </HorizontalStackLayout>
     </FlexLayout>
        

@@ -24,4 +24,10 @@
 	  <ProjectReference Include="..\Model\Model.csproj" />
 	  <ProjectReference Include="..\MVVM\MVVM.csproj" />
 	</ItemGroup>
+	<ItemGroup>
+	  <None Remove="converteur\" />
+	</ItemGroup>
+	<ItemGroup>
+	  <Folder Include="converteur\" />
+	</ItemGroup>
 </Project>

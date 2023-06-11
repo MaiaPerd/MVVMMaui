@@ -7,6 +7,7 @@ using Model;
 using MVVM;
 using System.Linq;
 using System.Windows.Input;
+using ViewModel.converteur;
 
 namespace ViewModel
 {
@@ -51,8 +52,6 @@ namespace ViewModel
             Skills = new ReadOnlyObservableCollection<SkillVM>(skills);
             LoadSkills();
             commandDef();
-
-
         }
 
         public ChampionVM()
@@ -61,6 +60,22 @@ namespace ViewModel
             Characteristics = new ReadOnlyObservableCollection<KeyValuePair<string, int>>(characteristics);
             Skins = new ReadOnlyObservableCollection<SkinVM>(skins);
             Skills = new ReadOnlyObservableCollection<SkillVM>(skills);
+            commandDef();
+        }
+
+        public ChampionVM(string name, ChampionVM championVM)
+        {
+            this.model = new Champion(name: name, champClass: championVM.Model.Class, icon: championVM.Icon, image: championVM.Image, bio: championVM.Bio);
+            foreach (var characteristic in championVM.Model.Characteristics)
+            {
+                Model.AddCharacteristics(Tuple.Create(characteristic.Key, characteristic.Value));
+            }
+            Characteristics = new ReadOnlyObservableCollection<KeyValuePair<string, int>>(characteristics);
+            LoadCaracteristique();
+            Skins = new ReadOnlyObservableCollection<SkinVM>(skins);
+            LoadSkins();
+            Skills = new ReadOnlyObservableCollection<SkillVM>(skills);
+            LoadSkills();
             commandDef();
         }
         // Jusque la
@@ -120,34 +135,10 @@ namespace ViewModel
             }
         }
 
-     /*   public ImageSource Icon
-        {
-            get
-            {
-                return ImageSource.FromStream(() => new MemoryStream(Convert.FromBase64String(Model.Icon)));
-            }
-            set
-            {
-                //if (Model == null || Model.Icon == value) return;
-                //Model.Icon = value;
-                OnPropertyChanged();
-                //OnPropertyChanged(nameof(Name)); Fais changer d'autre propriéter force le binding
-            }
-        }*/
-
 
         public string Image
         {
             get => Model.Image.Base64;
-          /*  {
-                return ImageSource.FromStream(() => new MemoryStream(Convert.FromBase64String(Model.Image.Base64)));
-            }*/
-        
-
-        //return Image.FromStream(new MemoryStream(Convert.FromBase64String(Model.Image.Base64)));
-        // return Convert.ToBase64String(System.IO.File.ReadAllBytes(Model.Image.Base64));
-    
-
             set
             {
                 if (Model == null || Model.Image.Base64 == value) return;
@@ -157,12 +148,11 @@ namespace ViewModel
             }
         }
 
-        public ChampionClass Class//En théorie il ne faudrait pas utiliser l'enum du model
+        public ChampionClassVM Class
         {
             get
             {
-               // if(Model.Class == ChampionClassVM.Tank)
-               return Model.Class;
+                return EnumToEnumVM.ChampionClassToChampionClassVM(Model.Class.ToString());
             }
             set
             {
@@ -170,40 +160,13 @@ namespace ViewModel
                 {
                     return;
                 }
-                if (Model.Class != value)
+                if (EnumToEnumVM.ChampionClassToChampionClassVM(Model.Class.ToString()) != value)
                 {
-                    Model.Class = value;
+                    Model.Class = EnumToEnumVM.ChampionClassVMToChampionClass(value.ToString());
                     OnPropertyChanged();
                 }
             }
         }
-
-        /*
-        private ObservableCollection<KeyValuePair<string, int>> characteristics;
-        public ReadOnlyObservableCollection<KeyValuePair<string, int>> Characteristics
-        {
-            get
-            {
-                
-                foreach(var a in Model.Characteristics)
-                {
-
-                }
-                return Model.Characteristics;
-            }
-            set
-            {
-                if (Model == null)
-                {
-                    return;
-                }
-                if (Model.Characteristics != value)
-                {
-                    Model.Characteristics = value;
-                    OnPropertyChanged();
-                }
-            }
-        }*/
 
         public ReadOnlyObservableCollection<KeyValuePair<string, int>> Characteristics { get; private set; }
 
@@ -241,52 +204,6 @@ namespace ViewModel
                 skills.Add(new SkillVM(skill));
             }
         }
-
-
-
-        /*
-        public LargeImage Image
-        {
-            get => Model.Image;
-            set
-            {
-                if (Model == null)
-                {
-                    return;
-                }
-                if (Model.Image != value)
-                {
-                    Model.Image = value;
-                    OnPropertyChanged();
-                }
-            }
-        }*/
-
-        /*private ObservableCollection<SkinVM> skins;
-        public ReadOnlyObservableCollection<SkinVM> Skins
-        {
-            get
-            {
-                foreach(var skin in Model.Skins)
-                {
-
-                }
-               // Model.Skins;
-            }
-            set
-            {
-                if (Model == null)
-                {
-                    return;
-                }
-                if (Model.Skins != value)
-                {
-                    Model.Skins = value;
-                    propertyChanged.OnPropertyChanged();
-                }
-            }
-        }*/
-
 
     }
 }

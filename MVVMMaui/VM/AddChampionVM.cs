@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.ObjectModel;
 using System.Windows.Input;
+using Model;
 using MVVM;
 using ViewModel;
 
@@ -7,12 +9,12 @@ namespace MVVMMaui.VM
 {
 	public class AddChampionVM : BaseVM
     {
-        ChampionVM championEdit;
+        ChampionVM championEditCopie;
 
-        public ChampionVM ChampionEdit
+        public ChampionVM ChampionEditCopie
         {
-            set { SetProperty(ref championEdit, value); }
-            get { return championEdit; }
+            set { SetProperty(ref championEditCopie, value); }
+            get { return championEditCopie; }
         }
 
         public ChampionManagerVM ChampionManagerVM
@@ -23,11 +25,56 @@ namespace MVVMMaui.VM
 
         public AddChampionVM(ChampionManagerVM championManagerVM)
 		{
-            this.championEdit = new ChampionVM();
-            this.Selection = "Mage";
-            this.GroupName = "class";
+            this.championEditCopie = new ChampionVM();
+            championManagerVM.ChampionEdit = ChampionEditCopie;
             this.championManagerVM = championManagerVM;
-     	}
+            ChampionsClass = new ReadOnlyObservableCollection<ClassVM>(championsClass);
+            LoadChampionsClass();
+            this.Selection = ChampionsClass.First();
+            name = ChampionEditCopie.Name;
+            UpdateChampionCommand = new Command(execute: () =>
+            {
+                ChampionEditCopie.Class = Selection.ChampionClassVM;
+                ChampionVM champion = new ChampionVM(Name, ChampionEditCopie);
+                championManagerVM.SaveChampionCommand.Execute(champion);
+                Shell.Current.Navigation.PopAsync();
+            });
+            ResetChampionCommand = new Command(execute: () =>
+            {
+                ChampionEditCopie = new ChampionVM(ChampionManagerVM.ChampionEdit);         
+            });
+        }
+
+        public ReadOnlyObservableCollection<ClassVM> ChampionsClass { get; private set; }
+
+        private ObservableCollection<ClassVM> championsClass = new ObservableCollection<ClassVM>();
+
+        private void LoadChampionsClass()
+        {
+            foreach (ChampionClassVM classVM in ChampionManagerVM.ChampionsClass)
+            {
+                if(classVM != ChampionClassVM.Unknown)
+                {
+                    championsClass.Add(new ClassVM(classVM));
+                }
+            }
+
+        }
+
+        public string Name
+        {
+            get => name;
+            set
+            {
+                if (name != value)
+                {
+                    name = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+        private string name;
+
 
         public string Titre
         {
@@ -44,10 +91,10 @@ namespace MVVMMaui.VM
             get => true;
         }
 
-        private object selection;
+        private ClassVM selection;
 
 
-        public object Selection
+        public ClassVM Selection
         {
             get => selection;
             set
@@ -57,19 +104,8 @@ namespace MVVMMaui.VM
             }
         }
 
-        private string groupName;
-        
-
-        public string GroupName
-        {
-            get => groupName;
-            set
-            {
-                groupName = value;
-                OnPropertyChanged(nameof(GroupName));
-            }
-        }
-
+        public ICommand UpdateChampionCommand { get; set; }
+        public ICommand ResetChampionCommand { get; set; }
     }
 }
 

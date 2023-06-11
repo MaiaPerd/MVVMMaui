@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.ObjectModel;
 using System.Windows.Input;
 using MVVM;
 using ViewModel;
@@ -25,7 +26,26 @@ namespace MVVMMaui.VM
         {
             this.championEditCopie = new ChampionVM(champion);
             this.championManagerVM = championManagerVM;
-          
+            ChampionsClass = new ReadOnlyObservableCollection<ClassVM>(championsClass);
+            LoadChampionsClass();
+            this.Selection = ChampionsClass.First();
+            this.GroupName = "class";
+        }
+
+        public ReadOnlyObservableCollection<ClassVM> ChampionsClass { get; private set; }
+
+        private ObservableCollection<ClassVM> championsClass = new ObservableCollection<ClassVM>();
+
+        private void LoadChampionsClass()
+        {
+            foreach (ChampionClassVM classVM in ChampionManagerVM.ChampionsClass)
+            {
+                if (classVM != ChampionClassVM.Unknown)
+                {
+                    championsClass.Add(new ClassVM(classVM));
+                }
+            }
+
         }
 
         public string Titre
@@ -41,6 +61,32 @@ namespace MVVMMaui.VM
         public bool Edit
         {
             get => false;
+        }
+
+        private ClassVM selection;
+
+
+        public ClassVM Selection
+        {
+            get => selection;
+            set
+            {
+                selection = value;
+                OnPropertyChanged(nameof(Selection));
+            }
+        }
+
+        private string groupName;
+
+
+        public string GroupName
+        {
+            get => groupName;
+            set
+            {
+                groupName = value;
+                OnPropertyChanged(nameof(GroupName));
+            }
         }
     }
 }
