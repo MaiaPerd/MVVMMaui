@@ -5,6 +5,7 @@ using Model;
 using MVVM;
 using ViewModel;
 
+//x:DataType="viewmodel:ChampionVM"
 namespace MVVMMaui.VM
 {
 	public class AddChampionVM : BaseVM
@@ -23,25 +24,50 @@ namespace MVVMMaui.VM
         }
         private ChampionManagerVM championManagerVM;
 
+        public AddChampionVM(ChampionManagerVM championManagerVM, ChampionVM champion)
+        {
+            this.championEditCopie = new ChampionVM(champion);
+            this.championManagerVM = championManagerVM;
+            ChampionsClass = new ReadOnlyObservableCollection<ClassVM>(championsClass);
+            LoadChampionsClass();
+            this.Selection = ChampionsClass.First();
+            name = ChampionEditCopie.Name;
+            this.titre = "Modifier le Champion";
+            this.status = "Modifier";
+            this.edit = false;
+
+            initCommand(false);
+        }
+
         public AddChampionVM(ChampionManagerVM championManagerVM)
 		{
             this.championEditCopie = new ChampionVM();
+            ChampionEditCopie.Image = "logolol.png";
+            ChampionEditCopie.Icon = "logo.png";
             championManagerVM.ChampionEdit = ChampionEditCopie;
             this.championManagerVM = championManagerVM;
             ChampionsClass = new ReadOnlyObservableCollection<ClassVM>(championsClass);
             LoadChampionsClass();
             this.Selection = ChampionsClass.First();
             name = ChampionEditCopie.Name;
+            this.titre = "Nouveau Champion";
+            this.status = "Ajouter";
+            this.edit = true;
+
+            initCommand(true);
+        }
+
+        private void initCommand(bool add)
+        {
             UpdateChampionCommand = new Command(execute: () =>
             {
                 ChampionEditCopie.Class = Selection.ChampionClassVM;
-                ChampionVM champion = new ChampionVM(Name, ChampionEditCopie);
-                championManagerVM.SaveChampionCommand.Execute(champion);
+                championManagerVM.SaveChampionCommand.Execute(add? new ChampionVM(Name, ChampionEditCopie):ChampionEditCopie);
                 Shell.Current.Navigation.PopAsync();
             });
             ResetChampionCommand = new Command(execute: () =>
             {
-                ChampionEditCopie = new ChampionVM(ChampionManagerVM.ChampionEdit);         
+                ChampionEditCopie = new ChampionVM(ChampionManagerVM.ChampionEdit);
             });
             AddCharacteristicCommand = new Command(execute: () =>
             {
@@ -84,18 +110,21 @@ namespace MVVMMaui.VM
 
         public string Titre
         {
-            get => "Nouveau Champion";
+            get => titre;
         }
+        private string titre;
 
         public string Status
         {
-            get => "Ajouter";
+            get => status;
         }
+        private string status;
 
         public bool Edit
         {
-            get => true;
+            get => edit;
         }
+        private bool edit;
 
         
 

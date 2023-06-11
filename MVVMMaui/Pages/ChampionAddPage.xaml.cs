@@ -18,7 +18,7 @@ public partial class ChampionAddPage : ContentPage
     public ChampionAddPage(ChampionVM championVM)
     {
         InitializeComponent();
-        BindingContext = new UpdateChampionVM(championManagerVM, championVM);
+        BindingContext = new AddChampionVM(championManagerVM, championVM);
 
     }
 
