@@ -43,6 +43,12 @@ namespace MVVMMaui.VM
             {
                 ChampionEditCopie = new ChampionVM(ChampionManagerVM.ChampionEdit);         
             });
+            AddCharacteristicCommand = new Command(execute: () =>
+            {
+                ChampionEditCopie.AddCharacteristicCommand.Execute(new KeyValuePair<string, int>(CharacteristicsValue, CharacteristicsKey));
+                CharacteristicsValue = "";
+                CharacteristicsKey = 0;
+            });
         }
 
         public ReadOnlyObservableCollection<ClassVM> ChampionsClass { get; private set; }
@@ -91,8 +97,7 @@ namespace MVVMMaui.VM
             get => true;
         }
 
-        private ClassVM selection;
-
+        
 
         public ClassVM Selection
         {
@@ -103,9 +108,33 @@ namespace MVVMMaui.VM
                 OnPropertyChanged(nameof(Selection));
             }
         }
+        private ClassVM selection;
+
+        public string CharacteristicsValue
+        {
+            get => characteristicsValue;
+            set
+            {
+                characteristicsValue = value;
+                OnPropertyChanged();
+            }
+        }
+        private string characteristicsValue = "";
+
+        public int CharacteristicsKey
+        {
+            get => characteristicsKey;
+            set
+            {
+                characteristicsKey = value;
+                OnPropertyChanged();
+            }
+        }
+        private int characteristicsKey = 0;
 
         public ICommand UpdateChampionCommand { get; set; }
         public ICommand ResetChampionCommand { get; set; }
+        public ICommand AddCharacteristicCommand { get; set; }
     }
 }
 

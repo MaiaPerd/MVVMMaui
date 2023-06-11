@@ -141,8 +141,8 @@
 
                     <VerticalStackLayout Grid.Column="1" Grid.Row="5">
                         <Border Stroke="{StaticResource Primary}">
-                            <ListView ItemsSource="{Binding Characteristics}"
-                                      MaximumHeightRequest="100"
+                            <ListView ItemsSource="{Binding ChampionEditCopie.Characteristics}"
+                                      HeightRequest="100"
                                       BackgroundColor="Transparent"
                                       SelectionMode="None"
                                       SeparatorVisibility="None">
@@ -180,7 +180,7 @@
                             <Button Text="+"
                                     Grid.Column="2" Grid.Row="0"
                                     CornerRadius="20"
-                                    Command="{Binding ChampionEditCopie.AddCharacteristicCommand}">
+                                    Command="{Binding AddCharacteristicCommand}">
                             </Button>
 
                         </Grid>

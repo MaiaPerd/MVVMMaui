@@ -41,7 +41,7 @@ namespace ViewModel
         public ChampionVM(ChampionVM championVM)
         {
             this.model = new Champion(name: championVM.Name, champClass: championVM.Model.Class, icon: championVM.Icon, image: championVM.Image, bio: championVM.Bio);
-            foreach (var characteristic in championVM.Model.Characteristics)
+            foreach (var characteristic in championVM.Characteristics)
             {
                 Model.AddCharacteristics(Tuple.Create(characteristic.Key, characteristic.Value));
             }
@@ -66,7 +66,7 @@ namespace ViewModel
         public ChampionVM(string name, ChampionVM championVM)
         {
             this.model = new Champion(name: name, champClass: championVM.Model.Class, icon: championVM.Icon, image: championVM.Image, bio: championVM.Bio);
-            foreach (var characteristic in championVM.Model.Characteristics)
+            foreach (var characteristic in championVM.Characteristics)
             {
                 Model.AddCharacteristics(Tuple.Create(characteristic.Key, characteristic.Value));
             }
@@ -84,15 +84,15 @@ namespace ViewModel
         public void commandDef()
         {
             AddCharacteristicCommand = new Command(
-             execute: () =>
+             execute: (characteristic) =>
              {
-                 Characteristics.Append(new KeyValuePair<string, int>("carac", 10));
+                 characteristics.Add((KeyValuePair<string, int>)characteristic);
              }
            );
             AddSkinsCommand = new Command(
                  execute: () =>
                  {
-                     Skins.Append(new SkinVM(new Skin(name: "Nouveau skin", champion: Model)));
+                     skins.Add(new SkinVM(new Skin(name: "Nouveau skin", champion: Model)));
                  }
                 );
         }
@@ -174,6 +174,7 @@ namespace ViewModel
 
         private void LoadCaracteristique()
         {
+            characteristics.Clear();
             foreach (var charact in Model.Characteristics)
             {
                 characteristics.Add(charact);
