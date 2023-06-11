@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Globalization;
+using CommunityToolkit.Maui.Converters;
 
 namespace MVVMMaui
 {
@@ -15,7 +16,18 @@ namespace MVVMMaui
             byte[] imageArray = System.IO.File.ReadAllBytes((string)value);
             return System.Convert.ToBase64String(imageArray);
         }
-        
+
+        public static string ImageSourceToBase64(ImageSource value)
+        {
+            byte[] imageArray = new ByteArrayToImageSourceConverter().ConvertBackTo(value);
+            if(imageArray == null)
+            {
+                return value.ToString();
+            }
+            return System.Convert.ToBase64String(imageArray);
+        }
+
+
     }
 }
 

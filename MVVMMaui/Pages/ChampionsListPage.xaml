@@ -27,26 +27,17 @@
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <ViewCell>
-                   
                         <SwipeView>
-                         <SwipeView.Behaviors>
-
-
-                         </SwipeView.Behaviors>
                             <SwipeView.RightItems>
                                 <SwipeItems>
-                                   
                                     <SwipeItem Text="Suprimer" Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:ListChampionsVM}}, Path=DeleteChampionCommand}"
                                                CommandParameter="{Binding}"
-                                              BackgroundColor="Red"  />
+                                               BackgroundColor="Red"  />
                                  
                                      <SwipeItem Text="Modifier" Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:ListChampionsVM}}, Path=UpdateChampionCommand}"
                                                CommandParameter="{Binding}"
-                                              BackgroundColor="Gray"  />
-                                 
-                                             
-                                </SwipeItems>
-                                
+                                               BackgroundColor="Gray"  />           
+                                </SwipeItems>                           
                             </SwipeView.RightItems>
                             <HorizontalStackLayout>
                                 <Image Source="{Binding Icon, Converter={StaticResource StringToImage}}" HeightRequest="40" WidthRequest="40" Margin="5,5"></Image>

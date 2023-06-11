@@ -3,22 +3,18 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="MVVMMaui.Pages.HomePage"
              Title="Home">
-    <VerticalStackLayout   VerticalOptions="Center" 
-            HorizontalOptions="Center" >
+    <VerticalStackLayout VerticalOptions="Center" 
+                         HorizontalOptions="Center">
         <Image Source="logolol.png" HeightRequest="150"></Image>
-        <Label 
-            Text="League of Legends Data"
-             VerticalOptions="Center" 
-            HorizontalOptions="Center"
-            FontSize="Title"
-          />
-          <Label 
-            Text="Find information about champions, skins and runes"
+        <Label Text="League of Legends Data"
                VerticalOptions="Center" 
-            HorizontalOptions="Center"
-              HorizontalTextAlignment="Center"
-            FontSize="Medium"
-              Padding="20"
-          />
+               HorizontalOptions="Center"
+               FontSize="Title" />
+          <Label Text="Find information about champions, skins and runes"
+                 VerticalOptions="Center" 
+                 HorizontalOptions="Center"
+                 HorizontalTextAlignment="Center"
+                 FontSize="Medium"
+                 Padding="20" />
     </VerticalStackLayout>
 </ContentPage>

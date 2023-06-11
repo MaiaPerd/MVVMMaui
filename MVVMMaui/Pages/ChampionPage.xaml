@@ -11,7 +11,6 @@
     </ContentPage.ToolbarItems>
     <ContentPage.Resources>
         <converter:StringToImageConverter x:Key="StringToImage"/>
-        <!--<toolkit:ItemTappedEventArgsConverter x:Key="ItemTappedEventArgsConverter" />-->
     </ContentPage.Resources> 
     <ScrollView>
         <VerticalStackLayout>
@@ -21,90 +20,83 @@
                     <Label Text="{Binding ChampionManagerVM.ChampionEdit.Name}" Style="{StaticResource TitreChampion}" Grid.Column="0"/>
                     <Label Text="{Binding ChampionManagerVM.ChampionEdit.Class}" Style="{StaticResource TextChampion}" VerticalTextAlignment="Center" Grid.Column="1"/>
                 </Grid>
-            <Label Text="{Binding ChampionManagerVM.ChampionEdit.Bio}" Style="{StaticResource TextChampion}"></Label>
-            <Label Text="Caractéristiques" Style="{StaticResource TitreChampion}"/>
-                    <CollectionView ItemsSource="{Binding ChampionManagerVM.ChampionEdit.Characteristics}" SelectionMode="None" MaximumHeightRequest="220">
-                        <CollectionView.ItemsLayout>
-                             <GridItemsLayout Orientation="Vertical"
-                                                Span="3"
-                                                VerticalItemSpacing="10"
-                                                HorizontalItemSpacing="10" />
-                         </CollectionView.ItemsLayout>
-                        <CollectionView.ItemTemplate>
-                            <DataTemplate>
-                                <Border Style="{StaticResource Characteristics}"  >
-                                     <VerticalStackLayout HorizontalOptions="Center" VerticalOptions="Center" >
-                                        <Label Text="{Binding Key}" Style="{StaticResource TextCaracteristics}"></Label>
-                                        <Label Text="{Binding Value}" Style="{StaticResource TextCaracteristics}"></Label>
-                                    </VerticalStackLayout>
+                <Label Text="{Binding ChampionManagerVM.ChampionEdit.Bio}" Style="{StaticResource TextChampion}"></Label>
+                <Label Text="Caractéristiques" Style="{StaticResource TitreChampion}"/>
+                        <CollectionView ItemsSource="{Binding ChampionManagerVM.ChampionEdit.Characteristics}" SelectionMode="None" MaximumHeightRequest="220">
+                            <CollectionView.ItemsLayout>
+                                 <GridItemsLayout Orientation="Vertical"
+                                                    Span="3"
+                                                    VerticalItemSpacing="10"
+                                                    HorizontalItemSpacing="10" />
+                             </CollectionView.ItemsLayout>
+                            <CollectionView.ItemTemplate>
+                                <DataTemplate>
+                                    <Border Style="{StaticResource Characteristics}"  >
+                                         <VerticalStackLayout HorizontalOptions="Center" VerticalOptions="Center" >
+                                            <Label Text="{Binding Key}" Style="{StaticResource TextCaracteristics}"></Label>
+                                            <Label Text="{Binding Value}" Style="{StaticResource TextCaracteristics}"></Label>
+                                        </VerticalStackLayout>
 
-                                </Border>
+                                    </Border>
                                
-                            </DataTemplate>
-                        </CollectionView.ItemTemplate>    
-                    </CollectionView>
-            <!--<views:CaracteristiquesView></views:CaracteristiquesView>-->
-            <Grid ColumnDefinitions="*,Auto">
-            <Label Grid.Column="0" 
-                Text="Compétences"
-               Style="{StaticResource TitreChampion}"/>
-                  <Button Text="+" Grid.Column="1" CornerRadius="20" Command="{Binding AddSkillChampionPageCommand}"
-                          Margin="4">
+                                </DataTemplate>
+                            </CollectionView.ItemTemplate>    
+                        </CollectionView>
+                <!--<views:CaracteristiquesView></views:CaracteristiquesView>-->
+                <Grid ColumnDefinitions="*,Auto">
+                    <Label Grid.Column="0" 
+                           Text="Compétences"
+                           Style="{StaticResource TitreChampion}"/>
+                      <Button Text="+" Grid.Column="1"
+                              CornerRadius="20"
+                              Command="{Binding AddSkillChampionPageCommand}"
+                              Margin="4">
                       </Button>
                 </Grid>
-                  <CollectionView ItemsSource="{Binding ChampionManagerVM.ChampionEdit.Skills}" SelectionMode="None"  MaximumHeightRequest="600">
-                        <CollectionView.ItemsLayout>
-                             <LinearItemsLayout Orientation="Vertical"
-                                                ItemSpacing="10" />
-                         </CollectionView.ItemsLayout>
-                        <CollectionView.ItemTemplate>
-                            <DataTemplate>
-                                <VerticalStackLayout>
-                                     <HorizontalStackLayout>
-                                           <Label Text="{Binding Name}" Style="{StaticResource SousTitreChampion}" VerticalTextAlignment="Center"></Label>
-                                    
-                                        <Label Text="{Binding Type}" Style="{StaticResource TextChampion}" VerticalTextAlignment="Center" Margin="10,0"></Label>
-                                     </HorizontalStackLayout>
-                                     <Label Text="{Binding Description}" Style="{StaticResource TextChampion}" ></Label>                     
-                                </VerticalStackLayout>                  
-                            </DataTemplate>
-                        </CollectionView.ItemTemplate>    
-                    </CollectionView>
+                <CollectionView ItemsSource="{Binding ChampionManagerVM.ChampionEdit.Skills}" SelectionMode="None"  MaximumHeightRequest="600">
+                    <CollectionView.ItemsLayout>
+                        <LinearItemsLayout Orientation="Vertical"
+                                           ItemSpacing="10" />
+                    </CollectionView.ItemsLayout>
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate>
+                            <VerticalStackLayout>
+                                <HorizontalStackLayout>
+                                    <Label Text="{Binding Name}" Style="{StaticResource SousTitreChampion}" VerticalTextAlignment="Center"></Label>
+                                    <Label Text="{Binding Type}" Style="{StaticResource TextChampion}" VerticalTextAlignment="Center" Margin="10,0"></Label>
+                                </HorizontalStackLayout>
+                                <Label Text="{Binding Description}" Style="{StaticResource TextChampion}" ></Label>                     
+                            </VerticalStackLayout>                  
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>    
+                </CollectionView>
 
-            <Grid ColumnDefinitions="*,Auto">
-            <Label Grid.Column="0" 
-                Text="Skins"
-               Style="{StaticResource TitreChampion}"/>
-                  <Button Text="+" Grid.Column="1" CornerRadius="20"
-                            Command="{Binding AddSkinChampionPageCommand}"
-                          Margin="4">
-               
+                <Grid ColumnDefinitions="*,Auto">
+                    <Label Grid.Column="0" 
+                           Text="Skins"
+                           Style="{StaticResource TitreChampion}"/>
+                      <Button Text="+" Grid.Column="1" CornerRadius="20"
+                              Command="{Binding AddSkinChampionPageCommand}"
+                              Margin="4">
                       </Button>
                 </Grid>
-                 <CollectionView ItemsSource="{Binding ChampionManagerVM.ChampionEdit.Skins}" SelectionMode="None" MaximumHeightRequest="220">
-                        <CollectionView.ItemsLayout>
-                             <LinearItemsLayout Orientation="Vertical"
-                                                ItemSpacing="10"/>
-                         </CollectionView.ItemsLayout>
-                        <CollectionView.ItemTemplate>
-                            <DataTemplate>
-                            <Border Style="{StaticResource Skins}"  >
-                                    <HorizontalStackLayout>
-                                        <Image Source="{Binding Icon, Converter={StaticResource StringToImage}}" HeightRequest="40" WidthRequest="40" Margin="10, 0"></Image>
-                                        <Label Text="{Binding Name}" Style="{StaticResource TextChampion}" VerticalTextAlignment="Center"></Label>
-                                    </HorizontalStackLayout>
-
-                                </Border>
-                               
-                                
-                            </DataTemplate>
-                        </CollectionView.ItemTemplate>    
-                    </CollectionView>
-
+                <CollectionView ItemsSource="{Binding ChampionManagerVM.ChampionEdit.Skins}" SelectionMode="None" MaximumHeightRequest="220">
+                    <CollectionView.ItemsLayout>
+                        <LinearItemsLayout Orientation="Vertical"
+                                           ItemSpacing="10"/>
+                    </CollectionView.ItemsLayout>
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate>
+                            <Border Style="{StaticResource Skins}">
+                                <HorizontalStackLayout>
+                                    <Image Source="{Binding Icon, Converter={StaticResource StringToImage}}" HeightRequest="40" WidthRequest="40" Margin="10, 0"></Image>
+                                    <Label Text="{Binding Name}" Style="{StaticResource TextChampion}" VerticalTextAlignment="Center"></Label>
+                                </HorizontalStackLayout>
+                            </Border>            
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>    
+                </CollectionView>
             </VerticalStackLayout>
-       
         </VerticalStackLayout>
-
     </ScrollView>
-   
 </ContentPage>

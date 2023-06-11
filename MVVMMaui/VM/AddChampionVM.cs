@@ -5,7 +5,6 @@ using Model;
 using MVVM;
 using ViewModel;
 
-//x:DataType="viewmodel:ChampionVM"
 namespace MVVMMaui.VM
 {
 	public class AddChampionVM : BaseVM
@@ -42,8 +41,8 @@ namespace MVVMMaui.VM
         public AddChampionVM(ChampionManagerVM championManagerVM)
 		{
             this.championEditCopie = new ChampionVM();
-            ChampionEditCopie.Image = "logolol.png";
-            ChampionEditCopie.Icon = "logo.png";
+            ChampionEditCopie.Image = StringToImageConverter.ImageSourceToBase64(ImageSource.FromResource("logolol.png"));
+            ChampionEditCopie.Icon = StringToImageConverter.ImageSourceToBase64(ImageSource.FromResource("logo.png"));
             championManagerVM.ChampionEdit = ChampionEditCopie;
             this.championManagerVM = championManagerVM;
             ChampionsClass = new ReadOnlyObservableCollection<ClassVM>(championsClass);
