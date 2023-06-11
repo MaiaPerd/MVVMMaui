@@ -79,6 +79,7 @@ namespace ViewModel
             DeleteChampionCommand = new Command(execute: (championVM) =>
             {
                 dataManager.ChampionsMgr.DeleteItem(((ChampionVM)championVM).Model);
+                LoadChampions(Index, Count);
             });
         }
 

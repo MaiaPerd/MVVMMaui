@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:converter="clr-namespace:MVVMMaui"
              xmlns:view="clr-namespace:MVVMMaui.Views"
+             xmlns:viewmodel="clr-namespace:MVVMMaui.VM"
              xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
              x:Class="MVVMMaui.Pages.ChampionsListPage"
              Title="Champions">
@@ -26,6 +27,7 @@
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <ViewCell>
+                   
                         <SwipeView>
                          <SwipeView.Behaviors>
 
@@ -33,7 +35,7 @@
                          </SwipeView.Behaviors>
                             <SwipeView.RightItems>
                                 <SwipeItems>
-                                    <SwipeItemView Command="{Binding DeleteChampionCommand}"
+                                    <SwipeItemView Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:ListChampionsVM}}, Path=DeleteChampionCommand}"
                                                CommandParameter="{Binding}">
                                   
                                         <Label Text="Suprimer"

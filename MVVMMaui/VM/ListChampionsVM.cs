@@ -43,16 +43,24 @@ namespace MVVMMaui.VM
                     Shell.Current.Navigation.PushAsync(new ChampionAddPage(champion));
                 }
                );
+            DeleteChampionCommand = new Command<ChampionVM>(execute: async (ChampionVM champion) =>
+            {
+                bool answer = await Shell.Current.DisplayAlert("Delete", "Voulez vous supprimer: "+champion.Name, "Oui", "Non");
+                if (answer) {
+                    ChampionManagerVM.DeleteChampionCommand.Execute(champion);
+                }
+            }
+               );
         }
 
         public ICommand UpdateChampionCommand { get; private set; }
 
         public ICommand ItemTappedCommand { get; private set; }
-        
+
+        public ICommand DeleteChampionCommand { get; private set; }
 
         public ICommand NavigationAddChampionPageCommand { get; private set; }
-
-
+        
 
     }
 }
