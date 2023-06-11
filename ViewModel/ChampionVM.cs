@@ -89,16 +89,23 @@ namespace ViewModel
                  characteristics.Add((KeyValuePair<string, int>)characteristic);
              }
            );
-            AddSkinsCommand = new Command(
-                 execute: () =>
+            AddSkinCommand = new Command(
+                 execute: (name) =>
                  {
-                     skins.Add(new SkinVM(new Skin(name: "Nouveau skin", champion: Model)));
+                     skins.Add(new SkinVM(new Skin(name: (string)name, champion: Model)));
                  }
                 );
+            AddSkillCommand = new Command(
+               execute: (name) =>
+               {
+                   skills.Add(new SkillVM(new Skill(name: (string)name, type: SkillType.Basic)));
+               }
+              );
         }
 
         public ICommand AddCharacteristicCommand { get; set; }
-        public ICommand AddSkinsCommand { get; set; }
+        public ICommand AddSkinCommand { get; set; }
+        public ICommand AddSkillCommand { get; set; }
 
 
         public string Name

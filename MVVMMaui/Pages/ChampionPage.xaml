@@ -3,7 +3,6 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="MVVMMaui.Pages.ChampionPage"
              xmlns:views="clr-namespace:MVVMMaui.Views"
-             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
              xmlns:converter="clr-namespace:MVVMMaui" 
              BackgroundColor="{StaticResource Gray950}"
              Title="ChampionPage">
@@ -18,10 +17,10 @@
         <VerticalStackLayout>
             <Image Source="{Binding ChampionManagerVM.ChampionEdit.Image, Converter={StaticResource StringToImage}}" HeightRequest="220"></Image>
             <VerticalStackLayout Padding="10,5">
-                <HorizontalStackLayout>
-                    <Label Text="{Binding ChampionManagerVM.ChampionEdit.Name}" Style="{StaticResource TitreChampion}" />
-                    <Label Text="{Binding ChampionManagerVM.ChampionEdit.Class}" Style="{StaticResource TextChampion}" VerticalTextAlignment="Center" Margin="130,0,0,0"/>
-                </HorizontalStackLayout>
+                <Grid ColumnDefinitions="*, Auto">
+                    <Label Text="{Binding ChampionManagerVM.ChampionEdit.Name}" Style="{StaticResource TitreChampion}" Grid.Column="0"/>
+                    <Label Text="{Binding ChampionManagerVM.ChampionEdit.Class}" Style="{StaticResource TextChampion}" VerticalTextAlignment="Center" Grid.Column="1"/>
+                </Grid>
             <Label Text="{Binding ChampionManagerVM.ChampionEdit.Bio}" Style="{StaticResource TextChampion}"></Label>
             <Label Text="Caractéristiques" Style="{StaticResource TitreChampion}"/>
                     <CollectionView ItemsSource="{Binding ChampionManagerVM.ChampionEdit.Characteristics}" SelectionMode="None" MaximumHeightRequest="220">
@@ -45,10 +44,14 @@
                         </CollectionView.ItemTemplate>    
                     </CollectionView>
             <!--<views:CaracteristiquesView></views:CaracteristiquesView>-->
-            <Label 
+            <Grid ColumnDefinitions="*,Auto">
+            <Label Grid.Column="0" 
                 Text="Compétences"
-                Style="{StaticResource TitreChampion}"/>
-
+               Style="{StaticResource TitreChampion}"/>
+                  <Button Text="+" Grid.Column="1" CornerRadius="20" Command="{Binding AddSkillChampionPageCommand}"
+                          Margin="4">
+                      </Button>
+                </Grid>
                   <CollectionView ItemsSource="{Binding ChampionManagerVM.ChampionEdit.Skills}" SelectionMode="None"  MaximumHeightRequest="600">
                         <CollectionView.ItemsLayout>
                              <LinearItemsLayout Orientation="Vertical"
@@ -73,12 +76,9 @@
                 Text="Skins"
                Style="{StaticResource TitreChampion}"/>
                   <Button Text="+" Grid.Column="1" CornerRadius="20"
+                            Command="{Binding AddSkinChampionPageCommand}"
                           Margin="4">
-                <Button.Behaviors>
-                <toolkit:EventToCommandBehavior EventName="Clicked"
-                                                Command="{Binding ChampionManagerVM.ChampionEdit.AddSkinsCommand}"
-                                                EventArgsConverter="{StaticResource ItemTappedEventArgsConverter}" />
-            </Button.Behaviors>
+               
                       </Button>
                 </Grid>
                  <CollectionView ItemsSource="{Binding ChampionManagerVM.ChampionEdit.Skins}" SelectionMode="None" MaximumHeightRequest="220">
