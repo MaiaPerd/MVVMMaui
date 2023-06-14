@@ -11,24 +11,12 @@ using ViewModel.converteur;
 
 namespace ViewModel
 {
-	public class ChampionVM : BaseVM
+	public class ChampionVM : BaseGenericVM<Champion>
     {
-        // Faire une classe génerique avec ça
-        public Champion Model
-        {
-            get => model;
-            set
-            {
-                if (model.Equals(value)) return;
-                model = value;
-                OnPropertyChanged();
-            }
-        }
-        private Champion model;
 
         public ChampionVM(Champion model)
 		{
-			this.model = model;
+			Model = model;
             Characteristics = new ReadOnlyObservableCollection<KeyValuePair<string, int>>(characteristics);
             LoadCaracteristique();
             Skins = new ReadOnlyObservableCollection<SkinVM>(skins);
@@ -40,7 +28,7 @@ namespace ViewModel
 
         public ChampionVM(ChampionVM championVM)
         {
-            this.model = new Champion(name: championVM.Name, champClass: championVM.Model.Class, icon: championVM.Icon, image: championVM.Image, bio: championVM.Bio);
+            Model = new Champion(name: championVM.Name, champClass: championVM.Model.Class, icon: championVM.Icon, image: championVM.Image, bio: championVM.Bio);
             foreach (var characteristic in championVM.Characteristics)
             {
                 Model.AddCharacteristics(Tuple.Create(characteristic.Key, characteristic.Value));
@@ -54,7 +42,7 @@ namespace ViewModel
 
         public ChampionVM()
         {
-            this.model = new Champion(name: "Nouveau");
+            Model = new Champion(name: "Nouveau");
             Characteristics = new ReadOnlyObservableCollection<KeyValuePair<string, int>>(characteristics);
             Skins = new ReadOnlyObservableCollection<SkinVM>(skins);
             Skills = new ReadOnlyObservableCollection<SkillVM>(skills);
@@ -63,7 +51,7 @@ namespace ViewModel
 
         public ChampionVM(string name, ChampionVM championVM)
         {
-            this.model = new Champion(name: name, champClass: championVM.Model.Class, icon: championVM.Icon, image: championVM.Image, bio: championVM.Bio);
+            Model = new Champion(name: name, champClass: championVM.Model.Class, icon: championVM.Icon, image: championVM.Image, bio: championVM.Bio);
             foreach (var characteristic in championVM.Characteristics)
             {
                 Model.AddCharacteristics(Tuple.Create(characteristic.Key, characteristic.Value));
@@ -76,7 +64,6 @@ namespace ViewModel
             LoadSkills();
             commandDef();
         }
-        // Jusque la
 
 
         public void commandDef()
@@ -136,7 +123,6 @@ namespace ViewModel
                 if (Model == null || Model.Icon == value) return;
                 Model.Icon = value;
                 OnPropertyChanged();
-                //OnPropertyChanged(nameof(Name)); Fais changer d'autre propriéter force le binding
             }
         }
 
@@ -149,7 +135,6 @@ namespace ViewModel
                 if (Model == null || Model.Image.Base64 == value) return;
                 Model.Image.Base64 = value;
                 OnPropertyChanged();
-                //OnPropertyChanged(nameof(Name)); Fais changer d'autre propriéter force le binding
             }
         }
 

@@ -5,23 +5,11 @@ using MVVM;
 
 namespace ViewModel
 {
-	public class SkillVM : BaseVM
+	public class SkillVM : BaseGenericVM<Skill>
 	{
-        public Skill Model
-        {
-            get => model;
-            set
-            {
-                if (model.Equals(value)) return;
-                model = value;
-                OnPropertyChanged();
-            }
-        }
-        private Skill model;
-
         public SkillVM(Skill model)
 		{
-            this.model = model;
+            Model = model;
         }
 
         public string Name

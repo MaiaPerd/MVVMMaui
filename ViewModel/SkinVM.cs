@@ -4,23 +4,12 @@ using MVVM;
 
 namespace ViewModel
 {
-	public class SkinVM : BaseVM
+	public class SkinVM : BaseGenericVM<Skin>
 	{
-        public Skin Model
-        {
-            get => model;
-            set
-            {
-                if (model.Equals(value)) return;
-                model = value;
-                OnPropertyChanged();
-            }
-        }
-        private Skin model;
 
         public SkinVM(Skin model)
         {
-            this.model = model;
+            Model = model;
         }
 
         public string Name
