@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.ObjectModel;
+using System.Globalization;
 using System.Windows.Input;
 using Model;
 using MVVM;
@@ -29,7 +30,7 @@ namespace MVVMMaui.VM
             this.championManagerVM = championManagerVM;
             ChampionsClass = new ReadOnlyObservableCollection<ClassVM>(championsClass);
             LoadChampionsClass();
-            this.Selection = ChampionsClass.First();
+            this.Selection = new ClassVM(ChampionEditCopie.Class);
             name = ChampionEditCopie.Name;
             this.titre = "Modifier le Champion";
             this.status = "Modifier";
@@ -41,8 +42,13 @@ namespace MVVMMaui.VM
         public AddChampionVM(ChampionManagerVM championManagerVM)
 		{
             this.championEditCopie = new ChampionVM();
-            ChampionEditCopie.Image = StringToImageConverter.ImageSourceToBase64(ImageSource.FromResource("logolol.png"));
-            ChampionEditCopie.Icon = StringToImageConverter.ImageSourceToBase64(ImageSource.FromResource("logo.png"));
+            var converter = new StringToImageConverter();
+            using FileStream fs = File.OpenRead("logolol.png");
+            ImageSource image = ImageSource.FromStream(() => fs);
+            ChampionEditCopie.Image = (string)converter.ConvertBack(image, null, null, CultureInfo.CurrentCulture);
+            using FileStream fs2 = File.OpenRead("logo.png");
+            ImageSource icon = ImageSource.FromStream(() => fs2);
+            ChampionEditCopie.Icon = (string)converter.ConvertBack(icon, null, null, CultureInfo.CurrentCulture);
             championManagerVM.ChampionEdit = ChampionEditCopie;
             this.championManagerVM = championManagerVM;
             ChampionsClass = new ReadOnlyObservableCollection<ClassVM>(championsClass);
@@ -77,33 +83,52 @@ namespace MVVMMaui.VM
             ImageChangeCommand = new Command(execute: async () =>
             {
 
-                FileResult image = await PickAndShow();
-                
+                string image = await PickAndShow();
+                if(image != null)
+                {
+                    ChampionEditCopie.Image = image;
+                }
                 
             });
             IconChangeCommand = new Command(execute: async () =>
             {
-                PickAndShow();
+                string image = await PickAndShow();
+                if (image != null)
+                {
+                    ChampionEditCopie.Icon = image;
+                }
             });
 
         }
 
-        public async Task<FileResult> PickAndShow()
+        public async Task<String> PickAndShow()
         {
             try
             {
                 var result = await FilePicker.Default.PickAsync(PickOptions.Images);
                 if (result != null)
                 {
-                    if (result.FileName.EndsWith("jpg", StringComparison.OrdinalIgnoreCase) ||
-                        result.FileName.EndsWith("png", StringComparison.OrdinalIgnoreCase))
-                    {
-                        using var stream = await result.OpenReadAsync();
-                        var image = ImageSource.FromStream(() => stream);
-                    }
+                    using var stream = await result.OpenReadAsync();
+                    var image = ImageSource.FromStream(() => stream);
+                    var converter = new StringToImageConverter();
+                    return (string)converter.ConvertBack(image, null, null, CultureInfo.CurrentCulture);
                 }
+                return null;
+               /* if (MediaPicker.Default.IsCaptureSupported)
+                {
+                    FileResult photo = await MediaPicker.Default.CapturePhotoAsync();
 
-                return result;
+                    if (photo != null)
+                    {
+                        // save the file into local storage
+                        string localFilePath = Path.Combine(FileSystem.CacheDirectory, photo.FileName);
+
+                        using Stream sourceStream = await photo.OpenReadAsync();
+                        using FileStream localFileStream = File.OpenWrite(localFilePath);
+
+                        await sourceStream.CopyToAsync(localFileStream);
+                    }
+                }*/
             }
             catch (Exception ex)
             {

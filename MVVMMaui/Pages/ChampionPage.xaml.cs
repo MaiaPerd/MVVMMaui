@@ -14,9 +14,4 @@ public partial class ChampionPage : ContentPage
         BindingContext = new PageChampionVM(championManagerVM);
     }
 
-    void ToolbarItem_Clicked(System.Object sender, System.EventArgs e)
-    {
-        Navigation.PushAsync(new ChampionAddPage((ChampionVM) BindingContext));
-    }
-
 }

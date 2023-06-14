@@ -15,8 +15,6 @@ namespace ViewModel
 
         public ChampionVM ChampionEdit
         {
-            //set { SetProperty(ref championEdit, value); }
-            //get { return championEdit; }
             get => championEdit;
             set
             {
@@ -71,6 +69,7 @@ namespace ViewModel
                 {
                     dataManager.ChampionsMgr.UpdateItem(((ChampionVM)old.First()).Model, ((ChampionVM)championVM).Model);          
                 }
+                ChampionEdit = (ChampionVM)championVM;
                 Index = IndexMax;
                 LoadChampions(Index, Count);
 

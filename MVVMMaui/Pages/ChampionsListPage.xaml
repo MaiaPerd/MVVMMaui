@@ -9,7 +9,7 @@
              Title="Champions">
 
     <ContentPage.ToolbarItems>
-        <ToolbarItem Text="Ajouter" Clicked="ToolbarItem_Clicked"/>
+        <ToolbarItem Text="Ajouter" Command="{Binding NavigationAddChampionPageCommand}"/>
     </ContentPage.ToolbarItems>
     <ContentPage.Resources>
         <converter:StringToImageConverter x:Key="StringToImage"/>

@@ -1,32 +1,28 @@
 ﻿using System;
 using System.Globalization;
 using CommunityToolkit.Maui.Converters;
+using System.IO;
+using System.Threading;
+using Microsoft.Maui.Controls;
 
 namespace MVVMMaui
 {
-	public class StringToImageConverter : IValueConverter
+	public class StringToImageConverter : ByteArrayToImageSourceConverter, IValueConverter
     {
 	    public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            return (ImageSource) ImageSource.FromStream(() => new MemoryStream(System.Convert.FromBase64String((string)value)));
+            return ConvertFrom(System.Convert.FromBase64String((string)value));
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            byte[] imageArray = System.IO.File.ReadAllBytes((string)value);
-            return System.Convert.ToBase64String(imageArray);
-        }
-
-        public static string ImageSourceToBase64(ImageSource value)
-        {
-            byte[] imageArray = new ByteArrayToImageSourceConverter().ConvertBackTo(value);
-            if(imageArray == null)
+            var convertValue = ConvertBackTo(value as ImageSource);
+            if(convertValue == null)
             {
-                return value.ToString();
+                return "";
             }
-            return System.Convert.ToBase64String(imageArray);
+            return System.Convert.ToBase64String(convertValue);
         }
-
 
     }
 }

@@ -47,10 +47,8 @@ namespace ViewModel
             }
             Characteristics = new ReadOnlyObservableCollection<KeyValuePair<string, int>>(characteristics);
             LoadCaracteristique();
-            Skins = new ReadOnlyObservableCollection<SkinVM>(skins);
-            LoadSkins();
-            Skills = new ReadOnlyObservableCollection<SkillVM>(skills);
-            LoadSkills();
+            Skins = championVM.Skins;
+            Skills = championVM.Skills;
             commandDef();
         }
 

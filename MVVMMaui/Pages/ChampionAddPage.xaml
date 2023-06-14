@@ -64,7 +64,10 @@
      
                     <ImageButton Source="{Binding ChampionEditCopie.Icon, Converter={StaticResource StringToImage}}"
                                  Grid.Column="1" Grid.Row="1"
-                                 Command="{Binding IconChangeCommand}">
+                                 Command="{Binding IconChangeCommand}"
+                                 BackgroundColor="{StaticResource Beige}"
+                                 WidthRequest="50"
+                                 Margin="10">
                     </ImageButton>
 
                     <Label Text="Image: "
@@ -74,8 +77,11 @@
 
                     <ImageButton Source="{Binding ChampionEditCopie.Image, Converter={StaticResource StringToImage}}"
                                  Command="{Binding ImageChangeCommand}"
-                           HeightRequest="100"
-                           Grid.Column="1" Grid.Row="2"></ImageButton>
+                                 HeightRequest="100"
+                                 Grid.Column="1" Grid.Row="2"
+                                 BackgroundColor="{StaticResource Beige}"
+                                 WidthRequest="300"
+                                 Margin="10"></ImageButton>
 
                     <Label Text="Bio: "
                            Style="{StaticResource TextChampion}"
@@ -95,7 +101,6 @@
                            VerticalOptions="Center"
                            Grid.Column="0" Grid.Row="4"/>
  
-         
                    
                     <VerticalStackLayout
                           Grid.Column="1" Grid.Row="4" VerticalOptions="Center"
