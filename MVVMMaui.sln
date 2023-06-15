@@ -13,11 +13,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "StubLib", "StubLib", "{4EB0
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Shared", "Shared", "{4322693F-3BB0-47FD-929C-7ADC2711D20D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shared", "..\MVVM_custom_LoL\Sources\Shared\Shared.csproj", "{C88B1C66-1A6C-40BB-BE2B-78361D9DE21F}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shared", "Shared\Shared.csproj", "{C88B1C66-1A6C-40BB-BE2B-78361D9DE21F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StubLib", "..\MVVM_custom_LoL\Sources\StubLib\StubLib.csproj", "{D42013B1-757B-4D88-9547-78B6675E3CE0}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StubLib", "StubLib\StubLib.csproj", "{D42013B1-757B-4D88-9547-78B6675E3CE0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleTests", "..\MVVM_custom_LoL\Sources\Tests\ConsoleTests\ConsoleTests.csproj", "{5EA31CEE-A375-4097-970A-DC615C49BA3B}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleTests", "Tests\ConsoleTests\ConsoleTests.csproj", "{5EA31CEE-A375-4097-970A-DC615C49BA3B}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MVVM", "MVVM\MVVM.csproj", "{9C745ED9-66B2-4C55-BC65-F7881CA71B05}"
 EndProject

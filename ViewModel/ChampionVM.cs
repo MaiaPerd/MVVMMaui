@@ -23,21 +23,11 @@ namespace ViewModel
             LoadSkins();
             Skills = new ReadOnlyObservableCollection<SkillVM>(skills);
             LoadSkills();
-            commandDef();
+            CommandDef();
         }
 
-        public ChampionVM(ChampionVM championVM)
+        public ChampionVM(ChampionVM championVM) : this(championVM.Name, championVM)
         {
-            Model = new Champion(name: championVM.Name, champClass: championVM.Model.Class, icon: championVM.Icon, image: championVM.Image, bio: championVM.Bio);
-            foreach (var characteristic in championVM.Characteristics)
-            {
-                Model.AddCharacteristics(Tuple.Create(characteristic.Key, characteristic.Value));
-            }
-            Characteristics = new ReadOnlyObservableCollection<KeyValuePair<string, int>>(characteristics);
-            LoadCaracteristique();
-            Skins = championVM.Skins;
-            Skills = championVM.Skills;
-            commandDef();
         }
 
         public ChampionVM()
@@ -46,7 +36,7 @@ namespace ViewModel
             Characteristics = new ReadOnlyObservableCollection<KeyValuePair<string, int>>(characteristics);
             Skins = new ReadOnlyObservableCollection<SkinVM>(skins);
             Skills = new ReadOnlyObservableCollection<SkillVM>(skills);
-            commandDef();
+            CommandDef();
         }
 
         public ChampionVM(string name, ChampionVM championVM)
@@ -59,14 +49,20 @@ namespace ViewModel
             Characteristics = new ReadOnlyObservableCollection<KeyValuePair<string, int>>(characteristics);
             LoadCaracteristique();
             Skins = new ReadOnlyObservableCollection<SkinVM>(skins);
-            LoadSkins();
+            foreach (var skin in championVM.Skins)
+            {
+                skins.Add(skin);
+            }
             Skills = new ReadOnlyObservableCollection<SkillVM>(skills);
-            LoadSkills();
-            commandDef();
+            foreach (var skill in championVM.Skills)
+            {
+                skills.Add(skill);
+            }
+            CommandDef();
         }
 
 
-        public void commandDef()
+        public void CommandDef()
         {
             AddCharacteristicCommand = new Command(
              execute: (characteristic) =>
@@ -75,9 +71,9 @@ namespace ViewModel
              }
            );
             AddSkinCommand = new Command(
-                 execute: (name) =>
+                 execute: (skin) =>
                  {
-                     skins.Add(new SkinVM(new Skin(name: (string)name, champion: Model)));
+                     skins.Add((SkinVM) skin);
                  }
                 );
             AddSkillCommand = new Command(
@@ -95,7 +91,7 @@ namespace ViewModel
 
         public string Name
 		{
-			get => Model.Name;
+			get => Model?.Name;
 		}
 
 		public string Bio
@@ -182,6 +178,19 @@ namespace ViewModel
                 skins.Add(new SkinVM(skin));
             }
             // A trier dans l'ordre alphabétique
+        }
+
+        SkinVM skinEdit;
+
+        public SkinVM SkinEdit
+        {
+            get => skinEdit;
+            set
+            {
+                if (skinEdit == value) return;
+                skinEdit = value;
+                OnPropertyChanged();
+            }
         }
 
         public ReadOnlyObservableCollection<SkillVM> Skills { get; private set; }

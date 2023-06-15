@@ -36,7 +36,7 @@ namespace MVVMMaui.VM
             this.status = "Modifier";
             this.edit = false;
 
-            initCommand(false);
+            InitCommand(false);
         }
 
         public AddChampionVM(ChampionManagerVM championManagerVM)
@@ -59,10 +59,10 @@ namespace MVVMMaui.VM
             this.status = "Ajouter";
             this.edit = true;
 
-            initCommand(true);
+            InitCommand(true);
         }
 
-        private void initCommand(bool add)
+        private void InitCommand(bool add)
         {
             UpdateChampionCommand = new Command(execute: () =>
             {

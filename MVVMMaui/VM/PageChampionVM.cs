@@ -33,13 +33,9 @@ namespace MVVMMaui.VM
             }
             );
             AddSkinChampionPageCommand = new Command(
-            execute: async () =>
+            execute: () =>
             {
-                string name = await Shell.Current.DisplayPromptAsync("New skin", "Nom du skin: ");
-                if(name != null)
-                {
-                    championManagerVM.ChampionEdit.AddSkinCommand.Execute(name);
-                }
+                Shell.Current.Navigation.PushAsync(new SkinAddPage());
             }
             ); 
         }

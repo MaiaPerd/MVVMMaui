@@ -1,0 +1,95 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MVVMMaui.Pages.SkinAddPage"
+             BackgroundColor="{StaticResource Gray950}"
+             Title="SkinAddPage">
+    <FlexLayout Direction="Column">
+
+        <VerticalStackLayout Grid.Row="0">
+            <Label Text="{Binding Titre}"
+                   HorizontalOptions="Center"
+                   Style="{StaticResource TitreChampion}"></Label>
+            <Line BackgroundColor="{StaticResource Primary}"></Line>
+        </VerticalStackLayout>
+
+        <FlexLayout FlexLayout.Grow="1">
+            <ScrollView >
+                <Grid ColumnDefinitions="60, *"
+                      RowDefinitions="Auto,Auto,Auto,Auto,Auto">
+                   
+                    <Label Text="Nom: "
+                           Style="{StaticResource TextChampion}"
+                           VerticalOptions="Center"
+                           Grid.Column="0" Grid.Row="0"></Label>
+                    <Entry Placeholder="{Binding SkinEditCopie.Name}"
+                           Text="{Binding Name}"
+                           WidthRequest="300"
+                           IsEnabled="{Binding Edit}"
+                           Style="{StaticResource EditChampion}"
+                           Grid.Column="1" Grid.Row="0"></Entry>
+             
+                    <Label Text="Icon: "
+                           Style="{StaticResource TextChampion}"
+                           VerticalOptions="Center"
+                           Grid.Column="0" Grid.Row="1"></Label>
+     
+                    <ImageButton Source="{Binding SkinEditCopie.Icon, Converter={StaticResource StringToImage}}"
+                                 Grid.Column="1" Grid.Row="1"
+                                 Command="{Binding IconChangeCommand}"
+                                 BackgroundColor="{StaticResource Beige}"
+                                 WidthRequest="50"
+                                 Margin="10">
+                    </ImageButton>
+
+                    <Label Text="Image: "
+                           Style="{StaticResource TextChampion}"
+                           VerticalOptions="Center"
+                           Grid.Column="0" Grid.Row="2"></Label>
+
+                    <ImageButton Source="{Binding SkinEditCopie.Image, Converter={StaticResource StringToImage}}"
+                                 Command="{Binding ImageChangeCommand}"
+                                 HeightRequest="100"
+                                 Grid.Column="1" Grid.Row="2"
+                                 BackgroundColor="{StaticResource Beige}"
+                                 WidthRequest="300"
+                                 Margin="10"></ImageButton>
+
+                    <Label Text="Price: "
+                           Style="{StaticResource TextChampion}"
+                           VerticalOptions="Center"
+                           Grid.Column="0" Grid.Row="3"></Label>
+                    <Entry Placeholder="{Binding SkinEditCopie.Price}"
+                           Text="{Binding SkinEditCopie.Price}"
+                           WidthRequest="300"
+                           Style="{StaticResource EditChampion}"
+                           Grid.Column="1" Grid.Row="3"></Entry>
+
+                    <Label Text="Description: "
+                           Style="{StaticResource TextChampion}"
+                           VerticalOptions="Center"         
+                           Grid.Column="0" Grid.Row="4"></Label>
+
+                    <Editor Text="{Binding SkinEditCopie.Description}"
+                            AutoSize="TextChanges"
+                            HeightRequest="200"
+                            WidthRequest="300"
+                            Placeholder="{Binding SkinEditCopie.Description}"
+                            Style="{StaticResource EditorChampion}"
+                            Grid.Column="1" Grid.Row="4"/>
+             
+             
+                   
+                 </Grid>
+          
+            </ScrollView>
+
+        </FlexLayout>
+
+        <HorizontalStackLayout Padding="5" HorizontalOptions="Center">
+            <Button Text="{Binding Status}" Margin="10, 5"  Command="{Binding UpdateSkinCommand}" CommandParameter="{Binding SkinEditCopie}"></Button>
+            <Button Text="Annuler" Margin="10, 5" Command="{Binding ResetSkinCommand}"></Button>
+        </HorizontalStackLayout>
+    </FlexLayout>
+       
+</ContentPage>
