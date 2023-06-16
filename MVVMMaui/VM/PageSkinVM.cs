@@ -1,16 +1,14 @@
 ﻿using System;
 using System.Windows.Input;
+using CommunityToolkit.Mvvm.ComponentModel;
 using MVVMMaui.Pages;
 using ViewModel;
 
 namespace MVVMMaui.VM
 {
-	public class PageSkinVM
+	public partial class PageSkinVM : ObservableObject
 	{
-        public SkinVM Skin
-        {
-            get => skin;
-        }
+        [ObservableProperty]
         private SkinVM skin;
 
         public PageSkinVM(SkinVM skinVM)

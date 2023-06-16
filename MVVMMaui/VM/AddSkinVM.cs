@@ -6,16 +6,11 @@ using ViewModel;
 
 namespace MVVMMaui.VM
 {
-	public class AddSkinVM : ObservableObject
+	public partial class AddSkinVM : ObservableObject
     {
 
-        SkinVM skinEditCopie;
-
-        public SkinVM SkinEditCopie
-        {
-            set { SetProperty(ref skinEditCopie, value); }
-            get { return skinEditCopie; }
-        }
+        [ObservableProperty]
+        private SkinVM skinEditCopie;
 
         public AddSkinVM(ChampionManagerVM championManagerVM, SkinVM skin)
 		{
@@ -53,38 +48,18 @@ namespace MVVMMaui.VM
         public ICommand UpdateSkinCommand { get; set; }
         public ICommand ResetSkinCommand { get; set; }
 
-
-        public string Name
-        {
-            get => name;
-            set
-            {
-                if (name != value)
-                {
-                    name = value;
-                    OnPropertyChanged();
-                }
-            }
-        }
+        [ObservableProperty]
         private string name;
 
-        public string Titre
-        {
-            get => titre;
-        }
+        [ObservableProperty]
         private string titre;
 
-        public string Status
-        {
-            get => status;
-        }
+        [ObservableProperty]
         private string status;
 
-        public bool Edit
-        {
-            get => edit;
-        }
+        [ObservableProperty]
         private bool edit;
+
     }
 }
 

@@ -9,20 +9,10 @@ using CommunityToolkit.Mvvm.ComponentModel;
 
 namespace ViewModel
 {
-    public class ChampionManagerVM : ObservableObject
+    public partial class ChampionManagerVM : ObservableObject
     {
-        ChampionVM championEdit;
-
-        public ChampionVM ChampionEdit
-        {
-            get => championEdit;
-            set
-            {
-                if (championEdit == value) return;
-                championEdit = value;
-                OnPropertyChanged();
-            }
-        }
+        [ObservableProperty]
+        private ChampionVM championEdit;
 
         public ReadOnlyObservableCollection<ChampionVM> Champions { get; private set; }
    
@@ -108,16 +98,7 @@ namespace ViewModel
             }
         }
 
-        public int Index
-        {
-           get => index;
-           set
-           {
-               if (index == value) return;
-               index = value;
-               OnPropertyChanged();
-           }
-        }
+        [ObservableProperty]
         private int index;
 
         public int IndexMax
@@ -132,18 +113,8 @@ namespace ViewModel
         }
         private int indexMax;
 
-        public int Count
-        {
-            get => count;
-            set
-            {
-                if (count == value) return;
-                count = value;
-                OnPropertyChanged();
-            }
-        }
+        [ObservableProperty]
         private int count;
-
 
         public async Task LoadChampions(int index, int count)
         {

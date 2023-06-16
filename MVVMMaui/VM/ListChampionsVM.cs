@@ -7,20 +7,13 @@ using ViewModel;
 
 namespace MVVMMaui.VM
 {
-	public class ListChampionsVM : ObservableObject
+	public partial class ListChampionsVM : ObservableObject
     {
-        public ChampionVM ItemSelected
-        {
-            set { SetProperty(ref itemSelected, value); }
-            get { return itemSelected; }
 
-        }
+        [ObservableProperty]
         private ChampionVM itemSelected;
 
-        public ChampionManagerVM ChampionManagerVM
-        {
-            get => championManagerVM;
-        }
+        [ObservableProperty]
         private ChampionManagerVM championManagerVM;
 
         public ListChampionsVM(ChampionManagerVM championManagerVM)

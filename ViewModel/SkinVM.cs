@@ -5,21 +5,11 @@ using Model;
 
 namespace ViewModel
 {
-	public class SkinVM : ObservableObject
+	public partial class SkinVM : ObservableObject
     {
 
-        Skin model;
-
-        public Skin Model
-        {
-            get => model;
-            set
-            {
-                if (model == value) return;
-                model = value;
-                OnPropertyChanged();
-            }
-        }
+        [ObservableProperty]
+        private Skin model;
 
         public SkinVM(Skin model)
         {

@@ -7,20 +7,12 @@ using ViewModel;
 
 namespace MVVMMaui.VM
 {
-	public class AddChampionVM : ObservableObject
+	public partial class AddChampionVM : ObservableObject
     {
-        ChampionVM championEditCopie;
+        [ObservableProperty]
+        private ChampionVM championEditCopie;
 
-        public ChampionVM ChampionEditCopie
-        {
-            set { SetProperty(ref championEditCopie, value); }
-            get { return championEditCopie; }
-        }
-
-        public ChampionManagerVM ChampionManagerVM
-        {
-            get => championManagerVM;
-        }
+        [ObservableProperty]
         private ChampionManagerVM championManagerVM;
 
         public AddChampionVM(ChampionManagerVM championManagerVM, ChampionVM champion)
@@ -153,72 +145,25 @@ namespace MVVMMaui.VM
 
         }
 
-        public string Name
-        {
-            get => name;
-            set
-            {
-                if (name != value)
-                {
-                    name = value;
-                    OnPropertyChanged();
-                }
-            }
-        }
+        [ObservableProperty]
         private string name;
 
-
-        public string Titre
-        {
-            get => titre;
-        }
+        [ObservableProperty]
         private string titre;
 
-        public string Status
-        {
-            get => status;
-        }
+        [ObservableProperty]
         private string status;
 
-        public bool Edit
-        {
-            get => edit;
-        }
+        [ObservableProperty]
         private bool edit;
 
-        
-
-        public ClassVM Selection
-        {
-            get => selection;
-            set
-            {
-                selection = value;
-                OnPropertyChanged(nameof(Selection));
-            }
-        }
+        [ObservableProperty]
         private ClassVM selection;
 
-        public string CharacteristicsValue
-        {
-            get => characteristicsValue;
-            set
-            {
-                characteristicsValue = value;
-                OnPropertyChanged();
-            }
-        }
+        [ObservableProperty]
         private string characteristicsValue = "";
 
-        public int CharacteristicsKey
-        {
-            get => characteristicsKey;
-            set
-            {
-                characteristicsKey = value;
-                OnPropertyChanged();
-            }
-        }
+        [ObservableProperty]
         private int characteristicsKey = 0;
 
         public ICommand UpdateChampionCommand { get; set; }

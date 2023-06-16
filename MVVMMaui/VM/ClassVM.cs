@@ -5,18 +5,9 @@ using ViewModel;
 
 namespace MVVMMaui.VM
 {
-	public class ClassVM : ObservableObject
+	public partial class ClassVM : ObservableObject
     {
-        public ChampionClassVM ChampionClassVM
-        {
-            get => championClassVM;
-            set
-            {
-                if (championClassVM == value) return;
-                championClassVM = value;
-                OnPropertyChanged();
-            }
-        }
+        [ObservableProperty]
         private ChampionClassVM championClassVM;
 
         public ClassVM(ChampionClassVM championClassVM)
@@ -26,28 +17,10 @@ namespace MVVMMaui.VM
             ImageName = ClassName.ToLower() + ".png";
         }
 
-        public string ClassName
-        {
-            get => className;
-            set
-            {
-                if (className == value) return;
-                className = value;
-                OnPropertyChanged();
-            }
-        }
+        [ObservableProperty]
         private string className;
 
-        public string ImageName
-        {
-            get => imageName;
-            set
-            {
-                if (imageName == value) return;
-                imageName = value;
-                OnPropertyChanged();
-            }
-        }
+        [ObservableProperty]
         private string imageName;
 
     }

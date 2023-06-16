@@ -12,15 +12,10 @@ using System.Xml.Linq;
 
 namespace ViewModel
 {
-    public class ChampionVM : ObservableObject
+    public partial class ChampionVM : ObservableObject
     {
+        [ObservableProperty]
         private Champion model;
-
-        public Champion Model
-        {
-            get => model;
-            set => SetProperty(ref model, value);
-        }
 
         public ChampionVM(Champion model)
 		{
