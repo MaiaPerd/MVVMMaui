@@ -2,13 +2,12 @@
 using System.Collections.ObjectModel;
 using System.Globalization;
 using System.Windows.Input;
-using Model;
-using MVVM;
+using CommunityToolkit.Mvvm.ComponentModel;
 using ViewModel;
 
 namespace MVVMMaui.VM
 {
-	public class AddChampionVM : BaseVM
+	public class AddChampionVM : ObservableObject
     {
         ChampionVM championEditCopie;
 

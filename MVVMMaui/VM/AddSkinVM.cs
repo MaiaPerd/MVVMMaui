@@ -1,13 +1,13 @@
 ﻿using System;
 using System.Windows.Input;
+using CommunityToolkit.Mvvm.ComponentModel;
 using Model;
-using MVVM;
 using ViewModel;
 
 namespace MVVMMaui.VM
 {
-	public class AddSkinVM : BaseVM
-	{
+	public class AddSkinVM : ObservableObject
+    {
 
         SkinVM skinEditCopie;
 

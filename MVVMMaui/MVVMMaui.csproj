@@ -63,6 +63,7 @@
 		<PackageReference Include="ParallelExtensionsExtras" Version="1.2.0" />
 		<PackageReference Include="Microsoft.Toolkit" Version="7.1.2" />
 		<PackageReference Include="CommunityToolkit.Maui" Version="5.2.0" />
+		<PackageReference Include="CommunityToolkit.Mvvm" Version="8.2.0" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -89,11 +90,11 @@
 	  <Folder Include="Views\" />
 	</ItemGroup>
 	<ItemGroup>
-	  <ProjectReference Include="..\ViewModel\ViewModel.csproj" />
-	  <ProjectReference Include="..\..\MVVM_custom_LoL\Sources\StubLib\StubLib.csproj" />
-	</ItemGroup>
-	<ItemGroup>
 	  <BundleResource Include="Resources\Images\marksman.png" />
 	  <BundleResource Include="Resources\Images\support.png" />
+	</ItemGroup>
+	<ItemGroup>
+	  <ProjectReference Include="..\ViewModel\ViewModel.csproj" />
+	  <ProjectReference Include="..\StubLib\StubLib.csproj" />
 	</ItemGroup>
 </Project>

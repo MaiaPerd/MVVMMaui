@@ -5,12 +5,12 @@ using System.Runtime.CompilerServices;
 using System.Collections.ObjectModel;
 using System.Reflection;
 using System.Windows.Input;
-using MVVM;
+using CommunityToolkit.Mvvm.ComponentModel;
 
 namespace ViewModel
 {
-	public class ChampionManagerVM : BaseVM
-	{
+    public class ChampionManagerVM : ObservableObject
+    {
         ChampionVM championEdit;
 
         public ChampionVM ChampionEdit

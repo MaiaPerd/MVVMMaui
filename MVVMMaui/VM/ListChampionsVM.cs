@@ -1,14 +1,14 @@
 ﻿using System;
 using System.Windows.Input;
+using CommunityToolkit.Mvvm.ComponentModel;
 using Model;
-using MVVM;
 using MVVMMaui.Pages;
 using ViewModel;
 
 namespace MVVMMaui.VM
 {
-	public class ListChampionsVM : BaseVM
-	{
+	public class ListChampionsVM : ObservableObject
+    {
         public ChampionVM ItemSelected
         {
             set { SetProperty(ref itemSelected, value); }

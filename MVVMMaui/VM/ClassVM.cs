@@ -1,12 +1,12 @@
 ﻿using System;
+using CommunityToolkit.Mvvm.ComponentModel;
 using Model;
-using MVVM;
 using ViewModel;
 
 namespace MVVMMaui.VM
 {
-	public class ClassVM : BaseVM
-	{
+	public class ClassVM : ObservableObject
+    {
         public ChampionClassVM ChampionClassVM
         {
             get => championClassVM;

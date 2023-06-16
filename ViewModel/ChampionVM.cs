@@ -4,19 +4,27 @@ using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Drawing;
 using Model;
-using MVVM;
 using System.Linq;
 using System.Windows.Input;
 using ViewModel.converteur;
+using CommunityToolkit.Mvvm.ComponentModel;
+using System.Xml.Linq;
 
 namespace ViewModel
 {
-	public class ChampionVM : BaseGenericVM<Champion>
+    public class ChampionVM : ObservableObject
     {
+        private Champion model;
+
+        public Champion Model
+        {
+            get => model;
+            set => SetProperty(ref model, value);
+        }
 
         public ChampionVM(Champion model)
 		{
-			Model = model;
+            Model = model;
             Characteristics = new ReadOnlyObservableCollection<KeyValuePair<string, int>>(characteristics);
             LoadCaracteristique();
             Skins = new ReadOnlyObservableCollection<SkinVM>(skins);
@@ -96,62 +104,26 @@ namespace ViewModel
 
 		public string Bio
 		{
-			get => Model.Bio;
-			set
-			{
-				if(Model == null)
-				{
-					return;
-				}
-				if(Model.Bio != value)
-				{
-					Model.Bio = value;
-					OnPropertyChanged();
-				}
-			}
+			get => Model?.Bio;
+			set => SetProperty(Model.Bio, value, Model, (c, n) => c.Bio = n);
 		}
-        
+
         public string Icon
         {
-            get => Model.Icon;
-            set
-            {
-                if (Model == null || Model.Icon == value) return;
-                Model.Icon = value;
-                OnPropertyChanged();
-            }
+            get => Model?.Icon;
+            set => SetProperty(Model.Icon, value, Model, (c, n) => c.Icon = n);
         }
-
 
         public string Image
         {
             get => Model.Image.Base64;
-            set
-            {
-                if (Model == null || Model.Image.Base64 == value) return;
-                Model.Image.Base64 = value;
-                OnPropertyChanged();
-            }
+            set => SetProperty(Model.Image.Base64, value, Model, (c, n) => c.Image.Base64 = n);
         }
 
         public ChampionClassVM Class
         {
-            get
-            {
-                return EnumToEnumVM.ChampionClassToChampionClassVM(Model.Class.ToString());
-            }
-            set
-            {
-                if (Model == null)
-                {
-                    return;
-                }
-                if (EnumToEnumVM.ChampionClassToChampionClassVM(Model.Class.ToString()) != value)
-                {
-                    Model.Class = EnumToEnumVM.ChampionClassVMToChampionClass(value.ToString());
-                    OnPropertyChanged();
-                }
-            }
+            get => EnumToEnumVM.ChampionClassToChampionClassVM(Model.Class.ToString());
+            set => SetProperty(EnumToEnumVM.ChampionClassToChampionClassVM(Model.Class.ToString()), value, Model, (c, n) => c.Class = EnumToEnumVM.ChampionClassVMToChampionClass(n.ToString()));
         }
 
         public ReadOnlyObservableCollection<KeyValuePair<string, int>> Characteristics { get; private set; }

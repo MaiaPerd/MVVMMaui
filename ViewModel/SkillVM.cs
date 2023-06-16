@@ -1,12 +1,25 @@
 ﻿using System;
 using Model;
 using System.Collections.ObjectModel;
-using MVVM;
+using CommunityToolkit.Mvvm.ComponentModel;
 
 namespace ViewModel
 {
-	public class SkillVM : BaseGenericVM<Skill>
-	{
+	public class SkillVM : ObservableObject
+    {
+        Skill model;
+
+        public Skill Model
+        {
+            get => model;
+            set
+            {
+                if (model == value) return;
+                model = value;
+                OnPropertyChanged();
+            }
+        }
+
         public SkillVM(Skill model)
 		{
             Model = model;

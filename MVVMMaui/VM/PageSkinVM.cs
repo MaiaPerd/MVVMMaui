@@ -1,12 +1,11 @@
 ﻿using System;
 using System.Windows.Input;
-using MVVM;
 using MVVMMaui.Pages;
 using ViewModel;
 
 namespace MVVMMaui.VM
 {
-	public class PageSkinVM : BaseVM
+	public class PageSkinVM
 	{
         public SkinVM Skin
         {

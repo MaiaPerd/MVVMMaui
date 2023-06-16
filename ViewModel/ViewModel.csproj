@@ -21,13 +21,15 @@
 	  <CreatePackage>false</CreatePackage>
 	</PropertyGroup>
 	<ItemGroup>
-	  <ProjectReference Include="..\Model\Model.csproj" />
-	  <ProjectReference Include="..\MVVM\MVVM.csproj" />
-	</ItemGroup>
-	<ItemGroup>
 	  <None Remove="converteur\" />
 	</ItemGroup>
 	<ItemGroup>
 	  <Folder Include="converteur\" />
+	</ItemGroup>
+	<ItemGroup>
+	  <PackageReference Include="CommunityToolkit.Mvvm" Version="8.2.0" />
+	</ItemGroup>
+	<ItemGroup>
+	  <ProjectReference Include="..\Model\Model.csproj" />
 	</ItemGroup>
 </Project>

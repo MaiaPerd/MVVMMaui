@@ -1,12 +1,25 @@
 ﻿using System;
 using System.Collections.ObjectModel;
+using CommunityToolkit.Mvvm.ComponentModel;
 using Model;
-using MVVM;
 
 namespace ViewModel
 {
-	public class SkinVM : BaseGenericVM<Skin>
-	{
+	public class SkinVM : ObservableObject
+    {
+
+        Skin model;
+
+        public Skin Model
+        {
+            get => model;
+            set
+            {
+                if (model == value) return;
+                model = value;
+                OnPropertyChanged();
+            }
+        }
 
         public SkinVM(Skin model)
         {
