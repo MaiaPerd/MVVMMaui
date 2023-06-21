@@ -2,9 +2,12 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="MVVMMaui.Pages.SkinAddPage"
-             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             xmlns:converter="clr-namespace:MVVMMaui"
              BackgroundColor="{StaticResource Gray950}"
              Title="SkinAddPage">
+     <ContentPage.Resources>
+        <converter:StringToImageConverter x:Key="StringToImage"/>
+    </ContentPage.Resources>
     <FlexLayout Direction="Column">
 
         <VerticalStackLayout Grid.Row="0">
@@ -81,8 +84,6 @@
                             Placeholder="{Binding SkinEditCopie.Description}"
                             Style="{StaticResource EditorChampion}"
                             Grid.Column="1" Grid.Row="4"/>
-             
-             
                    
                  </Grid>
           
