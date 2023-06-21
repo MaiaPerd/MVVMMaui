@@ -116,10 +116,10 @@
                             </CollectionView.ItemsLayout>
                             <CollectionView.ItemTemplate>
                                 <DataTemplate>
-                                    <RadioButton Value="{Binding}" 
+                                    <RadioButton Value="{Binding}" Content="{Binding ClassName}"
                                                  GroupName="class"
                                                  ControlTemplate="{StaticResource RadioTemplate}">
-                                       <RadioButton.Content>
+                                       <!--<RadioButton.Content>
                                             <VerticalStackLayout VerticalOptions="Center">
                                                 <Image Source="{Binding ImageName}" Style="{StaticResource ClassImage}">
                                                     <Image.Behaviors>
@@ -128,7 +128,7 @@
                                                 </Image>
                                                 <Label Text="{Binding ClassName}" HorizontalTextAlignment="Center" VerticalTextAlignment="Center"/>
                                             </VerticalStackLayout>
-                                       </RadioButton.Content>
+                                       </RadioButton.Content>-->
                                     </RadioButton>
                                 </DataTemplate>
                             </CollectionView.ItemTemplate>
