@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Windows.Input;
 using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
+using Model;
 using MVVMMaui.Pages;
 using ViewModel;
 
@@ -14,15 +16,15 @@ namespace MVVMMaui.VM
         public PageSkinVM(SkinVM skinVM)
         {
             this.skin = skinVM;
-            NavigationUpdateSkinPageCommand = new Command(
-             execute: () =>
-             {
-                 Shell.Current.Navigation.PushAsync(new SkinAddPage(skinVM));
-             }
-             );
         }
 
-        public ICommand NavigationUpdateSkinPageCommand { get; private set; }
+        [RelayCommand]
+        private void NavigationUpdateSkinPage()
+        {
+            Shell.Current.Navigation.PushAsync(new SkinAddPage(Skin));
+        }
+
+
 
     }
 }
