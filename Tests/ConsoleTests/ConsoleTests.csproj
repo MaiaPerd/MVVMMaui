@@ -10,6 +10,7 @@
   <ItemGroup>
     <ProjectReference Include="..\..\Model\Model.csproj" />
     <ProjectReference Include="..\..\StubLib\StubLib.csproj" />
+    <ProjectReference Include="..\..\StubLib\StubLib.csproj" />
   </ItemGroup>
   <ItemGroup>
     <None Remove="Microsoft.Extensions.DependencyInjection" />

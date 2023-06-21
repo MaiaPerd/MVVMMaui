@@ -13,6 +13,6 @@
     <Folder Include="enums\" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\MVVM_custom_LoL\Sources\Shared\Shared.csproj" />
+    <ProjectReference Include="..\Shared\Shared.csproj" />
   </ItemGroup>
 </Project>
