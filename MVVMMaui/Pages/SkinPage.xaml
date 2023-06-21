@@ -9,16 +9,16 @@
         <converter:StringToImageConverter x:Key="StringToImage"/>
     </ContentPage.Resources>
     <ContentPage.ToolbarItems>
-        <ToolbarItem Text="Modifier" Command="{Binding NavigationUpdateChampionPageCommand}"/>
+        <ToolbarItem Text="Modifier" Command="{Binding NavigationUpdateSkinPageCommand}"/>
     </ContentPage.ToolbarItems>
     <VerticalStackLayout>
-            <Image Source="{Binding Image, Converter={StaticResource StringToImage}}" HeightRequest="220"></Image>
+            <Image Source="{Binding Skin.Image, Converter={StaticResource StringToImage}}" HeightRequest="220"></Image>
             <VerticalStackLayout Padding="10,5">
                 <Grid ColumnDefinitions="*, Auto">
-                    <Label Text="{Binding Name}" Style="{StaticResource TitreChampion}" Grid.Column="0"/>
-                    <Label Text="{Binding Price}" Style="{StaticResource TextChampion}" VerticalTextAlignment="Center" Grid.Column="1"/>
+                    <Label Text="{Binding Skin.Name}" Style="{StaticResource TitreChampion}" Grid.Column="0"/>
+                    <Label Text="{Binding Skin.Price}" Style="{StaticResource TextChampion}" VerticalTextAlignment="Center" Grid.Column="1"/>
                 </Grid>
-                <Label Text="{Binding Bio}" Style="{StaticResource TextChampion}"></Label>
+                <Label Text="{Binding Skin.Description}" Style="{StaticResource TextChampion}"></Label>
             </VerticalStackLayout>
     </VerticalStackLayout>
 </ContentPage>

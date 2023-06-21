@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="MVVMMaui.Pages.ChampionPage"
              xmlns:converter="clr-namespace:MVVMMaui" 
+             xmlns:viewmodel="clr-namespace:MVVMMaui.VM"
              BackgroundColor="{StaticResource Gray950}"
              Title="ChampionPage">
     <ContentPage.ToolbarItems>
@@ -45,11 +46,11 @@
                     <Label Grid.Column="0" 
                            Text="Compétences"
                            Style="{StaticResource TitreChampion}"/>
-                      <Button Text="+" Grid.Column="1"
+                      <!--<Button Text="+" Grid.Column="1"
                               CornerRadius="20"
                               Command="{Binding AddSkillChampionPageCommand}"
                               Margin="4">
-                      </Button>
+                      </Button>-->
                 </Grid>
                 <CollectionView ItemsSource="{Binding ChampionManagerVM.ChampionEdit.Skills}" SelectionMode="None"  MaximumHeightRequest="600">
                     <CollectionView.ItemsLayout>
@@ -75,6 +76,7 @@
                            Style="{StaticResource TitreChampion}"/>
                       <Button Text="+" Grid.Column="1" CornerRadius="20"
                               Command="{Binding AddSkinChampionPageCommand}"
+                              TextColor="Black"
                               Margin="4">
                       </Button>
                 </Grid>
@@ -86,6 +88,13 @@
                     <CollectionView.ItemTemplate>
                         <DataTemplate>
                             <Border Style="{StaticResource Skins}">
+                                <Border.GestureRecognizers>
+                                    <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:PageChampionVM}}, Path=SkinPageNavCommand}"
+                                                          CommandParameter="{Binding}">
+
+                                    </TapGestureRecognizer>
+
+                                </Border.GestureRecognizers>
                                 <HorizontalStackLayout>
                                     <Image Source="{Binding Icon, Converter={StaticResource StringToImage}}" HeightRequest="40" WidthRequest="40" Margin="10, 0"></Image>
                                     <Label Text="{Binding Name}" Style="{StaticResource TextChampion}" VerticalTextAlignment="Center"></Label>

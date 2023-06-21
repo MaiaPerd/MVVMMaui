@@ -37,9 +37,17 @@ namespace MVVMMaui.VM
             {
                 Shell.Current.Navigation.PushAsync(new SkinAddPage());
             }
-            ); 
+            );
+            SkinPageNavCommand = new Command(
+            execute: (skin) =>
+            {
+                Shell.Current.Navigation.PushAsync(new SkinPage((SkinVM)skin));
+            }
+            );
         }
 
+        
+        public ICommand SkinPageNavCommand { get; private set; }
         public ICommand NavigationUpdateChampionPageCommand { get; private set; }
         public ICommand AddSkinChampionPageCommand { get; private set; }
         public ICommand AddSkillChampionPageCommand { get; private set; }

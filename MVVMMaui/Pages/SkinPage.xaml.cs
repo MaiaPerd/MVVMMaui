@@ -1,4 +1,5 @@
-﻿using ViewModel;
+﻿using MVVMMaui.VM;
+using ViewModel;
 
 namespace MVVMMaui.Pages;
 
@@ -7,6 +8,6 @@ public partial class SkinPage : ContentPage
 	public SkinPage(SkinVM skinVM)
 	{
 		InitializeComponent();
-		BindingContext = skinVM;
+		BindingContext = new PageSkinVM(skinVM);
 	}
 }
