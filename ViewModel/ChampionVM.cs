@@ -67,38 +67,44 @@ namespace ViewModel
             AddCharacteristicCommand = new Command(
              execute: (characteristic) =>
              {
-                 characteristics.Add((KeyValuePair<string, int>)characteristic);
+                 KeyValuePair<string, int> charac = ((KeyValuePair<string, int>)characteristic);
+                 Model.AddCharacteristics(Tuple.Create(charac.Key,charac.Value));
+                 LoadCaracteristique();
              }
            );
             AddSkinCommand = new Command(
                  execute: (skin) =>
                  {
-                     
-                     skins.Add((SkinVM) skin);
+                     Model.AddSkin(((SkinVM)skin).Model);
+                     LoadSkins();
                  }
                 );
             AddSkillCommand = new Command(
                execute: (name) =>
                {
-                   skills.Add(new SkillVM(new Skill(name: (string)name, type: SkillType.Basic)));
+                   Model.AddSkill(new Skill(name: (string)name, type: SkillType.Basic));
+                   LoadSkills();
                }
               );
             DeleteCharacteristicCommand = new Command(
              execute: (characteristic) =>
              {
-                 characteristics.Remove((KeyValuePair<string, int>)characteristic);
+                 Model.RemoveCharacteristics(((KeyValuePair<string, int>)characteristic).Key);
+                 LoadCaracteristique();
              }
             );
             DeleteSkinCommand = new Command(
                  execute: (skin) =>
                  {
-                     skins.Remove((SkinVM)skin);
+                     Model.RemoveSkin(((SkinVM)skin).Model);
+                     LoadSkins();
                  }
                 );
             DeleteSkillCommand = new Command(
                execute: (name) =>
                {
-                   skills.Remove(new SkillVM(new Skill(name: (string)name, type: SkillType.Basic)));
+                   Model.RemoveSkill(new Skill(name: (string)name, type: SkillType.Basic));
+                   LoadSkills();
                }
               );
         }
@@ -195,6 +201,7 @@ namespace ViewModel
 
         private void LoadSkins()
         {
+            skins.Clear();
             foreach (var skin in Model.Skins)
             {
                 skins.Add(new SkinVM(skin));
@@ -221,6 +228,7 @@ namespace ViewModel
 
         private void LoadSkills()
         {
+            skills.Clear();
             foreach (var skill in Model.Skills)
             {
                 skills.Add(new SkillVM(skill));

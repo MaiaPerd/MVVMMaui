@@ -34,6 +34,7 @@ namespace MVVMMaui.VM
             InitCommand(true, championManagerVM.ChampionEdit);
             this.titre = "Nouveau Skin";
             this.status = "Ajouter";
+            this.name = "";
             this.edit = true;
         }
 

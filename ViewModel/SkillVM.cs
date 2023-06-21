@@ -17,7 +17,6 @@ namespace ViewModel
             get => Model.Name;
         }
 
-
         public string Description
         {
             get => Model.Description;
