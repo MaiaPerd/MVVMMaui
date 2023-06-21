@@ -2,6 +2,7 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="MVVMMaui.Pages.SkinAddPage"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
              BackgroundColor="{StaticResource Gray950}"
              Title="SkinAddPage">
     <FlexLayout Direction="Column">
@@ -38,6 +39,7 @@
                                  Grid.Column="1" Grid.Row="1"
                                  Command="{Binding IconChangeCommand}"
                                  BackgroundColor="{StaticResource Beige}"
+                                 HeightRequest="50"
                                  WidthRequest="50"
                                  Margin="10">
                     </ImageButton>
@@ -62,8 +64,10 @@
                     <Entry Placeholder="{Binding SkinEditCopie.Price}"
                            Text="{Binding SkinEditCopie.Price}"
                            WidthRequest="300"
+                           Keyboard="Numeric"
                            Style="{StaticResource EditChampion}"
-                           Grid.Column="1" Grid.Row="3"></Entry>
+                           Grid.Column="1" Grid.Row="3">
+                    </Entry>
 
                     <Label Text="Description: "
                            Style="{StaticResource TextChampion}"

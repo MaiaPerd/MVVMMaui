@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Globalization;
 using System.Windows.Input;
 using Model;
 using MVVM;
@@ -7,7 +8,7 @@ using ViewModel;
 namespace MVVMMaui.VM
 {
 	public class AddSkinVM : BaseVM
-	{
+    {
 
         SkinVM skinEditCopie;
 
@@ -22,6 +23,7 @@ namespace MVVMMaui.VM
             SkinEditCopie = skin;
             championManagerVM.ChampionEdit.SkinEdit = skin;
             InitCommand(false, championManagerVM.ChampionEdit);
+            name = SkinEditCopie.Name;
             this.titre = "Modifier le skin";
             this.status = "Modifier";
             this.edit = false; 
@@ -31,10 +33,12 @@ namespace MVVMMaui.VM
         {
             SkinEditCopie = new SkinVM(championManagerVM.ChampionEdit);
             championManagerVM.ChampionEdit.SkinEdit = SkinEditCopie;
+            SkinEditCopie.Image = PickImage.getImage("logolol.png");
+            SkinEditCopie.Icon = PickImage.getImage("logo.png");
             InitCommand(true, championManagerVM.ChampionEdit);
+            name = SkinEditCopie.Name;
             this.titre = "Nouveau Skin";
             this.status = "Ajouter";
-            this.name = "";
             this.edit = true;
         }
 
@@ -49,8 +53,26 @@ namespace MVVMMaui.VM
             {
                 SkinEditCopie = new SkinVM(championVM.SkinEdit);
             });
+            ImageChangeCommand = new Command(execute: async () =>
+            {
+                string image = await PickImage.PickAndShow();
+                if (image != null)
+                {
+                    SkinEditCopie.Image = image;
+                }
+            });
+            IconChangeCommand = new Command(execute: async () =>
+            {
+                string image = await PickImage.PickAndShow();
+                if (image != null)
+                {
+                    SkinEditCopie.Icon = image;
+                }
+            });
         }
 
+        public ICommand ImageChangeCommand { get; set; }
+        public ICommand IconChangeCommand { get; set; }
         public ICommand UpdateSkinCommand { get; set; }
         public ICommand ResetSkinCommand { get; set; }
 

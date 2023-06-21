@@ -66,6 +66,7 @@
                                  Command="{Binding IconChangeCommand}"
                                  BackgroundColor="{StaticResource Beige}"
                                  WidthRequest="50"
+                                 HeightRequest="50"
                                  Margin="10">
                     </ImageButton>
 

@@ -81,12 +81,14 @@
 	  <None Remove="Resources\Images\support.png" />
 	  <None Remove="Resources\Images\tank.png" />
 	  <None Remove="Resources\Images\epee.png" />
+	  <None Remove="Utils\" />
 	</ItemGroup>
 	<ItemGroup>
 	  <Folder Include="Pages\" />
 	  <Folder Include="VM\" />
 	  <Folder Include="Converter\" />
 	  <Folder Include="Views\" />
+	  <Folder Include="Utils\" />
 	</ItemGroup>
 	<ItemGroup>
 	  <ProjectReference Include="..\ViewModel\ViewModel.csproj" />

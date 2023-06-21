@@ -42,13 +42,8 @@ namespace MVVMMaui.VM
         public AddChampionVM(ChampionManagerVM championManagerVM)
 		{
             this.championEditCopie = new ChampionVM();
-            var converter = new StringToImageConverter();
-            using FileStream fs = File.OpenRead("logolol.png");
-            ImageSource image = ImageSource.FromStream(() => fs);
-            ChampionEditCopie.Image = (string)converter.ConvertBack(image, null, null, CultureInfo.CurrentCulture);
-            using FileStream fs2 = File.OpenRead("logo.png");
-            ImageSource icon = ImageSource.FromStream(() => fs2);
-            ChampionEditCopie.Icon = (string)converter.ConvertBack(icon, null, null, CultureInfo.CurrentCulture);
+            ChampionEditCopie.Image = PickImage.getImage("logolol.png");
+            ChampionEditCopie.Icon = PickImage.getImage("logo.png");
             championManagerVM.ChampionEdit = ChampionEditCopie;
             this.championManagerVM = championManagerVM;
             ChampionsClass = new ReadOnlyObservableCollection<ClassVM>(championsClass);
@@ -82,8 +77,7 @@ namespace MVVMMaui.VM
             });
             ImageChangeCommand = new Command(execute: async () =>
             {
-
-                string image = await PickAndShow();
+                string image = await PickImage.PickAndShow();
                 if(image != null)
                 {
                     ChampionEditCopie.Image = image;
@@ -92,50 +86,13 @@ namespace MVVMMaui.VM
             });
             IconChangeCommand = new Command(execute: async () =>
             {
-                string image = await PickAndShow();
+                string image = await PickImage.PickAndShow();
                 if (image != null)
                 {
                     ChampionEditCopie.Icon = image;
                 }
             });
 
-        }
-
-        public async Task<String> PickAndShow()
-        {
-            try
-            {
-                var result = await FilePicker.Default.PickAsync(PickOptions.Images);
-                if (result != null)
-                {
-                    using var stream = await result.OpenReadAsync();
-                    var image = ImageSource.FromStream(() => stream);
-                    var converter = new StringToImageConverter();
-                    return (string)converter.ConvertBack(image, null, null, CultureInfo.CurrentCulture);
-                }
-                return null;
-               /* if (MediaPicker.Default.IsCaptureSupported)
-                {
-                    FileResult photo = await MediaPicker.Default.CapturePhotoAsync();
-
-                    if (photo != null)
-                    {
-                        // save the file into local storage
-                        string localFilePath = Path.Combine(FileSystem.CacheDirectory, photo.FileName);
-
-                        using Stream sourceStream = await photo.OpenReadAsync();
-                        using FileStream localFileStream = File.OpenWrite(localFilePath);
-
-                        await sourceStream.CopyToAsync(localFileStream);
-                    }
-                }*/
-            }
-            catch (Exception ex)
-            {
-                // The user canceled or something went wrong
-            }
-
-            return null;
         }
 
         public ReadOnlyObservableCollection<ClassVM> ChampionsClass { get; private set; }
