@@ -6,6 +6,7 @@ using System.Collections.ObjectModel;
 using System.Reflection;
 using System.Windows.Input;
 using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 
 namespace ViewModel
 {
@@ -48,28 +49,54 @@ namespace ViewModel
                 return Index - 1 >= 1;
             });
 
-            SaveChampionCommand = new Command(execute: (championVM) =>
-            {
-                var old = champions.Where((champion) => champion.Model.Equals(((ChampionVM)championVM).Model));
-                if(old.Count() == 0)
-                {
-                    dataManager.ChampionsMgr.AddItem(((ChampionVM)championVM).Model);
-                }
-                else
-                {
-                    dataManager.ChampionsMgr.UpdateItem(((ChampionVM)old.First()).Model, ((ChampionVM)championVM).Model);          
-                }
-                ChampionEdit = (ChampionVM)championVM;
-                Index = IndexMax;
-                LoadChampions(Index, Count);
+        }
 
-            });
+        public ICommand NextPageCommand { get; set; }
+        public ICommand PreviousPageCommand { get; set; }
 
-            DeleteChampionCommand = new Command(execute: (championVM) =>
+        /*
+        [RelayCommand(CanExecute = nameof(CanNextPage))]
+        private void NextPage()
+        {
+            Index += 1;
+        }
+        private bool CanNextPage()
+        {
+            return Index + 1 <= IndexMax;
+        }
+
+        [RelayCommand(CanExecute = nameof(CanPreviousPage))]
+        public void PreviousPage()
+        {
+            Index -= 1;
+        }
+        private bool CanPreviousPage()
+        {
+            return Index - 1 >= 1;
+        }
+        */
+        [RelayCommand]
+        private void SaveChampion(ChampionVM championVM)
+        {
+            var old = champions.Where((champion) => champion.Model.Equals((championVM).Model));
+            if (old.Count() == 0)
             {
-                dataManager.ChampionsMgr.DeleteItem(((ChampionVM)championVM).Model);
-                LoadChampions(Index, Count);
-            });
+                DataManager.ChampionsMgr.AddItem((championVM).Model);
+            }
+            else
+            {
+                DataManager.ChampionsMgr.UpdateItem(((ChampionVM)old.First()).Model, (championVM).Model);
+            }
+            ChampionEdit = championVM;
+            Index = IndexMax;
+            LoadChampions(Index, Count);
+        }
+
+        [RelayCommand]
+        private void DeleteChampion(ChampionVM championVM)
+        {
+            DataManager.ChampionsMgr.DeleteItem((championVM).Model);
+            LoadChampions(Index, Count);
         }
 
         public ReadOnlyObservableCollection<ChampionClassVM> ChampionsClass { get; private set; }
@@ -99,6 +126,7 @@ namespace ViewModel
         }
 
         [ObservableProperty]
+        //[NotifyCanExecuteChangedFor(nameof(PreviousPageCommand))]
         private int index;
 
         public int IndexMax
@@ -135,61 +163,6 @@ namespace ViewModel
         }
 
 
-        public ICommand NextPageCommand { get; set; }
-        public ICommand PreviousPageCommand { get; set; }
-        
-        public ICommand DeleteChampionCommand { get; set; }
-        public ICommand SaveChampionCommand { get; set; }
-
     }
 }
 
-
-
-//mette la readonly new () pour champions
-// PropertyChanged += ChampionManagerVM.PropertyChanged;
-/* command code bing de la page 
- * methode abboner pour chaque element de chaque vue
- * C'est les cas d'utilisation
- * binding des fonctionalité ecrite en code, ce sont les commande
- * je bind le bouton su rune fonctionalité de la vm wraping
- * Ou sur la vm applicative
- * binder a plusieur element de plusieurs appli a evité
- * 
- * Command toujours bindable a ICommand
- * 
- * Une commande a 2 méthode execute et canexecute(si on a le droit d'execute la command)
- * Par default elle a pas de paramètre c'est une action
- * 
- * execute -> prend rien et renvoie rien c'est le but
- * canexcute -> renvoie un bool Func<bool> (return quelque chose ou rien) 
- * 
- * Avec un command parameter on a un objet
- * 
- * Si les vu non pas la command on peut les binder a un evenement 
- * Toolkit eventToBeheviorCommand qui transform les evenmeny en commande
- * 
- * Sur la vm on declare
- * 
- * public ICommand qui est definie dans la commande !!attention ne pas faire de propriéter calculé!!
- * Puis dans le constructeur on definie la commande :
- * load Nounours (new Command( execute => Load..()
-   canExcute => Mgr != null //Mgr dans le model
- * La commande est bindable n'importe ou
- * Utilisation <Button Command="Binding nomCommand">
- * 
- * Ne met pas a jour le can execute donc dans le seteur on mes a jour la commande
- * Dans la proprité détailler:
- * private Manager Mgr {
- * get => mgr;
- * set{
- *  mgr = value
- *  (loadCommand as Command).ChangeCanExecute();
- * }
- * }
- * 
- * private Manager mgr = new Manager()
- * 
-
-
-*/

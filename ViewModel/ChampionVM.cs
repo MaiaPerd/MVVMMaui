@@ -9,6 +9,7 @@ using System.Windows.Input;
 using ViewModel.converteur;
 using CommunityToolkit.Mvvm.ComponentModel;
 using System.Xml.Linq;
+using CommunityToolkit.Mvvm.Input;
 
 namespace ViewModel
 {
@@ -26,7 +27,6 @@ namespace ViewModel
             LoadSkins();
             Skills = new ReadOnlyObservableCollection<SkillVM>(skills);
             LoadSkills();
-            CommandDef();
         }
 
         public ChampionVM(ChampionVM championVM) : this(championVM.Name, championVM)
@@ -39,7 +39,6 @@ namespace ViewModel
             Characteristics = new ReadOnlyObservableCollection<KeyValuePair<string, int>>(characteristics);
             Skins = new ReadOnlyObservableCollection<SkinVM>(skins);
             Skills = new ReadOnlyObservableCollection<SkillVM>(skills);
-            CommandDef();
         }
 
         public ChampionVM(string name, ChampionVM championVM)
@@ -61,35 +60,25 @@ namespace ViewModel
             {
                 skills.Add(skill);
             }
-            CommandDef();
         }
 
-
-        public void CommandDef()
+        [RelayCommand]
+        private void AddCharacteristic(KeyValuePair<string, int> characteristic)
         {
-            AddCharacteristicCommand = new Command(
-             execute: (characteristic) =>
-             {
-                 characteristics.Add((KeyValuePair<string, int>)characteristic);
-             }
-           );
-            AddSkinCommand = new Command(
-                 execute: (skin) =>
-                 {
-                     skins.Add((SkinVM) skin);
-                 }
-                );
-            AddSkillCommand = new Command(
-               execute: (name) =>
-               {
-                   skills.Add(new SkillVM(new Skill(name: (string)name, type: SkillType.Basic)));
-               }
-              );
+            characteristics.Add(characteristic);
         }
 
-        public ICommand AddCharacteristicCommand { get; set; }
-        public ICommand AddSkinCommand { get; set; }
-        public ICommand AddSkillCommand { get; set; }
+        [RelayCommand]
+        private void AddSkin(SkinVM skin)
+        {
+            skins.Add(skin);
+        }
+
+        [RelayCommand]
+        private void AddSkill(String name)
+        {
+            skills.Add(new SkillVM(new Skill(name: name, type: SkillType.Basic)));
+        }
 
 
         public string Name

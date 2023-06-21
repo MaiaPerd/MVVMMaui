@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.ObjectModel;
 using System.Globalization;
-using System.Windows.Input;
 using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 using ViewModel;
 
 namespace MVVMMaui.VM
@@ -15,19 +15,21 @@ namespace MVVMMaui.VM
         [ObservableProperty]
         private ChampionManagerVM championManagerVM;
 
+        private bool add;
+
         public AddChampionVM(ChampionManagerVM championManagerVM, ChampionVM champion)
         {
             this.championEditCopie = new ChampionVM(champion);
             this.championManagerVM = championManagerVM;
             ChampionsClass = new ReadOnlyObservableCollection<ClassVM>(championsClass);
             LoadChampionsClass();
-            this.Selection = new ClassVM(ChampionEditCopie.Class);
+            Selection = new ClassVM(ChampionEditCopie.Class);
             name = ChampionEditCopie.Name;
             this.titre = "Modifier le Champion";
             this.status = "Modifier";
             this.edit = false;
 
-            InitCommand(false);
+            add = (false);
         }
 
         public AddChampionVM(ChampionManagerVM championManagerVM)
@@ -44,52 +46,56 @@ namespace MVVMMaui.VM
             this.championManagerVM = championManagerVM;
             ChampionsClass = new ReadOnlyObservableCollection<ClassVM>(championsClass);
             LoadChampionsClass();
-            this.Selection = ChampionsClass.First();
+            Selection = ChampionsClass.First();
             name = ChampionEditCopie.Name;
             this.titre = "Nouveau Champion";
             this.status = "Ajouter";
             this.edit = true;
 
-            InitCommand(true);
+            add = (true);
         }
 
-        private void InitCommand(bool add)
+        [RelayCommand]
+        private void UpdateChampion()
         {
-            UpdateChampionCommand = new Command(execute: () =>
-            {
-                ChampionEditCopie.Class = Selection.ChampionClassVM;
-                championManagerVM.SaveChampionCommand.Execute(add? new ChampionVM(Name, ChampionEditCopie):ChampionEditCopie);
-                Shell.Current.Navigation.PopAsync();
-            });
-            ResetChampionCommand = new Command(execute: () =>
-            {
-                ChampionEditCopie = new ChampionVM(ChampionManagerVM.ChampionEdit);
-            });
-            AddCharacteristicCommand = new Command(execute: () =>
-            {
-                ChampionEditCopie.AddCharacteristicCommand.Execute(new KeyValuePair<string, int>(CharacteristicsValue, CharacteristicsKey));
-                CharacteristicsValue = "";
-                CharacteristicsKey = 0;
-            });
-            ImageChangeCommand = new Command(execute: async () =>
-            {
+            ChampionEditCopie.Class = Selection.ChampionClassVM;
+            ChampionManagerVM.SaveChampionCommand.Execute(add ? new ChampionVM(Name, ChampionEditCopie) : ChampionEditCopie);
+            Shell.Current.Navigation.PopAsync();
+        }
 
-                string image = await PickAndShow();
-                if(image != null)
-                {
-                    ChampionEditCopie.Image = image;
-                }
-                
-            });
-            IconChangeCommand = new Command(execute: async () =>
-            {
-                string image = await PickAndShow();
-                if (image != null)
-                {
-                    ChampionEditCopie.Icon = image;
-                }
-            });
 
+        [RelayCommand]
+        private void AddCharacteristic()
+        {
+            ChampionEditCopie.AddCharacteristicCommand.Execute(new KeyValuePair<string, int>(CharacteristicsValue, CharacteristicsKey));
+            CharacteristicsValue = "";
+            CharacteristicsKey = 0;
+        }
+
+        [RelayCommand]
+        private void ResetChampion()
+        {
+            ChampionEditCopie = new ChampionVM(ChampionManagerVM.ChampionEdit);
+        }
+
+        [RelayCommand]
+        private async Task ImageChange()
+        {
+            string image = await PickAndShow();
+            if (image != null)
+            {
+                ChampionEditCopie.Image = image;
+            }
+        }
+
+        [RelayCommand]
+        private async Task IconChange()
+        {
+            string image = await PickAndShow();
+            if (image != null)
+            {
+                ChampionEditCopie.Icon = image;
+            }
         }
 
         public async Task<String> PickAndShow()
@@ -166,11 +172,6 @@ namespace MVVMMaui.VM
         [ObservableProperty]
         private int characteristicsKey = 0;
 
-        public ICommand UpdateChampionCommand { get; set; }
-        public ICommand ResetChampionCommand { get; set; }
-        public ICommand AddCharacteristicCommand { get; set; }
-        public ICommand ImageChangeCommand { get; set; }
-        public ICommand IconChangeCommand { get; set; }
     }
 }
 

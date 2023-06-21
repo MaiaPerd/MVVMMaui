@@ -1,48 +1,44 @@
 ﻿using System;
 using System.Windows.Input;
+using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 using MVVMMaui.Pages;
 using ViewModel;
 
 namespace MVVMMaui.VM
 {
-	public class PageChampionVM
+	public partial class PageChampionVM : ObservableObject
 	{
-        public ChampionManagerVM ChampionManagerVM
-        {
-            get => championManagerVM;
-        }
+        [ObservableProperty]
         private ChampionManagerVM championManagerVM;
 
         public PageChampionVM(ChampionManagerVM championManagerVM)
         {
             this.championManagerVM = championManagerVM;
-            NavigationUpdateChampionPageCommand = new Command(
-             execute: () =>
-             {
-                 Shell.Current.Navigation.PushAsync(new ChampionAddPage(championManagerVM.ChampionEdit));
-             }
-             );
-            AddSkillChampionPageCommand = new Command(
-            execute: async () =>
-            {
-                string name = await Shell.Current.DisplayPromptAsync("New skill", "Nom de la compétence: ");
-                if (name != null)
-                {
-                    championManagerVM.ChampionEdit.AddSkillCommand.Execute(name);
-                }
-            }
-            );
-            AddSkinChampionPageCommand = new Command(
-            execute: () =>
-            {
-                Shell.Current.Navigation.PushAsync(new SkinAddPage());
-            }
-            ); 
         }
 
-        public ICommand NavigationUpdateChampionPageCommand { get; private set; }
-        public ICommand AddSkinChampionPageCommand { get; private set; }
-        public ICommand AddSkillChampionPageCommand { get; private set; }
+        [RelayCommand]
+        private void NavigationUpdateChampionPage()
+        {
+            Shell.Current.Navigation.PushAsync(new ChampionAddPage(ChampionManagerVM.ChampionEdit));
+        }
+
+        [RelayCommand]
+        private async Task AddSkillChampionPage()
+        {
+            string name = await Shell.Current.DisplayPromptAsync("New skill", "Nom de la compétence: ");
+            if (name != null)
+            {
+                championManagerVM.ChampionEdit.AddSkillCommand.Execute(name);
+            }
+        }
+
+        [RelayCommand]
+        private void AddSkinChampionPage()
+        {
+            Shell.Current.Navigation.PushAsync(new SkinAddPage());
+        }
+
 
     }
 }

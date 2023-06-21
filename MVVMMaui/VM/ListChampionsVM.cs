@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Windows.Input;
 using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 using Model;
 using MVVMMaui.Pages;
 using ViewModel;
@@ -18,42 +19,36 @@ namespace MVVMMaui.VM
 
         public ListChampionsVM(ChampionManagerVM championManagerVM)
 		{
-            this.championManagerVM = championManagerVM;
-
-            NavigationAddChampionPageCommand = new Command(
-               execute: () =>
-               {
-                   Shell.Current.Navigation.PushAsync(new ChampionAddPage());
-               }
-               );
-            ItemTappedCommand = new Command<ChampionVM>(execute: (ChampionVM champion) =>
-                {
-                    Shell.Current.Navigation.PushAsync(new ChampionPage(champion));
-                }
-               );
-            UpdateChampionCommand = new Command<ChampionVM>(execute: (ChampionVM champion) =>
-                {
-                    Shell.Current.Navigation.PushAsync(new ChampionAddPage(champion));
-                }
-               );
-            DeleteChampionCommand = new Command<ChampionVM>(execute: async (ChampionVM champion) =>
-            {
-                bool answer = await Shell.Current.DisplayAlert("Delete", "Voulez vous supprimer: "+champion.Name, "Oui", "Non");
-                if (answer) {
-                    ChampionManagerVM.DeleteChampionCommand.Execute(champion);
-                }
-            }
-               );
+            this.championManagerVM = championManagerVM;         
         }
 
-        public ICommand UpdateChampionCommand { get; private set; }
+        [RelayCommand]
+        private void NavigationAddChampionPage()
+        {
+            Shell.Current.Navigation.PushAsync(new ChampionAddPage());
+        }
 
-        public ICommand ItemTappedCommand { get; private set; }
+        [RelayCommand]
+        private async Task DeleteChampion(ChampionVM champion)
+        {
+            bool answer = await Shell.Current.DisplayAlert("Delete", "Voulez vous supprimer: " + champion.Name, "Oui", "Non");
+            if (answer)
+            {
+                ChampionManagerVM.DeleteChampionCommand.Execute(champion);
+            }
+        }
 
-        public ICommand DeleteChampionCommand { get; private set; }
+        [RelayCommand]
+        private void UpdateChampion(ChampionVM champion)
+        {
+            Shell.Current.Navigation.PushAsync(new ChampionAddPage(champion));
+        }
 
-        public ICommand NavigationAddChampionPageCommand { get; private set; }
-        
+        [RelayCommand]
+        private void ItemTapped(ChampionVM champion)
+        {
+            Shell.Current.Navigation.PushAsync(new ChampionPage(champion));
+        }
 
     }
 }
