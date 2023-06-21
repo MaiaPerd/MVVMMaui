@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Windows.Input;
+using Model;
 using MVVMMaui.Pages;
 using ViewModel;
 
@@ -44,9 +45,20 @@ namespace MVVMMaui.VM
                 Shell.Current.Navigation.PushAsync(new SkinPage((SkinVM)skin));
             }
             );
+            DeleteSkinCommand = new Command(
+            execute: async (skin) =>
+            {
+                bool answer = await Shell.Current.DisplayAlert("Delete", "Voulez vous supprimer: " + ((SkinVM)skin).Name, "Oui", "Non");
+                if (answer)
+                {
+                    championManagerVM.ChampionEdit.DeleteSkinCommand.Execute((SkinVM)skin);
+                }
+            }
+            );
         }
 
-        
+
+        public ICommand DeleteSkinCommand { get; private set; }
         public ICommand SkinPageNavCommand { get; private set; }
         public ICommand NavigationUpdateChampionPageCommand { get; private set; }
         public ICommand AddSkinChampionPageCommand { get; private set; }

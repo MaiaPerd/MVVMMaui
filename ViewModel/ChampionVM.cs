@@ -73,6 +73,7 @@ namespace ViewModel
             AddSkinCommand = new Command(
                  execute: (skin) =>
                  {
+                     
                      skins.Add((SkinVM) skin);
                  }
                 );
@@ -82,11 +83,32 @@ namespace ViewModel
                    skills.Add(new SkillVM(new Skill(name: (string)name, type: SkillType.Basic)));
                }
               );
+            DeleteCharacteristicCommand = new Command(
+             execute: (characteristic) =>
+             {
+                 characteristics.Remove((KeyValuePair<string, int>)characteristic);
+             }
+            );
+            DeleteSkinCommand = new Command(
+                 execute: (skin) =>
+                 {
+                     skins.Remove((SkinVM)skin);
+                 }
+                );
+            DeleteSkillCommand = new Command(
+               execute: (name) =>
+               {
+                   skills.Remove(new SkillVM(new Skill(name: (string)name, type: SkillType.Basic)));
+               }
+              );
         }
 
         public ICommand AddCharacteristicCommand { get; set; }
+        public ICommand DeleteCharacteristicCommand { get; set; }
         public ICommand AddSkinCommand { get; set; }
+        public ICommand DeleteSkinCommand { get; set; }
         public ICommand AddSkillCommand { get; set; }
+        public ICommand DeleteSkillCommand { get; set; }
 
 
         public string Name

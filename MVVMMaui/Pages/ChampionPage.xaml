@@ -91,14 +91,23 @@
                                 <Border.GestureRecognizers>
                                     <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:PageChampionVM}}, Path=SkinPageNavCommand}"
                                                           CommandParameter="{Binding}">
-
                                     </TapGestureRecognizer>
-
                                 </Border.GestureRecognizers>
-                                <HorizontalStackLayout>
-                                    <Image Source="{Binding Icon, Converter={StaticResource StringToImage}}" HeightRequest="40" WidthRequest="40" Margin="10, 0"></Image>
-                                    <Label Text="{Binding Name}" Style="{StaticResource TextChampion}" VerticalTextAlignment="Center"></Label>
-                                </HorizontalStackLayout>
+                                <SwipeView>
+                                     <SwipeView.RightItems>
+                                <SwipeItems  Mode="Execute">
+                                    <SwipeItem Text="Suprimer" Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:PageChampionVM}}, Path=DeleteSkinCommand}"
+                                               CommandParameter="{Binding}"
+                                               BackgroundColor="Red"  />         
+                                </SwipeItems>                           
+                            </SwipeView.RightItems>
+                                     <HorizontalStackLayout>
+                                        <Image Source="{Binding Icon, Converter={StaticResource StringToImage}}" HeightRequest="40" WidthRequest="40" Margin="10, 0"></Image>
+                                        <Label Text="{Binding Name}" Style="{StaticResource TextChampion}" VerticalTextAlignment="Center"></Label>
+                                    </HorizontalStackLayout>
+
+                                </SwipeView>
+                               
                             </Border>            
                         </DataTemplate>
                     </CollectionView.ItemTemplate>    
