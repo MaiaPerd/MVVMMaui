@@ -75,6 +75,29 @@ namespace MVVMMaui.VM
                 CharacteristicsValue = "";
                 CharacteristicsKey = 0;
             });
+            DeleteCharacteristicCommand = new Command(execute: async (characteristic) =>
+            {
+                KeyValuePair<string, int> charac = (KeyValuePair<string, int>)characteristic;
+                bool answer = await Shell.Current.DisplayAlert("Delete", "Voulez vous supprimer: " + charac.Key, "Oui", "Non");
+                if (answer)
+                {
+                    ChampionEditCopie.DeleteCharacteristicCommand.Execute(charac);
+                }
+            });
+            AddSkillCommand = new Command(execute: async (skill) =>
+            {
+                    //ChampionEditCopie.AddSkillCommand.Execute(skill);
+               
+            });
+            DeleteSkillCommand = new Command(execute: async (skill) =>
+            {
+                SkillVM skillVM = (SkillVM) skill;
+                bool answer = await Shell.Current.DisplayAlert("Delete", "Voulez vous supprimer: " + skillVM.Name, "Oui", "Non");
+                if (answer)
+                {
+                    ChampionEditCopie.DeleteSkillCommand.Execute(skillVM);
+                }
+            });
             ImageChangeCommand = new Command(execute: async () =>
             {
                 string image = await PickImage.PickAndShow();
@@ -179,9 +202,13 @@ namespace MVVMMaui.VM
         }
         private int characteristicsKey = 0;
 
+        
         public ICommand UpdateChampionCommand { get; set; }
         public ICommand ResetChampionCommand { get; set; }
         public ICommand AddCharacteristicCommand { get; set; }
+        public ICommand DeleteCharacteristicCommand { get; set; }
+        public ICommand AddSkillCommand { get; set; }
+        public ICommand DeleteSkillCommand { get; set; }
         public ICommand ImageChangeCommand { get; set; }
         public ICommand IconChangeCommand { get; set; }
     }

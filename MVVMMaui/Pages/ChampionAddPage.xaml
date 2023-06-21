@@ -2,6 +2,7 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:converter="clr-namespace:MVVMMaui"
+             xmlns:viewmodel="clr-namespace:MVVMMaui.VM"
              x:Class="MVVMMaui.Pages.ChampionAddPage"
              BackgroundColor="{StaticResource Gray950}"
              Title="ChampionAddPage">
@@ -43,7 +44,7 @@
         <FlexLayout FlexLayout.Grow="1">
             <ScrollView >
                 <Grid ColumnDefinitions="60, *"
-                      RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto">
+                      RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto,Auto">
                    
                     <Label Text="Nom: "
                            Style="{StaticResource TextChampion}"
@@ -150,17 +151,27 @@
                                 <ListView.ItemTemplate>
                                     <DataTemplate>
                                         <ViewCell>
-                                            <Border BackgroundColor="{StaticResource Beige}"
-                                                    StrokeShape="RoundRectangle 10,10,0,10"
-                                                    Margin="2" Padding="2">
-                                                <Grid RowDefinitions="*"
-                                                      ColumnDefinitions="*,Auto"
-                                                      VerticalOptions="Center"
-                                                      Padding="5">
-                                                    <Label Text="{Binding Key}"  Grid.Column="0"></Label>
-                                                    <Label Text="{Binding Value}" Grid.Column="1"></Label>
-                                                </Grid>
-                                            </Border>
+                                            <SwipeView>
+                                                <SwipeView.RightItems>
+                                                    <SwipeItems Mode="Execute">
+                                                        <SwipeItem Text="Suprimer" Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:AddChampionVM}}, Path=DeleteCharacteristicCommand}"
+                                                                   CommandParameter="{Binding}"
+                                                                   BackgroundColor="Red"  />        
+                                                    </SwipeItems>                           
+                                                </SwipeView.RightItems>
+                                                <Border BackgroundColor="{StaticResource Beige}"
+                                                        StrokeShape="RoundRectangle 10,10,0,10"
+                                                        Margin="2" Padding="2">
+                                                    <Grid RowDefinitions="*"
+                                                          ColumnDefinitions="*,Auto"
+                                                          VerticalOptions="Center"
+                                                          Padding="5">
+                                                            <Label Text="{Binding Key}"  Grid.Column="0"></Label>
+                                                            <Label Text="{Binding Value}" Grid.Column="1"></Label>
+                                                    </Grid>
+                                                </Border>
+                                            </SwipeView>
+                                           
                                         </ViewCell>
                                     </DataTemplate>
                                 </ListView.ItemTemplate>
@@ -185,6 +196,56 @@
                             </Button>
 
                         </Grid>
+                  
+                    </VerticalStackLayout>
+                     <Label Text="Compétences: "
+                           Style="{StaticResource TextChampion}"
+                           VerticalOptions="Center"
+                           Grid.Column="0" Grid.Row="6"/>
+                     <VerticalStackLayout Grid.Column="1" Grid.Row="6">
+                        <Border Stroke="{StaticResource Primary}">
+                            <ListView ItemsSource="{Binding ChampionEditCopie.Skills}"
+                                      HeightRequest="100"
+                                      BackgroundColor="Transparent"
+                                      SelectionMode="None"
+                                      SeparatorVisibility="None">
+                                <ListView.ItemTemplate>
+                                    <DataTemplate>
+                                        <ViewCell>
+                                            <SwipeView>
+                                                <SwipeView.RightItems>
+                                                    <SwipeItems Mode="Execute">
+                                                        <SwipeItem Text="Suprimer" Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:AddChampionVM}}, Path=DeleteSkillCommand}"
+                                                                   CommandParameter="{Binding}"
+                                                                   BackgroundColor="Red"  />        
+                                                    </SwipeItems>                           
+                                                </SwipeView.RightItems>
+                                                <Border BackgroundColor="{StaticResource Beige}"
+                                                        StrokeShape="RoundRectangle 10,10,0,10"
+                                                        Margin="2" Padding="2">
+                                                    <VerticalStackLayout>
+                                                        <Grid RowDefinitions="*"
+                                                          ColumnDefinitions="*,Auto"
+                                                          VerticalOptions="Center"
+                                                          Padding="5">
+                                                            <Label Text="{Binding Name}"  Grid.Column="0"></Label>
+                                                            <Label Text="{Binding Type}" Grid.Column="1"></Label>
+                                                        </Grid>
+                                                        <Label Text="{Binding Description}"></Label>
+                                                    </VerticalStackLayout>      
+                                                </Border>
+                                            </SwipeView>
+                                           
+                                        </ViewCell>
+                                    </DataTemplate>
+                                </ListView.ItemTemplate>
+                            </ListView>
+                        </Border>
+                
+                        <Button Text="Nouvelle compétence"
+                                    CornerRadius="20"
+                                    Command="{Binding AddSkillCommand}">
+                            </Button>
                   
                     </VerticalStackLayout>
                                         
