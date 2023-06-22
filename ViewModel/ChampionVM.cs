@@ -14,44 +14,31 @@ namespace ViewModel
 	public class ChampionVM : BaseGenericVM<Champion>
     {
 
-        public ChampionVM(Champion model)
+        public ChampionVM(Champion model) : base(model)
 		{
-			Model = model;
             Characteristics = new ReadOnlyObservableCollection<KeyValuePair<string, int>>(characteristics);
             LoadCaracteristique();
             Skins = new ReadOnlyObservableCollection<SkinVM>(skins);
             LoadSkins();
             Skills = new ReadOnlyObservableCollection<SkillVM>(skills);
             LoadSkills();
-            commandDef();
+            CommandDef();
         }
 
-        public ChampionVM(ChampionVM championVM)
+        public ChampionVM(ChampionVM championVM) : this(championVM.Name, championVM)
         {
-            Model = new Champion(name: championVM.Name, champClass: championVM.Model.Class, icon: championVM.Icon, image: championVM.Image, bio: championVM.Bio);
-            foreach (var characteristic in championVM.Characteristics)
-            {
-                Model.AddCharacteristics(Tuple.Create(characteristic.Key, characteristic.Value));
-            }
-            Characteristics = new ReadOnlyObservableCollection<KeyValuePair<string, int>>(characteristics);
-            LoadCaracteristique();
-            Skins = championVM.Skins;
-            Skills = championVM.Skills;
-            commandDef();
         }
 
-        public ChampionVM()
+        public ChampionVM() : base(new Champion(name: "Nouveau"))
         {
-            Model = new Champion(name: "Nouveau");
             Characteristics = new ReadOnlyObservableCollection<KeyValuePair<string, int>>(characteristics);
             Skins = new ReadOnlyObservableCollection<SkinVM>(skins);
             Skills = new ReadOnlyObservableCollection<SkillVM>(skills);
-            commandDef();
+            CommandDef();
         }
 
-        public ChampionVM(string name, ChampionVM championVM)
+        public ChampionVM(string name, ChampionVM championVM) : base(new Champion(name: name, champClass: championVM.Model.Class, icon: championVM.Icon, image: championVM.Image, bio: championVM.Bio))
         {
-            Model = new Champion(name: name, champClass: championVM.Model.Class, icon: championVM.Icon, image: championVM.Image, bio: championVM.Bio);
             foreach (var characteristic in championVM.Characteristics)
             {
                 Model.AddCharacteristics(Tuple.Create(characteristic.Key, characteristic.Value));
@@ -59,43 +46,77 @@ namespace ViewModel
             Characteristics = new ReadOnlyObservableCollection<KeyValuePair<string, int>>(characteristics);
             LoadCaracteristique();
             Skins = new ReadOnlyObservableCollection<SkinVM>(skins);
-            LoadSkins();
+            foreach (var skin in championVM.Skins)
+            {
+                skins.Add(skin);
+            }
             Skills = new ReadOnlyObservableCollection<SkillVM>(skills);
-            LoadSkills();
-            commandDef();
+            foreach (var skill in championVM.Skills)
+            {
+                skills.Add(skill);
+            }
+            CommandDef();
         }
 
 
-        public void commandDef()
+        public void CommandDef()
         {
             AddCharacteristicCommand = new Command(
              execute: (characteristic) =>
              {
-                 characteristics.Add((KeyValuePair<string, int>)characteristic);
+                 KeyValuePair<string, int> charac = ((KeyValuePair<string, int>)characteristic);
+                 Model.AddCharacteristics(Tuple.Create(charac.Key,charac.Value));
+                 LoadCaracteristique();
              }
-           );
+            );
             AddSkinCommand = new Command(
-                 execute: (name) =>
+             execute: (skin) =>
                  {
-                     skins.Add(new SkinVM(new Skin(name: (string)name, champion: Model)));
+                     Model.AddSkin(((SkinVM)skin).Model);
+                     LoadSkins();
                  }
                 );
             AddSkillCommand = new Command(
-               execute: (name) =>
+               execute: (skill) =>
                {
-                   skills.Add(new SkillVM(new Skill(name: (string)name, type: SkillType.Basic)));
+                   Model.AddSkill(((SkillVM)skill).Model);
+                   LoadSkills();
+               }
+              );
+            DeleteCharacteristicCommand = new Command(
+             execute: (characteristic) =>
+             {
+                 Model.RemoveCharacteristics(((KeyValuePair<string, int>)characteristic).Key);
+                 LoadCaracteristique();
+             }
+            );
+            DeleteSkinCommand = new Command(
+                 execute: (skin) =>
+                 {
+                     Model.RemoveSkin(((SkinVM)skin).Model);
+                     LoadSkins();
+                 }
+                );
+            DeleteSkillCommand = new Command(
+               execute: (skill) =>
+               {
+                   Model.RemoveSkill(((SkillVM)skill).Model);
+                   LoadSkills();
                }
               );
         }
 
         public ICommand AddCharacteristicCommand { get; set; }
+        public ICommand DeleteCharacteristicCommand { get; set; }
         public ICommand AddSkinCommand { get; set; }
+        public ICommand DeleteSkinCommand { get; set; }
         public ICommand AddSkillCommand { get; set; }
+        public ICommand DeleteSkillCommand { get; set; }
 
 
         public string Name
 		{
-			get => Model.Name;
+			get => Model?.Name;
 		}
 
 		public string Bio
@@ -117,7 +138,7 @@ namespace ViewModel
         
         public string Icon
         {
-            get => Model.Icon;
+            get => Model?.Icon;
             set
             {
                 if (Model == null || Model.Icon == value) return;
@@ -129,7 +150,7 @@ namespace ViewModel
 
         public string Image
         {
-            get => Model.Image.Base64;
+            get => Model?.Image.Base64;
             set
             {
                 if (Model == null || Model.Image.Base64 == value) return;
@@ -142,7 +163,7 @@ namespace ViewModel
         {
             get
             {
-                return EnumToEnumVM.ChampionClassToChampionClassVM(Model.Class.ToString());
+                return EnumToEnumVM.ChampionClassToChampionClassVM(Model?.Class.ToString());
             }
             set
             {
@@ -165,7 +186,7 @@ namespace ViewModel
         private void LoadCaracteristique()
         {
             characteristics.Clear();
-            foreach (var charact in Model.Characteristics)
+            foreach (var charact in Model?.Characteristics)
             {
                 characteristics.Add(charact);
             }
@@ -177,11 +198,25 @@ namespace ViewModel
 
         private void LoadSkins()
         {
-            foreach (var skin in Model.Skins)
+            skins.Clear();
+            foreach (var skin in Model?.Skins)
             {
                 skins.Add(new SkinVM(skin));
             }
             // A trier dans l'ordre alphabétique
+        }
+
+        SkinVM skinEdit;
+
+        public SkinVM SkinEdit
+        {
+            get => skinEdit;
+            set
+            {
+                if (skinEdit == value) return;
+                skinEdit = value;
+                OnPropertyChanged();
+            }
         }
 
         public ReadOnlyObservableCollection<SkillVM> Skills { get; private set; }
@@ -190,7 +225,8 @@ namespace ViewModel
 
         private void LoadSkills()
         {
-            foreach (var skill in Model.Skills)
+            skills.Clear();
+            foreach (var skill in Model?.Skills)
             {
                 skills.Add(new SkillVM(skill));
             }

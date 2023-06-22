@@ -4,6 +4,7 @@ using System.Globalization;
 using System.Windows.Input;
 using Model;
 using MVVM;
+using MVVMMaui.Pages;
 using ViewModel;
 
 namespace MVVMMaui.VM
@@ -36,19 +37,14 @@ namespace MVVMMaui.VM
             this.status = "Modifier";
             this.edit = false;
 
-            initCommand(false);
+            InitCommand(false);
         }
 
         public AddChampionVM(ChampionManagerVM championManagerVM)
 		{
             this.championEditCopie = new ChampionVM();
-            var converter = new StringToImageConverter();
-            using FileStream fs = File.OpenRead("logolol.png");
-            ImageSource image = ImageSource.FromStream(() => fs);
-            ChampionEditCopie.Image = (string)converter.ConvertBack(image, null, null, CultureInfo.CurrentCulture);
-            using FileStream fs2 = File.OpenRead("logo.png");
-            ImageSource icon = ImageSource.FromStream(() => fs2);
-            ChampionEditCopie.Icon = (string)converter.ConvertBack(icon, null, null, CultureInfo.CurrentCulture);
+            ChampionEditCopie.Image = PickImage.getImage("logolol.png");
+            ChampionEditCopie.Icon = PickImage.getImage("logo.png");
             championManagerVM.ChampionEdit = ChampionEditCopie;
             this.championManagerVM = championManagerVM;
             ChampionsClass = new ReadOnlyObservableCollection<ClassVM>(championsClass);
@@ -59,10 +55,10 @@ namespace MVVMMaui.VM
             this.status = "Ajouter";
             this.edit = true;
 
-            initCommand(true);
+            InitCommand(true);
         }
 
-        private void initCommand(bool add)
+        private void InitCommand(bool add)
         {
             UpdateChampionCommand = new Command(execute: () =>
             {
@@ -80,10 +76,32 @@ namespace MVVMMaui.VM
                 CharacteristicsValue = "";
                 CharacteristicsKey = 0;
             });
+            DeleteCharacteristicCommand = new Command(execute: async (characteristic) =>
+            {
+                KeyValuePair<string, int> charac = (KeyValuePair<string, int>)characteristic;
+                bool answer = await Shell.Current.DisplayAlert("Delete", "Voulez vous supprimer: " + charac.Key, "Oui", "Non");
+                if (answer)
+                {
+                    ChampionEditCopie.DeleteCharacteristicCommand.Execute(charac);
+                }
+            });
+            AddSkillCommand = new Command(execute: () =>
+            {
+                Shell.Current.Navigation.PushModalAsync(new SkillAddPage(ChampionEditCopie));
+
+            });
+            DeleteSkillCommand = new Command(execute: async (skill) =>
+            {
+                SkillVM skillVM = (SkillVM) skill;
+                bool answer = await Shell.Current.DisplayAlert("Delete", "Voulez vous supprimer: " + skillVM.Name, "Oui", "Non");
+                if (answer)
+                {
+                    ChampionEditCopie.DeleteSkillCommand.Execute(skillVM);
+                }
+            });
             ImageChangeCommand = new Command(execute: async () =>
             {
-
-                string image = await PickAndShow();
+                string image = await PickImage.PickAndShow();
                 if(image != null)
                 {
                     ChampionEditCopie.Image = image;
@@ -92,50 +110,13 @@ namespace MVVMMaui.VM
             });
             IconChangeCommand = new Command(execute: async () =>
             {
-                string image = await PickAndShow();
+                string image = await PickImage.PickAndShow();
                 if (image != null)
                 {
                     ChampionEditCopie.Icon = image;
                 }
             });
 
-        }
-
-        public async Task<String> PickAndShow()
-        {
-            try
-            {
-                var result = await FilePicker.Default.PickAsync(PickOptions.Images);
-                if (result != null)
-                {
-                    using var stream = await result.OpenReadAsync();
-                    var image = ImageSource.FromStream(() => stream);
-                    var converter = new StringToImageConverter();
-                    return (string)converter.ConvertBack(image, null, null, CultureInfo.CurrentCulture);
-                }
-                return null;
-               /* if (MediaPicker.Default.IsCaptureSupported)
-                {
-                    FileResult photo = await MediaPicker.Default.CapturePhotoAsync();
-
-                    if (photo != null)
-                    {
-                        // save the file into local storage
-                        string localFilePath = Path.Combine(FileSystem.CacheDirectory, photo.FileName);
-
-                        using Stream sourceStream = await photo.OpenReadAsync();
-                        using FileStream localFileStream = File.OpenWrite(localFilePath);
-
-                        await sourceStream.CopyToAsync(localFileStream);
-                    }
-                }*/
-            }
-            catch (Exception ex)
-            {
-                // The user canceled or something went wrong
-            }
-
-            return null;
         }
 
         public ReadOnlyObservableCollection<ClassVM> ChampionsClass { get; private set; }
@@ -156,15 +137,8 @@ namespace MVVMMaui.VM
 
         public string Name
         {
-            get => name;
-            set
-            {
-                if (name != value)
-                {
-                    name = value;
-                    OnPropertyChanged();
-                }
-            }
+            set { SetProperty(ref name, value); }
+            get { return name; }
         }
         private string name;
 
@@ -191,40 +165,33 @@ namespace MVVMMaui.VM
 
         public ClassVM Selection
         {
-            get => selection;
-            set
-            {
-                selection = value;
-                OnPropertyChanged(nameof(Selection));
-            }
+            set { SetProperty(ref selection, value); }
+            get { return selection; }
         }
         private ClassVM selection;
 
         public string CharacteristicsValue
         {
-            get => characteristicsValue;
-            set
-            {
-                characteristicsValue = value;
-                OnPropertyChanged();
-            }
+            set { SetProperty(ref characteristicsValue, value); }
+            get { return characteristicsValue; }
         }
         private string characteristicsValue = "";
 
         public int CharacteristicsKey
         {
-            get => characteristicsKey;
-            set
-            {
-                characteristicsKey = value;
-                OnPropertyChanged();
-            }
+            set { SetProperty(ref characteristicsKey, value); }
+            get { return characteristicsKey; }
+
         }
         private int characteristicsKey = 0;
 
+        
         public ICommand UpdateChampionCommand { get; set; }
         public ICommand ResetChampionCommand { get; set; }
         public ICommand AddCharacteristicCommand { get; set; }
+        public ICommand DeleteCharacteristicCommand { get; set; }
+        public ICommand AddSkillCommand { get; set; }
+        public ICommand DeleteSkillCommand { get; set; }
         public ICommand ImageChangeCommand { get; set; }
         public ICommand IconChangeCommand { get; set; }
     }

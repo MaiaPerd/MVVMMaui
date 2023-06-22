@@ -40,6 +40,8 @@ namespace ViewModel
             LoadChampions(index, count);
             ChampionsClass = new ReadOnlyObservableCollection<ChampionClassVM>(championsClass);
             LoadChampionsClass();
+            SkillTypes = new ReadOnlyObservableCollection<SkillTypeVM>(skillTypes);
+            LoadSkillType();
 
             PropertyChanged += ChampionManagerVM_PropertyChanged;
             NextPageCommand = new Command(execute: () =>
@@ -93,6 +95,19 @@ namespace ViewModel
                 championsClass.Add(champion);
             }
             
+        }
+
+        public ReadOnlyObservableCollection<SkillTypeVM> SkillTypes { get; private set; }
+
+        private ObservableCollection<SkillTypeVM> skillTypes = new ObservableCollection<SkillTypeVM>();
+
+        private void LoadSkillType()
+        {
+            foreach (SkillTypeVM skillType in Enum.GetValues(typeof(SkillTypeVM)))
+            {
+                skillTypes.Add(skillType);
+            }
+
         }
 
 

@@ -24,6 +24,11 @@ namespace MVVM
         }
         private Base model;
 
+        public BaseGenericVM(Base model)
+        {
+            Model = model;
+        }
+
     }
 }
 

@@ -2,7 +2,6 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:converter="clr-namespace:MVVMMaui"
-             xmlns:view="clr-namespace:MVVMMaui.Views"
              xmlns:viewmodel="clr-namespace:MVVMMaui.VM"
              xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
              x:Class="MVVMMaui.Pages.ChampionsListPage"
@@ -15,10 +14,25 @@
         <converter:StringToImageConverter x:Key="StringToImage"/>
         <toolkit:ItemTappedEventArgsConverter x:Key="ItemTappedEventArgsConverter" />
     </ContentPage.Resources>
-    <Grid RowDefinitions="*,Auto">
-         <ListView ItemsSource="{Binding ChampionManagerVM.Champions}"
+    <Grid RowDefinitions="Auto,*,Auto">
+        <HorizontalStackLayout Grid.Row="0" VerticalOptions="Center">
+            <Label Text="Rechercher par :" VerticalTextAlignment="Center"></Label>
+            <Picker SelectedItem="{Binding ChampionManagerVM.Count}">
+                <Picker.ItemsSource>
+                    <x:Array Type="{x:Type x:Int32}">
+                        <x:Int32>5</x:Int32>
+                        <x:Int32>10</x:Int32>
+                        <x:Int32>15</x:Int32>
+                        <x:Int32>20</x:Int32>
+                        <x:Int32>50</x:Int32>
+                        <x:Int32>100</x:Int32>
+                    </x:Array>
+                </Picker.ItemsSource>
+            </Picker>
+        </HorizontalStackLayout>
+        <ListView ItemsSource="{Binding ChampionManagerVM.Champions}"
                    SelectedItem="{Binding ItemSelected}"
-                   Grid.Row="0">
+                   Grid.Row="1">
             <ListView.Behaviors>
                 <toolkit:EventToCommandBehavior EventName="ItemTapped"
                                                 Command="{Binding ItemTappedCommand}"
@@ -30,11 +44,13 @@
                         <SwipeView>
                             <SwipeView.RightItems>
                                 <SwipeItems>
-                                    <SwipeItem Text="Suprimer" Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:ListChampionsVM}}, Path=DeleteChampionCommand}"
+                                    <SwipeItem Text="Suprimer"
+                                               Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:ListChampionsVM}}, Path=DeleteChampionCommand}"
                                                CommandParameter="{Binding}"
                                                BackgroundColor="Red"  />
                                  
-                                    <SwipeItem Text="Modifier" Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:ListChampionsVM}}, Path=UpdateChampionCommand}"
+                                    <SwipeItem Text="Modifier"
+                                               Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:ListChampionsVM}}, Path=UpdateChampionCommand}"
                                                CommandParameter="{Binding}"
                                                BackgroundColor="Gray"  />           
                                 </SwipeItems>                           
@@ -52,7 +68,7 @@
             </ListView.ItemTemplate>
         </ListView>
 
-        <HorizontalStackLayout HorizontalOptions="Center" Grid.Row="1">
+        <HorizontalStackLayout HorizontalOptions="Center" Grid.Row="2">
             <ImageButton Source="previous.png" Style="{StaticResource Pagination}"  Command="{Binding ChampionManagerVM.PreviousPageCommand}" Margin="20, 10"></ImageButton>
             <Label Text="{Binding ChampionManagerVM.Index}" Margin="0, 10" VerticalTextAlignment="Center"></Label>
             <Label Text="/" Margin="0, 10" VerticalTextAlignment="Center"></Label>

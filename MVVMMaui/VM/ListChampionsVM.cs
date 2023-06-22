@@ -35,6 +35,7 @@ namespace MVVMMaui.VM
                );
             ItemTappedCommand = new Command<ChampionVM>(execute: (ChampionVM champion) =>
                 {
+                    ChampionManagerVM.ChampionEdit = champion;
                     Shell.Current.Navigation.PushAsync(new ChampionPage(champion));
                 }
                );

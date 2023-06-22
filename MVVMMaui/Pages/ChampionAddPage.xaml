@@ -2,6 +2,7 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:converter="clr-namespace:MVVMMaui"
+             xmlns:viewmodel="clr-namespace:MVVMMaui.VM"
              x:Class="MVVMMaui.Pages.ChampionAddPage"
              BackgroundColor="{StaticResource Gray950}"
              Title="ChampionAddPage">
@@ -32,8 +33,7 @@
         </ControlTemplate>
     </ContentPage.Resources>
     <FlexLayout Direction="Column">
-
-        <VerticalStackLayout Grid.Row="0">
+        <VerticalStackLayout>
             <Label Text="{Binding Titre}"
                    HorizontalOptions="Center"
                    Style="{StaticResource TitreChampion}"></Label>
@@ -43,61 +43,48 @@
         <FlexLayout FlexLayout.Grow="1">
             <ScrollView >
                 <Grid ColumnDefinitions="60, *"
-                      RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto">
+                      RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto,Auto">
                    
                     <Label Text="Nom: "
                            Style="{StaticResource TextChampion}"
-                           VerticalOptions="Center"
                            Grid.Column="0" Grid.Row="0"></Label>
                     <Entry Placeholder="{Binding ChampionEditCopie.Name}"
                            Text="{Binding Name}"
-                           WidthRequest="300"
                            IsEnabled="{Binding Edit}"
                            Style="{StaticResource EditChampion}"
                            Grid.Column="1" Grid.Row="0"></Entry>
              
                     <Label Text="Icon: "
                            Style="{StaticResource TextChampion}"
-                           VerticalOptions="Center"
                            Grid.Column="0" Grid.Row="1"></Label>
      
                     <ImageButton Source="{Binding ChampionEditCopie.Icon, Converter={StaticResource StringToImage}}"
                                  Grid.Column="1" Grid.Row="1"
-                                 Command="{Binding IconChangeCommand}"
-                                 BackgroundColor="{StaticResource Beige}"
-                                 WidthRequest="50"
-                                 Margin="10">
+                                 Style="{StaticResource IconButton}"
+                                 Command="{Binding IconChangeCommand}">
                     </ImageButton>
 
                     <Label Text="Image: "
                            Style="{StaticResource TextChampion}"
-                           VerticalOptions="Center"
                            Grid.Column="0" Grid.Row="2"></Label>
 
                     <ImageButton Source="{Binding ChampionEditCopie.Image, Converter={StaticResource StringToImage}}"
                                  Command="{Binding ImageChangeCommand}"
-                                 HeightRequest="100"
                                  Grid.Column="1" Grid.Row="2"
-                                 BackgroundColor="{StaticResource Beige}"
-                                 WidthRequest="300"
+                                 Style="{StaticResource ImageButton}"
                                  Margin="10"></ImageButton>
 
                     <Label Text="Bio: "
                            Style="{StaticResource TextChampion}"
-                           VerticalOptions="Center"         
                            Grid.Column="0" Grid.Row="3"></Label>
 
                     <Editor Text="{Binding ChampionEditCopie.Bio}"
-                            AutoSize="TextChanges"
-                            HeightRequest="200"
-                            WidthRequest="300"
                             Placeholder="{Binding ChampionEditCopie.Bio}"
                             Style="{StaticResource EditorChampion}"
                             Grid.Column="1" Grid.Row="3"/>
              
                     <Label Text="Classe: "
                            Style="{StaticResource TextChampion}"
-                           VerticalOptions="Center"
                            Grid.Column="0" Grid.Row="4"/>
  
                    
@@ -136,30 +123,36 @@
 
                     <Label Text="Caractéristiques: "
                            Style="{StaticResource TextChampion}"
-                           VerticalOptions="Center"
                            Grid.Column="0" Grid.Row="5"/>
 
                     <VerticalStackLayout Grid.Column="1" Grid.Row="5">
-                        <Border Stroke="{StaticResource Primary}">
+                        <Border Style="{StaticResource Box}">
                             <ListView ItemsSource="{Binding ChampionEditCopie.Characteristics}"
-                                      HeightRequest="100"
-                                      BackgroundColor="Transparent"
-                                      SelectionMode="None"
-                                      SeparatorVisibility="None">
+                                      Style="{StaticResource ListBox}"
+                                      SelectionMode="None">
                                 <ListView.ItemTemplate>
                                     <DataTemplate>
                                         <ViewCell>
-                                            <Border BackgroundColor="{StaticResource Beige}"
-                                                    StrokeShape="RoundRectangle 10,10,0,10"
-                                                    Margin="2" Padding="2">
-                                                <Grid RowDefinitions="*"
-                                                      ColumnDefinitions="*,Auto"
-                                                      VerticalOptions="Center"
-                                                      Padding="5">
-                                                    <Label Text="{Binding Key}"  Grid.Column="0"></Label>
-                                                    <Label Text="{Binding Value}" Grid.Column="1"></Label>
-                                                </Grid>
-                                            </Border>
+                                            <SwipeView>
+                                                <SwipeView.RightItems>
+                                                    <SwipeItems Mode="Execute">
+                                                        <SwipeItem Text="Suprimer"
+                                                                   Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:AddChampionVM}}, Path=DeleteCharacteristicCommand}"
+                                                                   CommandParameter="{Binding}"
+                                                                   BackgroundColor="Red"  />        
+                                                    </SwipeItems>                           
+                                                </SwipeView.RightItems>
+                                                <Border Style="{StaticResource UpdateBox}">
+                                                    <Grid RowDefinitions="*"
+                                                          ColumnDefinitions="*,Auto"
+                                                          VerticalOptions="Center"
+                                                          Padding="5">
+                                                            <Label Text="{Binding Key}"  Grid.Column="0"></Label>
+                                                            <Label Text="{Binding Value}" Grid.Column="1"></Label>
+                                                    </Grid>
+                                                </Border>
+                                            </SwipeView>
+                                           
                                         </ViewCell>
                                     </DataTemplate>
                                 </ListView.ItemTemplate>
@@ -186,6 +179,51 @@
                         </Grid>
                   
                     </VerticalStackLayout>
+                     <Label Text="Compétences: "
+                           Style="{StaticResource TextChampion}"
+                           Grid.Column="0" Grid.Row="6"/>
+                     <VerticalStackLayout Grid.Column="1" Grid.Row="6">
+                        <Border Style="{StaticResource Box}">
+                            <ListView ItemsSource="{Binding ChampionEditCopie.Skills}"
+                                      Style="{StaticResource ListBox}"
+                                      SelectionMode="None">
+                                <ListView.ItemTemplate>
+                                    <DataTemplate>
+                                        <ViewCell>
+                                            <SwipeView>
+                                                <SwipeView.RightItems>
+                                                    <SwipeItems Mode="Execute">
+                                                        <SwipeItem Text="Suprimer"
+                                                                   Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:AddChampionVM}}, Path=DeleteSkillCommand}"
+                                                                   CommandParameter="{Binding}"
+                                                                   BackgroundColor="Red" />
+                                                    </SwipeItems>                           
+                                                </SwipeView.RightItems>
+                                                <Border Style="{StaticResource UpdateBox}">
+                                                    <VerticalStackLayout>
+                                                        <Grid RowDefinitions="*"
+                                                              ColumnDefinitions="*,Auto"
+                                                              VerticalOptions="Center"
+                                                              Padding="5">
+                                                            <Label Text="{Binding Name}"  Grid.Column="0"></Label>
+                                                            <Label Text="{Binding Type}" Grid.Column="1"></Label>
+                                                        </Grid>
+                                                    </VerticalStackLayout>      
+                                                </Border>
+                                            </SwipeView>
+                                           
+                                        </ViewCell>
+                                    </DataTemplate>
+                                </ListView.ItemTemplate>
+                            </ListView>
+                        </Border>
+                
+                        <Button Text="Nouvelle compétence"
+                                CornerRadius="20"
+                                Command="{Binding AddSkillCommand}">
+                        </Button>
+                  
+                    </VerticalStackLayout>
                                         
                  </Grid>
           
@@ -194,8 +232,13 @@
         </FlexLayout>
 
         <HorizontalStackLayout Padding="5" HorizontalOptions="Center">
-            <Button Text="{Binding Status}" Margin="10, 5"  Command="{Binding UpdateChampionCommand}" CommandParameter="{Binding ChampionEditCopie}"></Button>
-            <Button Text="Annuler" Margin="10, 5" Command="{Binding ResetChampionCommand}"></Button>
+            <Button Text="{Binding Status}"
+                    Style="{StaticResource EditButton}"
+                    Command="{Binding UpdateChampionCommand}"
+                    CommandParameter="{Binding ChampionEditCopie}"></Button>
+            <Button Text="Annuler"
+                    Style="{StaticResource EditButton}"
+                    Command="{Binding ResetChampionCommand}"></Button>
         </HorizontalStackLayout>
     </FlexLayout>
        

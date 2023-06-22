@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Windows.Input;
+using Model;
+using MVVM;
 using MVVMMaui.Pages;
 using ViewModel;
 
 namespace MVVMMaui.VM
 {
-	public class PageChampionVM
+	public class PageChampionVM : BaseVM
 	{
         public ChampionManagerVM ChampionManagerVM
         {
@@ -33,17 +35,32 @@ namespace MVVMMaui.VM
             }
             );
             AddSkinChampionPageCommand = new Command(
-            execute: async () =>
+            execute: () =>
             {
-                string name = await Shell.Current.DisplayPromptAsync("New skin", "Nom du skin: ");
-                if(name != null)
+                Shell.Current.Navigation.PushAsync(new SkinAddPage());
+            }
+            );
+            SkinPageNavCommand = new Command(
+            execute: (skin) =>
+            {
+                Shell.Current.Navigation.PushAsync(new SkinPage((SkinVM)skin));
+            }
+            );
+            DeleteSkinCommand = new Command(
+            execute: async (skin) =>
+            {
+                bool answer = await Shell.Current.DisplayAlert("Delete", "Voulez vous supprimer: " + ((SkinVM)skin).Name, "Oui", "Non");
+                if (answer)
                 {
-                    championManagerVM.ChampionEdit.AddSkinCommand.Execute(name);
+                    championManagerVM.ChampionEdit.DeleteSkinCommand.Execute((SkinVM)skin);
                 }
             }
-            ); 
+            );
         }
 
+
+        public ICommand DeleteSkinCommand { get; private set; }
+        public ICommand SkinPageNavCommand { get; private set; }
         public ICommand NavigationUpdateChampionPageCommand { get; private set; }
         public ICommand AddSkinChampionPageCommand { get; private set; }
         public ICommand AddSkillChampionPageCommand { get; private set; }
