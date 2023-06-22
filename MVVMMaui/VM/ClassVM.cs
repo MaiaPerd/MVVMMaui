@@ -9,13 +9,8 @@ namespace MVVMMaui.VM
 	{
         public ChampionClassVM ChampionClassVM
         {
-            get => championClassVM;
-            set
-            {
-                if (championClassVM == value) return;
-                championClassVM = value;
-                OnPropertyChanged();
-            }
+            set { SetProperty(ref championClassVM, value); }
+            get { return championClassVM; }
         }
         private ChampionClassVM championClassVM;
 
@@ -28,25 +23,15 @@ namespace MVVMMaui.VM
 
         public string ClassName
         {
-            get => className;
-            set
-            {
-                if (className == value) return;
-                className = value;
-                OnPropertyChanged();
-            }
+            set { SetProperty(ref className, value); }
+            get { return className; }
         }
         private string className;
 
         public string ImageName
         {
-            get => imageName;
-            set
-            {
-                if (imageName == value) return;
-                imageName = value;
-                OnPropertyChanged();
-            }
+            set { SetProperty(ref imageName, value); }
+            get { return imageName; }
         }
         private string imageName;
 

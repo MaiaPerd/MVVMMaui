@@ -4,6 +4,7 @@ using System.Globalization;
 using System.Windows.Input;
 using Model;
 using MVVM;
+using MVVMMaui.Pages;
 using ViewModel;
 
 namespace MVVMMaui.VM
@@ -84,10 +85,10 @@ namespace MVVMMaui.VM
                     ChampionEditCopie.DeleteCharacteristicCommand.Execute(charac);
                 }
             });
-            AddSkillCommand = new Command(execute: async (skill) =>
+            AddSkillCommand = new Command(execute: (skill) =>
             {
-                    //ChampionEditCopie.AddSkillCommand.Execute(skill);
-               
+                Shell.Current.Navigation.PushModalAsync(new SkillAddPage());
+
             });
             DeleteSkillCommand = new Command(execute: async (skill) =>
             {
@@ -136,15 +137,8 @@ namespace MVVMMaui.VM
 
         public string Name
         {
-            get => name;
-            set
-            {
-                if (name != value)
-                {
-                    name = value;
-                    OnPropertyChanged();
-                }
-            }
+            set { SetProperty(ref name, value); }
+            get { return name; }
         }
         private string name;
 
@@ -171,34 +165,23 @@ namespace MVVMMaui.VM
 
         public ClassVM Selection
         {
-            get => selection;
-            set
-            {
-                selection = value;
-                OnPropertyChanged(nameof(Selection));
-            }
+            set { SetProperty(ref selection, value); }
+            get { return selection; }
         }
         private ClassVM selection;
 
         public string CharacteristicsValue
         {
-            get => characteristicsValue;
-            set
-            {
-                characteristicsValue = value;
-                OnPropertyChanged();
-            }
+            set { SetProperty(ref characteristicsValue, value); }
+            get { return characteristicsValue; }
         }
         private string characteristicsValue = "";
 
         public int CharacteristicsKey
         {
-            get => characteristicsKey;
-            set
-            {
-                characteristicsKey = value;
-                OnPropertyChanged();
-            }
+            set { SetProperty(ref characteristicsKey, value); }
+            get { return characteristicsKey; }
+
         }
         private int characteristicsKey = 0;
 

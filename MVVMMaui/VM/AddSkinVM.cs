@@ -79,15 +79,8 @@ namespace MVVMMaui.VM
 
         public string Name
         {
-            get => name;
-            set
-            {
-                if (name != value)
-                {
-                    name = value;
-                    OnPropertyChanged();
-                }
-            }
+            set { SetProperty(ref name, value); }
+            get { return name; }
         }
         private string name;
 

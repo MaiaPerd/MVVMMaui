@@ -5,12 +5,12 @@
              xmlns:converter="clr-namespace:MVVMMaui"
              BackgroundColor="{StaticResource Gray950}"
              Title="SkinAddPage">
-     <ContentPage.Resources>
+    <ContentPage.Resources>
         <converter:StringToImageConverter x:Key="StringToImage"/>
     </ContentPage.Resources>
     <FlexLayout Direction="Column">
 
-        <VerticalStackLayout Grid.Row="0">
+        <VerticalStackLayout>
             <Label Text="{Binding Titre}"
                    HorizontalOptions="Center"
                    Style="{StaticResource TitreChampion}"></Label>

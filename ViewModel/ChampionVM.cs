@@ -77,9 +77,9 @@ namespace ViewModel
                  }
                 );
             AddSkillCommand = new Command(
-               execute: (name) =>
+               execute: (skill) =>
                {
-                   Model.AddSkill(new Skill(name: (string)name, type: SkillType.Basic));
+                   Model.AddSkill(((SkillVM)skill).Model);
                    LoadSkills();
                }
               );
@@ -98,9 +98,9 @@ namespace ViewModel
                  }
                 );
             DeleteSkillCommand = new Command(
-               execute: (name) =>
+               execute: (skill) =>
                {
-                   Model.RemoveSkill(new Skill(name: (string)name, type: SkillType.Basic));
+                   Model.RemoveSkill(((SkillVM)skill).Model);
                    LoadSkills();
                }
               );

@@ -1,0 +1,63 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MVVMMaui.Pages.SkillAddPage"
+             BackgroundColor="{StaticResource Gray950}"
+             Title="SkillAddPage">
+    <FlexLayout Direction="Column">
+        <VerticalStackLayout>
+            <Label Text="Nouvelle Compétence"
+                   HorizontalOptions="Center"
+                   Style="{StaticResource TitreChampion}"></Label>
+            <Line BackgroundColor="{StaticResource Primary}"></Line>
+        </VerticalStackLayout>
+
+        <FlexLayout FlexLayout.Grow="1">
+            <ScrollView >
+                <Grid ColumnDefinitions="60, *"
+                      RowDefinitions="Auto,Auto,Auto">
+                   
+                    <Label Text="Nom: "
+                           Style="{StaticResource TextChampion}"
+                           VerticalOptions="Center"
+                           Grid.Column="0" Grid.Row="0"></Label>
+                    <Entry Placeholder="{Binding SkillEdit.Name}"
+                           Text="{Binding Name}"
+                           WidthRequest="300"
+                           Style="{StaticResource EditChampion}"
+                           Grid.Column="1" Grid.Row="0"></Entry>
+
+                    <Label Text="Type: "
+                           Style="{StaticResource TextChampion}"
+                           VerticalOptions="Center"
+                           Grid.Column="0" Grid.Row="1"></Label>
+
+                    <Picker SelectedItem="{Binding SkillEdit.Type}" ItemsSource="{Binding AllType}" Grid.Column="1" Grid.Row="1" WidthRequest="300">
+                    </Picker>
+
+                    <Label Text="Description: "
+                           Style="{StaticResource TextChampion}"
+                           VerticalOptions="Center"         
+                           Grid.Column="0" Grid.Row="2"></Label>
+
+                    <Editor Text="{Binding SkillEdit.Description}"
+                            AutoSize="TextChanges"
+                            HeightRequest="200"
+                            WidthRequest="300"
+                            Placeholder="{Binding SkillEdit.Description}"
+                            Style="{StaticResource EditorChampion}"
+                            Grid.Column="1" Grid.Row="2"/>
+                   
+                 </Grid>
+          
+            </ScrollView>
+
+        </FlexLayout>
+
+        <HorizontalStackLayout Padding="5" HorizontalOptions="Center">
+            <Button Text="Ajouter" Margin="10, 5"  Command="{Binding AddSkillCommand}" CommandParameter="{Binding SkillEdit}"></Button>
+            <Button Text="Annuler" Margin="10, 5" Command="{Binding ResetSkinCommand}"></Button>
+        </HorizontalStackLayout>
+    </FlexLayout>
+</ContentPage>
+

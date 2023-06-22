@@ -34,7 +34,7 @@
     </ContentPage.Resources>
     <FlexLayout Direction="Column">
 
-        <VerticalStackLayout Grid.Row="0">
+        <VerticalStackLayout>
             <Label Text="{Binding Titre}"
                    HorizontalOptions="Center"
                    Style="{StaticResource TitreChampion}"></Label>
