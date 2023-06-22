@@ -9,12 +9,13 @@ Le projet est une application MAUI cross-platform.
 
 # Sommaire
 
-- [MVVM maison](#mvvm_maison)
-- [MVVM toolkit](#mvvm_toolkit)
-- [Ce qui marche](#ce_qui_marche)
-- [Ce qui marche pas](#ce_qui_marche_pas)
-- [Ce qui marche un peu près](#ce_qui_marche_un_peu_pres)
-- [Ce qui n'est pas fait](#ce_qui_nest_pas_fait)
+- [Architecture du projet](#architecture-du-projet)
+- [MVVM maison](#mvvm-maison)
+- [MVVM toolkit](#mvvm-toolkit)
+- [Ce qui marche](#ce-qui-marche)
+- [Ce qui marche pas](#ce-qui-ne-marche-pas)
+- [Ce qui marche un peu près](#ce-qui-marche-un-peu-près)
+- [Ce qui n'est pas fait](#ce-qui-n-est-pas-fait)
 - [Requirements](#requirements)
 - [Installation](#installation)
     - [Lancement:](#lancement)
@@ -57,6 +58,7 @@ La deuxième classe est BaseGenericVM<Base> hérite de BaseVM et ajoute une prop
 # MVVM toolkit
 
 Le toolkit permet de facilité la déclaration des propriétés observable et des commandes.
+J'ai commencé a le mettre en place sur mon projet. (La relay command pour la pagination ne marche pas)
 
 # Ce qui marche
 
