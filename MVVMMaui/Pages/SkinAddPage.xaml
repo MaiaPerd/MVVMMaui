@@ -41,10 +41,7 @@
                     <ImageButton Source="{Binding SkinEditCopie.Icon, Converter={StaticResource StringToImage}}"
                                  Grid.Column="1" Grid.Row="1"
                                  Command="{Binding IconChangeCommand}"
-                                 BackgroundColor="{StaticResource Beige}"
-                                 HeightRequest="50"
-                                 WidthRequest="50"
-                                 Margin="10">
+                                 Style="{StaticResource IconButton}">
                     </ImageButton>
 
                     <Label Text="Image: "
@@ -54,11 +51,7 @@
 
                     <ImageButton Source="{Binding SkinEditCopie.Image, Converter={StaticResource StringToImage}}"
                                  Command="{Binding ImageChangeCommand}"
-                                 HeightRequest="100"
-                                 Grid.Column="1" Grid.Row="2"
-                                 BackgroundColor="{StaticResource Beige}"
-                                 WidthRequest="300"
-                                 Margin="10"></ImageButton>
+                                 Style="{StaticResource ImageButton}"></ImageButton>
 
                     <Label Text="Price: "
                            Style="{StaticResource TextChampion}"
@@ -78,13 +71,9 @@
                            Grid.Column="0" Grid.Row="4"></Label>
 
                     <Editor Text="{Binding SkinEditCopie.Description}"
-                            AutoSize="TextChanges"
-                            HeightRequest="200"
-                            WidthRequest="300"
                             Placeholder="{Binding SkinEditCopie.Description}"
                             Style="{StaticResource EditorChampion}"
                             Grid.Column="1" Grid.Row="4"/>
-                   
                  </Grid>
           
             </ScrollView>

@@ -192,15 +192,11 @@
                                         <ViewCell>
                                             <SwipeView>
                                                 <SwipeView.RightItems>
-                                                    <SwipeItems>
+                                                    <SwipeItems Mode="Execute">
                                                         <SwipeItem Text="Suprimer"
                                                                    Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:AddChampionVM}}, Path=DeleteSkillCommand}"
                                                                    CommandParameter="{Binding}"
                                                                    BackgroundColor="Red" />
-                                                        <SwipeItem Text="Modifier"
-                                                                   Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:AddChampionVM}}, Path=UpdateSkillCommand}"
-                                                                   CommandParameter="{Binding}"
-                                                                   BackgroundColor="Gray"  /> 
                                                     </SwipeItems>                           
                                                 </SwipeView.RightItems>
                                                 <Border Style="{StaticResource UpdateBox}">

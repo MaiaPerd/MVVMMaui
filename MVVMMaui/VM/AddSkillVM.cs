@@ -17,9 +17,17 @@ namespace MVVMMaui.VM
             get { return skillEdit; }
         }
 
-        public AddSkillVM(ChampionVM championVM)
+        public ChampionManagerVM ChampionManagerVM
+        {
+            get => championManagerVM;
+        }
+        private ChampionManagerVM championManagerVM;
+
+
+        public AddSkillVM(ChampionVM championVM, ChampionManagerVM championManagerVM)
         {
             SkillEdit = new SkillVM();
+            this.championManagerVM = championManagerVM;
             name = SkillEdit.Name;
             AddSkillCommand = new Command(execute: () =>
             {

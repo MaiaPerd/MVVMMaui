@@ -32,7 +32,10 @@
                            VerticalOptions="Center"
                            Grid.Column="0" Grid.Row="1"></Label>
 
-                    <Picker SelectedItem="{Binding SkillEdit.Type}" ItemsSource="{Binding AllType}" Grid.Column="1" Grid.Row="1" WidthRequest="300">
+                    <Picker SelectedItem="{Binding SkillEdit.Type}"
+                            ItemsSource="{Binding ChampionManagerVM.SkillTypes}"
+                            Grid.Column="1" Grid.Row="1" WidthRequest="300"
+                            BackgroundColor="Beige">
                     </Picker>
 
                     <Label Text="Description: "
@@ -41,9 +44,6 @@
                            Grid.Column="0" Grid.Row="2"></Label>
 
                     <Editor Text="{Binding SkillEdit.Description}"
-                            AutoSize="TextChanges"
-                            HeightRequest="200"
-                            WidthRequest="300"
                             Placeholder="{Binding SkillEdit.Description}"
                             Style="{StaticResource EditorChampion}"
                             Grid.Column="1" Grid.Row="2"/>
