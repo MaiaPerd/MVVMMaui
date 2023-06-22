@@ -39,17 +39,9 @@ Le principe du MVVM est de séprarer la vue et le model avec des VMs. Il est com
 
 Mes VMs sont divisé en deux, les VMs qui wrap le model qui sont dans "ViewModel" et mes VMs applicative qui sont dans le projet MVVMMaui->VM.
 
-Mes VMs de wrapping:
-
-Mes VMs applicative:
-
-/VMsApplicative.png
-
 J'ai décider de faire une VM applicative par page.
 Chaque page définie en BindingContext la page correspondante.
 Dans ces VMs il y a l'objet sur lequelle je me bind pour récupérer ce que je veux afficher et les commandes de navigation exclusive a la vue.
-
-Mes pages:
 
 ## toolkit "maison"
 
