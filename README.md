@@ -60,39 +60,50 @@ Le toolkit permet de facilité la déclaration des propriétés observable et de
 
 # Ce qui marche
 
-- La page d'accueil
+- La page d'accueil.
 - La page des champions avec:
-    - la pagination  
-    - la possibilité de changer le nombre de champion par page
-    - le swipe avec le click sur le détail et la suppression
-    - bouton ajouter navigant vers la page d'ajout d'un nouveau champion
-- La page du détail d'un champion avec l'affichage de toutes ces informations
+    - la pagination.
+    - la possibilité de changer le nombre de champion par page.
+    - le swipe avec le clique sur le edit et la suppression.
+    - bouton ajouter navigant vers la page d'ajout d'un nouveau champion.
+- La page du détail d'un champion avec l'affichage de toutes ces informations:
+    - Detail du skin avec un tap sur l'éléments
 - La page Ajouter/Modifier un champion:
-    - Le nom (que pour l'ajout)
-    - L'icon
-    - L'image
-    - La bio
-    - La classe
-    - Ajout et suppression de caractéristiques
-- La page ajouter une compétence
-
-    
+    - Le nom (que pour l'ajout).
+    - L'icon.
+    - L'image.
+    - La bio.
+    - La classe.
+    - Ajout et suppression des caractéristiques (swipe sur l'element pour la suppression).
+- La page de détail du skin avec la possibilité de le modifier.
 
 # Ce qui ne marche pas
 
 - Modifier un champion: 
-    - Le radio bouton ne séléctionne pas la classe actuel du champion
+    - Le radio bouton ne séléctionne pas la classe actuel du champion.
+    - La gestion des compétences.
+
+- La page ajouter une compétence:
+    - Ajout de la nouvelle compétence (Modifie juste les vms sans modifier le model).
+    
+Sur android le bouton ajouter un skin fait planter l'application.
 
 # Ce qui marche un peu près
 
 - Gestion des skins:
-    - Ajout d'un skin, il s'ajoute mais si on sort de la page puis revien il n'est plus présent mais si on revien une deuxième fois la mise à jours est faite
-    - Suppression d'un skin, mais problème que l'ajout
+    - Ajout d'un skin, il s'ajoute mais si on sort de la page puis reviens il n'est plus présent mais si on reviens une deuxième fois la mise à jours est faite.
+    - Suppression d'un skin, même problème que l'ajout. (swipe sur le skin pour la suppression)
 
 - Modifier un champion: 
-    - La gestion des compétences marche mal
+    - La gestion des compétences marche mal.
+    - Problème d'affichage du radio button.
+    
+- Picker des images sur les fichiers de l'appareil et non des photos.
+
 
 # Ce qui n'est pas fait
+
+Modification des caractéristiques et des skills.
 
 # Requirements
 

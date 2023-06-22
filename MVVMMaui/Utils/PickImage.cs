@@ -32,7 +32,6 @@ namespace MVVMMaui.VM
 
                      if (photo != null)
                      {
-                         // save the file into local storage
                          string localFilePath = Path.Combine(FileSystem.CacheDirectory, photo.FileName);
 
                          using Stream sourceStream = await photo.OpenReadAsync();
@@ -44,7 +43,6 @@ namespace MVVMMaui.VM
             }
             catch (Exception ex)
             {
-                // The user canceled or something went wrong
             }
 
             return null;
