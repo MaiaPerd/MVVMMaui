@@ -76,8 +76,6 @@
             <ImageButton Source="next.png" Style="{StaticResource Pagination}" Command="{Binding ChampionManagerVM.NextPageCommand}" Margin="20, 10"></ImageButton>
         </HorizontalStackLayout>
         
-
     </Grid>
     
-
 </ContentPage>

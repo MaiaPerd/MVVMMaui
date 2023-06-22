@@ -100,6 +100,7 @@ Sur android le bouton ajouter un skin fait planter l'application.
 # Ce qui n'est pas fait
 
 Modification des caractéristiques et des skills.
+Trie des listes par ordre alphabétique.
 
 # Requirements
 

@@ -51,6 +51,7 @@
 
                     <ImageButton Source="{Binding SkinEditCopie.Image, Converter={StaticResource StringToImage}}"
                                  Command="{Binding ImageChangeCommand}"
+                                 Grid.Column="1" Grid.Row="2"
                                  Style="{StaticResource ImageButton}"></ImageButton>
 
                     <Label Text="Price: "
