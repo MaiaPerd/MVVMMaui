@@ -2,24 +2,21 @@
 using Model;
 using System.Collections.ObjectModel;
 using MVVM;
+using ViewModel.converteur;
 
 namespace ViewModel
 {
 	public class SkillVM : BaseGenericVM<Skill>
 	{
-        public SkillVM(Skill model)
-		{
-            Model = model;
-        }
 
         public string Name
         {
-            get => Model.Name;
+            get => Model?.Name;
         }
 
         public string Description
         {
-            get => Model.Description;
+            get => Model?.Description;
             set
             {
                 if (Model == null || Model.Description == value) return;
@@ -28,9 +25,11 @@ namespace ViewModel
             }
         }
 
-        public SkillType Type // A changer l'enum
+
+        public SkillTypeVM Type
         {
-            get => Model.Type;
+            get => EnumToEnumVM.SkillTypeToSkillTypeVM(Model?.Type.ToString());
+            
         }
     }
 }

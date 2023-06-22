@@ -8,33 +8,30 @@ namespace ViewModel
 	public class SkinVM : BaseGenericVM<Skin>
 	{
 
-        public SkinVM(Skin model)
+        public SkinVM(Skin model) : base(model)
         {
-            Model = model;
         }
 
         public SkinVM(SkinVM skinVM) : this(skinVM.Name, skinVM)
         {
         }
 
-        public SkinVM(ChampionVM champion)
+        public SkinVM(ChampionVM champion) : base(new Skin(name: "Nouveau skin", champion: champion.Model))
         {
-            Model = new Skin(name: "Nouveau skin", champion: champion.Model);
         }
 
-        public SkinVM(string name, SkinVM skinVM)
+        public SkinVM(string name, SkinVM skinVM) : base(new Skin(name: name, champion: skinVM.Champion.Model, price: skinVM.Price, icon: skinVM.Icon, image: skinVM.Image, description: skinVM.Description))
         {
-            Model = new Skin(name: name, champion: skinVM.Champion ,price: skinVM.Price, icon: skinVM.Icon, image: skinVM.Image, description: skinVM.Description);
         }
 
         public string Name
         {
-            get => Model.Name;
+            get => Model?.Name;
         }
 
         public string Description
         {
-            get => Model.Description;
+            get => Model?.Description;
             set
             {
                 if (Model == null)
@@ -51,7 +48,7 @@ namespace ViewModel
 
         public string Icon
         {
-            get => Model.Icon;
+            get => Model?.Icon;
             set
             {
                 if (Model == null || Model.Icon == value) return;
@@ -62,7 +59,7 @@ namespace ViewModel
 
         public string Image
         {
-            get => Model.Image.Base64;
+            get => Model?.Image.Base64;
             set
             {
                 if (Model == null || Model.Image.Base64 == value) return;
@@ -88,9 +85,9 @@ namespace ViewModel
             }
         }
 
-        public Champion Champion
+        public ChampionVM Champion
         {
-            get => Model.Champion;
+            get => new ChampionVM(Model?.Champion);
         }
 
 

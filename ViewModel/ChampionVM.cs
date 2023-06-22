@@ -14,9 +14,8 @@ namespace ViewModel
 	public class ChampionVM : BaseGenericVM<Champion>
     {
 
-        public ChampionVM(Champion model)
+        public ChampionVM(Champion model) : base(model)
 		{
-			Model = model;
             Characteristics = new ReadOnlyObservableCollection<KeyValuePair<string, int>>(characteristics);
             LoadCaracteristique();
             Skins = new ReadOnlyObservableCollection<SkinVM>(skins);
@@ -30,18 +29,16 @@ namespace ViewModel
         {
         }
 
-        public ChampionVM()
+        public ChampionVM() : base(new Champion(name: "Nouveau"))
         {
-            Model = new Champion(name: "Nouveau");
             Characteristics = new ReadOnlyObservableCollection<KeyValuePair<string, int>>(characteristics);
             Skins = new ReadOnlyObservableCollection<SkinVM>(skins);
             Skills = new ReadOnlyObservableCollection<SkillVM>(skills);
             CommandDef();
         }
 
-        public ChampionVM(string name, ChampionVM championVM)
+        public ChampionVM(string name, ChampionVM championVM) : base(new Champion(name: name, champClass: championVM.Model.Class, icon: championVM.Icon, image: championVM.Image, bio: championVM.Bio))
         {
-            Model = new Champion(name: name, champClass: championVM.Model.Class, icon: championVM.Icon, image: championVM.Image, bio: championVM.Bio);
             foreach (var characteristic in championVM.Characteristics)
             {
                 Model.AddCharacteristics(Tuple.Create(characteristic.Key, characteristic.Value));
@@ -141,7 +138,7 @@ namespace ViewModel
         
         public string Icon
         {
-            get => Model.Icon;
+            get => Model?.Icon;
             set
             {
                 if (Model == null || Model.Icon == value) return;
@@ -153,7 +150,7 @@ namespace ViewModel
 
         public string Image
         {
-            get => Model.Image.Base64;
+            get => Model?.Image.Base64;
             set
             {
                 if (Model == null || Model.Image.Base64 == value) return;
@@ -166,7 +163,7 @@ namespace ViewModel
         {
             get
             {
-                return EnumToEnumVM.ChampionClassToChampionClassVM(Model.Class.ToString());
+                return EnumToEnumVM.ChampionClassToChampionClassVM(Model?.Class.ToString());
             }
             set
             {
@@ -189,7 +186,7 @@ namespace ViewModel
         private void LoadCaracteristique()
         {
             characteristics.Clear();
-            foreach (var charact in Model.Characteristics)
+            foreach (var charact in Model?.Characteristics)
             {
                 characteristics.Add(charact);
             }
@@ -202,7 +199,7 @@ namespace ViewModel
         private void LoadSkins()
         {
             skins.Clear();
-            foreach (var skin in Model.Skins)
+            foreach (var skin in Model?.Skins)
             {
                 skins.Add(new SkinVM(skin));
             }
@@ -229,7 +226,7 @@ namespace ViewModel
         private void LoadSkills()
         {
             skills.Clear();
-            foreach (var skill in Model.Skills)
+            foreach (var skill in Model?.Skills)
             {
                 skills.Add(new SkillVM(skill));
             }

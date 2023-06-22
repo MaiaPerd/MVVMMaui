@@ -1,12 +1,13 @@
 ﻿using System;
 using System.Windows.Input;
 using Model;
+using MVVM;
 using MVVMMaui.Pages;
 using ViewModel;
 
 namespace MVVMMaui.VM
 {
-	public class PageChampionVM
+	public class PageChampionVM : BaseVM
 	{
         public ChampionManagerVM ChampionManagerVM
         {
