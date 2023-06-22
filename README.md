@@ -43,6 +43,8 @@ Mes VMs de wrapping:
 
 Mes VMs applicative:
 
+/VMsApplicative.png
+
 J'ai décider de faire une VM applicative par page.
 Chaque page définie en BindingContext la page correspondante.
 Dans ces VMs il y a l'objet sur lequelle je me bind pour récupérer ce que je veux afficher et les commandes de navigation exclusive a la vue.
