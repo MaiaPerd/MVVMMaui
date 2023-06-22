@@ -44,11 +44,13 @@
                         <SwipeView>
                             <SwipeView.RightItems>
                                 <SwipeItems>
-                                    <SwipeItem Text="Suprimer" Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:ListChampionsVM}}, Path=DeleteChampionCommand}"
+                                    <SwipeItem Text="Suprimer"
+                                               Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:ListChampionsVM}}, Path=DeleteChampionCommand}"
                                                CommandParameter="{Binding}"
                                                BackgroundColor="Red"  />
                                  
-                                    <SwipeItem Text="Modifier" Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:ListChampionsVM}}, Path=UpdateChampionCommand}"
+                                    <SwipeItem Text="Modifier"
+                                               Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:ListChampionsVM}}, Path=UpdateChampionCommand}"
                                                CommandParameter="{Binding}"
                                                BackgroundColor="Gray"  />           
                                 </SwipeItems>                           

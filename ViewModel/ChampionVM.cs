@@ -68,9 +68,9 @@ namespace ViewModel
                  Model.AddCharacteristics(Tuple.Create(charac.Key,charac.Value));
                  LoadCaracteristique();
              }
-           );
+            );
             AddSkinCommand = new Command(
-                 execute: (skin) =>
+             execute: (skin) =>
                  {
                      Model.AddSkin(((SkinVM)skin).Model);
                      LoadSkins();
@@ -83,6 +83,14 @@ namespace ViewModel
                    LoadSkills();
                }
               );
+            UpdateCharacteristicCommand = new Command(
+             execute: (characteristic) =>
+             {
+                 KeyValuePair<string, int> charac = ((KeyValuePair<string, int>)characteristic);
+              //   Model.Characteristics[charac.Key] = charac.Value;
+                 LoadCaracteristique();
+             }
+           );
             DeleteCharacteristicCommand = new Command(
              execute: (characteristic) =>
              {
@@ -107,6 +115,7 @@ namespace ViewModel
         }
 
         public ICommand AddCharacteristicCommand { get; set; }
+        public ICommand UpdateCharacteristicCommand { get; set; }
         public ICommand DeleteCharacteristicCommand { get; set; }
         public ICommand AddSkinCommand { get; set; }
         public ICommand DeleteSkinCommand { get; set; }

@@ -31,7 +31,7 @@ namespace MVVMMaui.VM
 
         public AddSkinVM(ChampionManagerVM championManagerVM)
         {
-            SkinEditCopie = new SkinVM(championManagerVM.ChampionEdit);
+            SkinEditCopie = new SkinVM(new ChampionVM(championManagerVM.ChampionEdit));
             championManagerVM.ChampionEdit.SkinEdit = SkinEditCopie;
             SkinEditCopie.Image = PickImage.getImage("logolol.png");
             SkinEditCopie.Icon = PickImage.getImage("logo.png");

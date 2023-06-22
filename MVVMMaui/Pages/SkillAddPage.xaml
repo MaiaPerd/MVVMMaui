@@ -55,8 +55,13 @@
         </FlexLayout>
 
         <HorizontalStackLayout Padding="5" HorizontalOptions="Center">
-            <Button Text="Ajouter" Margin="10, 5"  Command="{Binding AddSkillCommand}" CommandParameter="{Binding SkillEdit}"></Button>
-            <Button Text="Annuler" Margin="10, 5" Command="{Binding ResetSkinCommand}"></Button>
+            <Button Text="Ajouter"
+                    Style="{StaticResource EditButton}"
+                    Command="{Binding AddSkillCommand}"
+                    CommandParameter="{Binding SkillEdit}"></Button>
+            <Button Text="Annuler"
+                    Style="{StaticResource EditButton}"
+                    Command="{Binding ResetSkinCommand}"></Button>
         </HorizontalStackLayout>
     </FlexLayout>
 </ContentPage>

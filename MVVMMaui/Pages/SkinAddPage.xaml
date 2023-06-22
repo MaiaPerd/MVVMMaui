@@ -92,8 +92,13 @@
         </FlexLayout>
 
         <HorizontalStackLayout Padding="5" HorizontalOptions="Center">
-            <Button Text="{Binding Status}" Margin="10, 5"  Command="{Binding UpdateSkinCommand}" CommandParameter="{Binding SkinEditCopie}"></Button>
-            <Button Text="Annuler" Margin="10, 5" Command="{Binding ResetSkinCommand}"></Button>
+            <Button Text="{Binding Status}"
+                    Style="{StaticResource EditButton}"
+                    Command="{Binding UpdateSkinCommand}"
+                    CommandParameter="{Binding SkinEditCopie}"></Button>
+            <Button Text="Annuler"
+                    Style="{StaticResource EditButton}"
+                    Command="{Binding ResetSkinCommand}"></Button>
         </HorizontalStackLayout>
     </FlexLayout>
        

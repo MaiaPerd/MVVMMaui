@@ -10,7 +10,6 @@ public partial class ChampionPage : ContentPage
     public ChampionPage(ChampionVM championVM)
 	{
 		InitializeComponent();
-        championManagerVM.ChampionEdit = championVM;
         BindingContext = new PageChampionVM(championManagerVM);
     }
 
