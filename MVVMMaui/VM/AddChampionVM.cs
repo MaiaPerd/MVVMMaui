@@ -85,9 +85,9 @@ namespace MVVMMaui.VM
                     ChampionEditCopie.DeleteCharacteristicCommand.Execute(charac);
                 }
             });
-            AddSkillCommand = new Command(execute: (skill) =>
+            AddSkillCommand = new Command(execute: () =>
             {
-                Shell.Current.Navigation.PushModalAsync(new SkillAddPage());
+                Shell.Current.Navigation.PushModalAsync(new SkillAddPage(ChampionEditCopie));
 
             });
             DeleteSkillCommand = new Command(execute: async (skill) =>

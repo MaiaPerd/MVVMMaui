@@ -17,13 +17,13 @@ namespace MVVMMaui.VM
             get { return skillEdit; }
         }
 
-        public AddSkillVM(ChampionManagerVM championManagerVM)
+        public AddSkillVM(ChampionVM championVM)
         {
             SkillEdit = new SkillVM();
             name = SkillEdit.Name;
             AddSkillCommand = new Command(execute: () =>
             {
-                championManagerVM.ChampionEdit.AddSkillCommand.Execute(new SkillVM(Name, SkillEdit));
+                championVM.AddSkillCommand.Execute(new SkillVM(Name, SkillEdit));
                 Shell.Current.Navigation.PopModalAsync();
             });
             ResetSkillCommand = new Command(execute: () =>

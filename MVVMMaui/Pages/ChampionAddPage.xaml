@@ -231,7 +231,6 @@
                                                             <Label Text="{Binding Name}"  Grid.Column="0"></Label>
                                                             <Label Text="{Binding Type}" Grid.Column="1"></Label>
                                                         </Grid>
-                                                        <Label Text="{Binding Description}"></Label>
                                                     </VerticalStackLayout>      
                                                 </Border>
                                             </SwipeView>

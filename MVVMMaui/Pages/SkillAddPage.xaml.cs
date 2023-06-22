@@ -5,11 +5,9 @@ namespace MVVMMaui.Pages;
 
 public partial class SkillAddPage : ContentPage
 {
-    readonly ChampionManagerVM championManagerVM = (Application.Current as App).championVM;
-
-    public SkillAddPage()
+    public SkillAddPage(ChampionVM championEditCopie)
 	{
 		InitializeComponent();
-        BindingContext = new AddSkillVM(championManagerVM);
+        BindingContext = new AddSkillVM(championEditCopie);
     }
 }
