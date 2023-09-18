@@ -4,8 +4,8 @@ Bienvenue sur l'application prepaLoL.
 
 Le projet est une application MAUI cross-platform.
 
-    - MVVM "maison" sur la branch MVVM: https://codefirst.iut.uca.fr/git/maia.perderizet/MVVMMaui/src/branch/MVVM
-    - MVVM community toolkit sur la branch MVVMtoolkit: https://codefirst.iut.uca.fr/git/maia.perderizet/MVVMMaui/src/branch/MVVMtoolkit
+    - MVVM "maison" sur la branch MVVM
+    - MVVM community toolkit sur la branch MVVMtoolkit
 
 # Sommaire
 
@@ -17,8 +17,7 @@ Le projet est une application MAUI cross-platform.
 - [Ce qui marche un peu près](#ce-qui-marche-un-peu-près)
 - [Ce qui n'est pas fait](#ce-qui-n-est-pas-fait)
 - [Requirements](#requirements)
-- [Installation](#installation)
-    - [Lancement:](#lancement)
+- [Lancement:](#lancement)
 - [Auteurs](#auteurs)
 
 # Architecture du projet
@@ -106,10 +105,6 @@ Trie des listes par ordre alphabétique.
 
 Le projet utilise .NET7, je vous conseille de le lancé sur Visual Studio 2022 (ou 2019).
 
-# Installation
-
-Cloné le dépôt du projet: ```git clone https://codefirst.iut.uca.fr/git/maia.perderizet/MVVMMaui.git```.
-
 ## Lancement:
 
 - Ouvrir la solution dans Visual Studio.
@@ -119,5 +114,3 @@ Cloné le dépôt du projet: ```git clone https://codefirst.iut.uca.fr/git/maia.
 # Auteurs
 Maïa PERDERIZET
 
-_Generated with a_ **Code#0** _template_  
-<img src="Documentation/doc_images/CodeFirst.png" height=40/>   
