@@ -15,7 +15,7 @@ Le projet est une application MAUI cross-platform.
 - [Ce qui fonctionne](#ce-qui-fonctionne)
 - [Ce qui ne fonctionne pas](#ce-qui-ne-fonctionne-pas)
 - [Ce qui fonctionne à-peu-près](#ce-qui-fonctionne-à-peu-près)
-- [Ce qui n'est pas fait](#ce-qui-n-est-pas-fait)
+- [Ce qui n'est pas fait](#ce-qui-nest-pas-fait)
 - [Requirements](#requirements)
 - [Lancement:](#lancement)
 - [Auteurs](#auteurs)
