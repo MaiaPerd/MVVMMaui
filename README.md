@@ -2,7 +2,7 @@
 
 Bienvenue sur l'application MVVMMaui.
 
-Le projet est une application MAUI cross-platform permettant à l'utilisateur de voir des informations sur les personnages du célèbre jeu League Of Legends et de modifier leurs informations.
+Le projet est une application MAUI cross-platform permettant à l'utilisateur de voir des informations sur les personnages jeu League Of Legends et de modifier leurs informations.
 
     - MVVM "maison" sur la branch MVVM
     - MVVM community toolkit sur la branch MVVMtoolkit
@@ -12,10 +12,6 @@ Le projet est une application MAUI cross-platform permettant à l'utilisateur de
 - [Architecture du projet](#architecture-du-projet)
 - [MVVM maison](#mvvm-maison)
 - [MVVM toolkit](#mvvm-toolkit)
-- [Ce qui fonctionne](#ce-qui-fonctionne)
-- [Ce qui ne fonctionne pas](#ce-qui-ne-fonctionne-pas)
-- [Ce qui fonctionne à-peu-près](#ce-qui-fonctionne-à-peu-près)
-- [Ce qui n'est pas fait](#ce-qui-nest-pas-fait)
 - [Requirements](#requirements)
 - [Lancement:](#lancement)
 - [Auteurs](#auteurs)
